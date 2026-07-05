@@ -15,6 +15,23 @@
     "training": "التدريب",
     "classes": "الحصص الجماعية",
     "about": "من أنا",
-    "book": "احجزي جلسة"
+    "book": "احجزي جلسة",
+    "register": "التسجيل"
+  },
+  "register": {
+    "title": "إنشاء حساب",
+    "subtitle": "ابدأي رحلتكِ الرياضية مع Reset.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "registerButton": "إنشاء حساب",
+    "login": "هل لديكِ حساب بالفعل?",
+    "loginLink": "تسجيل الدخول",
+    "verifyEmail": "تحقق من بريدك الإلكتروني",
+    "verificationMessage": "أدخلي الرمز المرسل إلى بريدكِ الإلكتروني.",
+    "verificationCode": "رمز التحقق",
+    "verify": "تحقق",
+    "enterCode": "أدخلي الرمز",
+    "loadingMessage": "جاري إنشاء الحساب...",
+    "passwordPlaceholder": "أنشئي كلمة مرور"
   }
 }

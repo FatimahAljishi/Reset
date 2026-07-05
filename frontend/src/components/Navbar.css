@@ -1,4 +1,5 @@
 .navbar {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,7 +15,7 @@
   background: none;
   border: none;
   font-size: 30px;
-  color: #465e2c;
+  color: var(--primary-color);
 }
 
 .desktop-nav {
@@ -37,14 +38,94 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #465e2c;
+  color: var(--primary-color);
   font-weight: 600;
   font-size: 0.9rem;
 }
 
 .language-switcher button:disabled {
-  color: #d8ae43;
+  color: var(--secondary-color);
   cursor: default;
+}
+
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 0;
+}
+
+.mobile-nav-art {
+  width: 220%;
+  max-width: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  align-self: center;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 90;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 72%;
+  max-width: 320px;
+  height: 100vh;
+  background: #fffdf7;
+  z-index: 100;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.close-menu {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 34px;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.mobile-menu a {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  padding: 14px 0;
+  width: 100%;
+}
+
+.mobile-link-icon {
+  font-size: 2rem;
+}
+
+.mobile-menu a:active {
+  background: var(--secondary-background-color);
+  border-radius: 8px;
+}
+
+.mobile-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #eadfbd;
 }
 
 @media (min-width: 900px) {
@@ -60,13 +141,13 @@
 
   .desktop-nav a {
     text-decoration: none;
-    color: #355432;
+    color: var(--text-color);
     font-weight: 500;
   }
 
   .desktop-nav button {
-    background: #355432;
-    color: white;
+    background: var(--primary-color);
+    color: var(--light-text-color);
     border: none;
     padding: 12px 22px;
     border-radius: 999px;

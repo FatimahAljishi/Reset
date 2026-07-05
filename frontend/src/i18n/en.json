@@ -15,6 +15,24 @@
     "training": "Training",
     "classes": "Classes",
     "about": "About",
-    "book": "Book a Session"
+    "book": "Book a Session",
+    "register": "Register"
+  },
+
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Start your fitness journey with Reset.",
+    "email": "Email",
+    "password": "Password",
+    "registerButton": "Create Account",
+    "login": "Already have an account?",
+    "loginLink": "Log in",
+    "verifyEmail": "Verify Email",
+    "verificationMessage": "Enter the code sent to your email.",
+    "verificationCode": "Verification Code",
+    "verify": "Verify",
+    "enterCode": "Enter code",
+    "loadingMessage": "Creating account...",
+    "passwordPlaceholder": "Create a password"
   }
 }

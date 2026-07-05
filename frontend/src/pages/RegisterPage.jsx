@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { useSignUp } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import "./RegisterPage.css";
+import logo from "../assets/reset-logo-transparent.png";
+import Navbar from "../components/Navbar";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterPage() {
+  const { t } = useTranslation();
   const { isLoaded, signUp, setActive } = useSignUp();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -25,6 +31,7 @@ export default function RegisterPage() {
 
     try {
       setError("");
+      setLoading(true);
 
       await signUp.create({
         emailAddress: form.email,
@@ -38,6 +45,8 @@ export default function RegisterPage() {
       setPendingVerification(true);
     } catch (err) {
       setError(err.errors?.[0]?.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -62,45 +71,79 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="auth-page">
-      <h1>Create Account</h1>
+    <>
+      <Navbar />
+      <main className="register-page">
+        <section className="register-card">
+          <img src={logo} alt="Reset logo" className="register-logo" />
 
-      {!pendingVerification ? (
-        <form onSubmit={handleRegister}>
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-          />
+          <h1>
+            {pendingVerification
+              ? t("register.verifyEmail")
+              : t("register.title")}
+          </h1>
 
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-          />
+          <p className="register-subtitle">
+            {pendingVerification
+              ? t("register.verificationMessage")
+              : t("register.subtitle")}
+          </p>
 
-          <button type="submit">Create Account</button>
-        </form>
-      ) : (
-        <form onSubmit={handleVerify}>
-          <p>We sent a verification code to your email.</p>
+          {!pendingVerification ? (
+            <form onSubmit={handleRegister} className="register-form">
+              <label>{t("register.email")}</label>
+              <input
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                value={form.email}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
 
-          <input
-            name="code"
-            placeholder="Verification code"
-            value={form.code}
-            onChange={handleChange}
-          />
+              <label>{t("register.password")}</label>
+              <input
+                name="password"
+                type="password"
+                placeholder={t("register.passwordPlaceholder")}
+                value={form.password}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
 
-          <button type="submit">Verify Email</button>
-        </form>
-      )}
+              <button type="submit" disabled={loading}>
+                {loading
+                  ? t("register.loadingMessage")
+                  : t("register.registerButton")}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleVerify} className="register-form">
+              <label>{t("register.verificationCode")}</label>
+              <input
+                name="code"
+                placeholder={t("register.enterCode")}
+                value={form.code}
+                onChange={handleChange}
+                required
+              />
 
-      {error && <p>{error}</p>}
-    </div>
+              <button type="submit">{t("register.verify")}</button>
+            </form>
+          )}
+
+          {error && <p className="register-error">{error}</p>}
+
+          {!pendingVerification && (
+            <p className="register-login">
+              {t("register.login")}{" "}
+              <Link to="/"> {t("register.loginLink")} </Link>
+            </p>
+          )}
+        </section>
+      </main>
+    </>
   );
 }

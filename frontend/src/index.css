@@ -30,3 +30,13 @@ textarea,
 select {
   font: inherit;
 }
+
+:root {
+  --primary-color: #465e2c;
+  --secondary-color: #d8ae43;
+  --tertiary-color: #6d765c;
+  --background-color: linear-gradient(180deg, #fffaf0 0%, #f7efd9 100%);
+  --text-color: #374a23;
+  --light-text-color: #fffaf0;
+  --secondary-background-color: #ffeea9;
+}
