@@ -1,0 +1,105 @@
+.hero {
+  position: relative;
+  min-height: calc(100vh - 88px);
+  padding: 42px 28px 32px;
+  overflow: hidden;
+
+  background: linear-gradient(180deg, #fffaf0 0%, #f7efd9 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 330px;
+}
+
+.hero h1 {
+  margin: 0;
+  color: #465e2c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 15vw, 4.4rem);
+  line-height: 0.95;
+}
+
+.hero h1 span {
+  color: #d8ae43;
+}
+
+.hero p {
+  margin: 28px 0 0;
+  max-width: 330px;
+  color: #374a23;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.hero-buttons {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-buttons button {
+  width: 100%;
+  min-height: 54px;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-btn {
+  border: none;
+  background: #465e2c;
+  color: #fffaf0;
+  box-shadow: 0 8px 18px rgba(49, 89, 45, 0.25);
+}
+
+.secondary-btn {
+  border: 2px solid #465e2c;
+  background: rgba(255, 250, 240, 0.75);
+  color: #465e2c;
+}
+
+.hero-art {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 125%;
+  max-width: none;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (min-width: 700px) {
+  .hero {
+    min-height: calc(100vh - 96px);
+    padding: 90px 8%;
+  }
+
+  .hero-content {
+    max-width: 520px;
+  }
+
+  .hero h1 {
+    font-size: 6rem;
+  }
+
+  .hero p {
+    max-width: 360px;
+    font-size: 1.15rem;
+  }
+
+  .hero-buttons {
+    flex-direction: row;
+    max-width: 430px;
+  }
+
+  .hero-art {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+  }
+}
