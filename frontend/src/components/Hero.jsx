@@ -1,25 +1,27 @@
 import "./Hero.css";
 import heroArt from "../assets/hero-art.png";
+import { useTranslation } from "react-i18next";
 
 export default function Hero() {
+  const { t } = useTranslation();
   return (
     <section className="hero">
       <div className="hero-content">
         <h1>
-          Move.
+          {t("hero.title1")}
           <br />
-          Nourish.
+          {t("hero.title2")}
           <br />
-          Balance.
+          {t("hero.title3")}
           <br />
-          <span>Reset.</span>
+          <span>{t("hero.title4")}</span>
         </h1>
 
-        <p>Personal training and ready workout plans designed for you.</p>
+        <p>{t("hero.description")}</p>
 
         <div className="hero-buttons">
-          <button className="primary-btn">Explore Plans</button>
-          <button className="secondary-btn">Book a Session</button>
+          <button className="primary-btn">{t("hero.explore")}</button>
+          <button className="secondary-btn">{t("hero.book")}</button>
         </div>
       </div>
 

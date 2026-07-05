@@ -21,6 +21,32 @@
   display: none;
 }
 
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-switcher button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #465e2c;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.language-switcher button:disabled {
+  color: #d8ae43;
+  cursor: default;
+}
+
 @media (min-width: 900px) {
   .menu-btn {
     display: none;

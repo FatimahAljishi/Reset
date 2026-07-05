@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title1": "Move.",
+    "title2": "Train.",
+    "title3": "Balance.",
+    "title4": "Reset.",
+    "description": "Personal training and ready workout plans designed for you.",
+    "explore": "Explore Plans",
+    "book": "Book a Session"
+  },
+
+  "navbar": {
+    "home": "Home",
+    "plans": "Plans",
+    "training": "Training",
+    "classes": "Classes",
+    "about": "About",
+    "book": "Book a Session"
+  }
+}

@@ -102,4 +102,10 @@
     bottom: 0;
     width: 100%;
   }
+
+  html[dir="rtl"] .hero-art {
+    right: auto;
+    left: 0;
+    transform: scaleX(-1);
+  }
 }
