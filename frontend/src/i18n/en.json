@@ -50,7 +50,13 @@
     "register": "Don't have an account?",
     "registerLink": "Register",
     "passwordPlaceholder": "Enter your password",
-    "loadingMessage": "Logging in..."
+    "loadingMessage": "Logging in...",
+    "verifyEmail": "Verify Email",
+    "verifyEmailSubtitle": "Enter the code sent to your email.",
+    "verifyEmailLabel": "Email code",
+    "verifyEmailPlaceholder": "Enter code",
+    "verifying": "Verifying...",
+    "verify": "Verify"
   },
   "profile": {
     "welcome": "Welcome",
