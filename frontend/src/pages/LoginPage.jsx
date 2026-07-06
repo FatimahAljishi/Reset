@@ -1,17 +1,30 @@
 import { useState } from "react";
 import { useSignIn } from "@clerk/clerk-react";
 import { useNavigate, Link } from "react-router-dom";
-import "./RegisterPage.css";
-import logo from "../assets/reset-logo-transparent.png";
-import Navbar from "../components/Navbar";
 import { useTranslation } from "react-i18next";
+import Navbar from "../components/Navbar";
+import logo from "../assets/reset-logo-transparent.png";
+import "./RegisterPage.css";
+
+const clerkErrorTranslations = {
+  form_identifier_not_found: "errors.emailNotFound",
+  form_password_incorrect: "errors.incorrectPassword",
+  form_param_format_invalid: "errors.invalidEmail",
+  form_code_incorrect: "errors.invalidCode",
+  form_code_expired: "errors.expiredCode",
+  session_exists: "errors.sessionExists",
+};
 
 export default function LoginPage() {
   const { t } = useTranslation();
   const { isLoaded, signIn, setActive } = useSignIn();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
   const [needsSecondFactor, setNeedsSecondFactor] = useState(false);
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,6 +32,18 @@ export default function LoginPage() {
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function getErrorMessage(err) {
+    const clerkError = err.errors?.[0];
+
+    if (!clerkError) {
+      return t("errors.generic");
+    }
+
+    const translationKey = clerkErrorTranslations[clerkError.code];
+
+    return translationKey ? t(translationKey) : clerkError.message;
   }
 
   async function handleLogin(e) {
@@ -44,10 +69,10 @@ export default function LoginPage() {
 
         setNeedsSecondFactor(true);
       } else {
-        setError(`Login needs another step: ${result.status}`);
+        setError(t("errors.loginNeedsAnotherStep"));
       }
     } catch (err) {
-      setError(err.errors?.[0]?.message || "Login failed");
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -70,10 +95,10 @@ export default function LoginPage() {
         await setActive({ session: result.createdSessionId });
         navigate("/");
       } else {
-        setError(`Verification needs another step: ${result.status}`);
+        setError(t("errors.verificationNeedsAnotherStep"));
       }
     } catch (err) {
-      setError(err.errors?.[0]?.message || "Verification failed");
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }

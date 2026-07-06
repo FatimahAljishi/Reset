@@ -61,5 +61,20 @@
     "welcome": "مرحبًا",
     "manageAccount": "إدارة الحساب",
     "signOut": "تسجيل الخروج"
+  },
+  "errors": {
+    "generic": "حدث خطأ ما.",
+    "emailExists": "هذا البريد الإلكتروني مستخدم بالفعل.",
+    "passwordPwned": "كلمة المرور غير آمنة، يرجى اختيار كلمة مرور أخرى.",
+    "passwordTooShort": "كلمة المرور قصيرة جدًا.",
+    "passwordNotStrongEnough": "كلمة المرور ليست قوية بما يكفي.",
+    "invalidCode": "رمز التحقق غير صحيح.",
+    "expiredCode": "انتهت صلاحية رمز التحقق.",
+    "sessionExists": "أنت مسجل الدخول بالفعل.",
+    "emailNotFound": "لا يوجد حساب بهذا البريد الإلكتروني.",
+    "incorrectPassword": "كلمة المرور غير صحيحة.",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح.",
+    "loginNeedsAnotherStep": "تسجيل الدخول يحتاج إلى خطوة إضافية.",
+    "verificationNeedsAnotherStep": "التحقق يحتاج إلى خطوة إضافية."
   }
 }

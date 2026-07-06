@@ -62,5 +62,20 @@
     "welcome": "Welcome",
     "manageAccount": "Manage Account",
     "signOut": "Sign Out"
+  },
+  "errors": {
+    "generic": "Something went wrong.",
+    "emailExists": "This email is already registered.",
+    "passwordPwned": "This password has been found in a data breach. Please choose another.",
+    "passwordTooShort": "Password is too short.",
+    "passwordNotStrongEnough": "Password is not strong enough.",
+    "invalidCode": "The verification code is incorrect.",
+    "expiredCode": "The verification code has expired.",
+    "sessionExists": "You are already signed in.",
+    "emailNotFound": "No account was found with this email.",
+    "incorrectPassword": "Incorrect password.",
+    "invalidEmail": "Please enter a valid email address.",
+    "loginNeedsAnotherStep": "Login needs another step.",
+    "verificationNeedsAnotherStep": "Verification needs another step."
   }
 }

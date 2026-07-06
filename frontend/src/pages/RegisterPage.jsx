@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { useSignUp } from "@clerk/clerk-react";
 import { useNavigate, Link } from "react-router-dom";
-import "./RegisterPage.css";
-import logo from "../assets/reset-logo-transparent.png";
-import Navbar from "../components/Navbar";
 import { useTranslation } from "react-i18next";
+import Navbar from "../components/Navbar";
+import logo from "../assets/reset-logo-transparent.png";
+import "./RegisterPage.css";
+
+const clerkErrorTranslations = {
+  form_identifier_exists: "errors.emailExists",
+  form_password_pwned: "errors.passwordPwned",
+  form_password_length_too_short: "errors.passwordTooShort",
+  form_password_not_strong_enough: "errors.passwordNotStrongEnough",
+  form_code_incorrect: "errors.invalidCode",
+  form_code_expired: "errors.expiredCode",
+  session_exists: "errors.sessionExists",
+};
 
 export default function RegisterPage() {
   const { t } = useTranslation();
   const { isLoaded, signUp, setActive } = useSignUp();
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -21,10 +30,23 @@ export default function RegisterPage() {
   });
 
   const [pendingVerification, setPendingVerification] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function getErrorMessage(err) {
+    const clerkError = err.errors?.[0];
+
+    if (!clerkError) {
+      return t("errors.generic");
+    }
+
+    const translationKey = clerkErrorTranslations[clerkError.code];
+
+    return translationKey ? t(translationKey) : clerkError.message;
   }
 
   async function handleRegister(e) {
@@ -32,8 +54,8 @@ export default function RegisterPage() {
     if (!isLoaded) return;
 
     try {
-      setError("");
       setLoading(true);
+      setError("");
 
       await signUp.create({
         firstName: form.firstName,
@@ -48,7 +70,7 @@ export default function RegisterPage() {
 
       setPendingVerification(true);
     } catch (err) {
-      setError(err.errors?.[0]?.message || "Registration failed");
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -59,6 +81,7 @@ export default function RegisterPage() {
     if (!isLoaded) return;
 
     try {
+      setLoading(true);
       setError("");
 
       const result = await signUp.attemptEmailAddressVerification({
@@ -70,13 +93,16 @@ export default function RegisterPage() {
         navigate("/");
       }
     } catch (err) {
-      setError(err.errors?.[0]?.message || "Verification failed");
+      setError(getErrorMessage(err));
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <>
       <Navbar />
+
       <main className="register-page">
         <section className="register-card">
           <img src={logo} alt="Reset logo" className="register-logo" />
@@ -105,6 +131,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 required
               />
+
               <label>{t("register.lastName")}</label>
               <input
                 name="lastName"
@@ -115,6 +142,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 required
               />
+
               <label>{t("register.email")}</label>
               <input
                 name="email"
@@ -148,15 +176,20 @@ export default function RegisterPage() {
           ) : (
             <form onSubmit={handleVerify} className="register-form">
               <label>{t("register.verificationCode")}</label>
+
               <input
                 name="code"
+                type="text"
                 placeholder={t("register.enterCode")}
                 value={form.code}
                 onChange={handleChange}
+                disabled={loading}
                 required
               />
 
-              <button type="submit">{t("register.verify")}</button>
+              <button type="submit" disabled={loading}>
+                {loading ? t("register.verifying") : t("register.verify")}
+              </button>
             </form>
           )}
 
@@ -165,7 +198,7 @@ export default function RegisterPage() {
           {!pendingVerification && (
             <p className="register-login">
               {t("register.login")}{" "}
-              <Link to="/login"> {t("register.loginLink")} </Link>
+              <Link to="/login">{t("register.loginLink")}</Link>
             </p>
           )}
         </section>
