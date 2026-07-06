@@ -35,10 +35,11 @@ export default function LoginPage() {
         identifier: form.email,
         password: form.password,
       });
+      console.log(result.status);
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        navigate("/");
+        navigate("/profile");
       }
     } catch (err) {
       setError(err.errors?.[0]?.message || "Login failed");
