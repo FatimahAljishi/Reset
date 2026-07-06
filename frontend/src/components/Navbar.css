@@ -94,6 +94,29 @@
   transform: translateX(0);
 }
 
+html[dir="rtl"] .mobile-menu {
+  right: auto;
+  left: 0;
+}
+
+html[dir="rtl"] .mobile-menu:not(.open) {
+  transform: translateX(-100%);
+}
+
+html[dir="rtl"] .mobile-menu.open {
+  transform: translateX(0);
+}
+
+html[dir="rtl"] .mobile-nav-art {
+  right: auto;
+  left: 0;
+  transform: scaleX(-1);
+}
+
+html.changing-dir .mobile-menu {
+  transition: none;
+}
+
 .close-menu {
   align-self: flex-end;
   background: none;

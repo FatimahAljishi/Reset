@@ -3,8 +3,16 @@ import { useTranslation } from "react-i18next";
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
-  function changeLanguage(language) {
-    i18n.changeLanguage(language);
+  function changeLanguage(lang) {
+    document.documentElement.classList.add("changing-dir");
+
+    i18n.changeLanguage(lang).then(() => {
+      document.documentElement.dir = i18n.dir(lang);
+
+      requestAnimationFrame(() => {
+        document.documentElement.classList.remove("changing-dir");
+      });
+    });
   }
 
   return (

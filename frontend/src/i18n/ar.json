@@ -16,7 +16,9 @@
     "classes": "الحصص الجماعية",
     "about": "من أنا",
     "book": "احجزي جلسة",
-    "register": "التسجيل"
+    "register": "التسجيل",
+    "profile": "الملف الشخصي",
+    "login": "تسجيل الدخول"
   },
   "register": {
     "title": "إنشاء حساب",
@@ -32,6 +34,26 @@
     "verify": "تحقق",
     "enterCode": "أدخلي الرمز",
     "loadingMessage": "جاري إنشاء الحساب...",
-    "passwordPlaceholder": "أنشئي كلمة مرور"
+    "passwordPlaceholder": "أنشئي كلمة مرور",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "firstNamePlaceholder": "أدخلي اسمك الأول",
+    "lastNamePlaceholder": "أدخلي اسم عائلتك"
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "subtitle": "مرحبًا بعودتك! يرجى تسجيل الدخول إلى حسابك.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "loginButton": "تسجيل الدخول",
+    "register": "ليس لديكِ حساب؟",
+    "registerLink": "سجلي الآن",
+    "passwordPlaceholder": "أدخلي كلمة المرور",
+    "loadingMessage": "جاري تسجيل الدخول..."
+  },
+  "profile": {
+    "welcome": "مرحبًا",
+    "manageAccount": "إدارة الحساب",
+    "signOut": "تسجيل الخروج"
   }
 }

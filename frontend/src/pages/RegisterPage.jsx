@@ -13,6 +13,8 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     code: "",
@@ -34,6 +36,8 @@ export default function RegisterPage() {
       setLoading(true);
 
       await signUp.create({
+        firstName: form.firstName,
+        lastName: form.lastName,
         emailAddress: form.email,
         password: form.password,
       });
@@ -91,6 +95,26 @@ export default function RegisterPage() {
 
           {!pendingVerification ? (
             <form onSubmit={handleRegister} className="register-form">
+              <label>{t("register.firstName")}</label>
+              <input
+                name="firstName"
+                type="text"
+                placeholder={t("register.firstNamePlaceholder")}
+                value={form.firstName}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
+              <label>{t("register.lastName")}</label>
+              <input
+                name="lastName"
+                type="text"
+                placeholder={t("register.lastNamePlaceholder")}
+                value={form.lastName}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
               <label>{t("register.email")}</label>
               <input
                 name="email"
@@ -112,6 +136,8 @@ export default function RegisterPage() {
                 disabled={loading}
                 required
               />
+
+              <div id="clerk-captcha" />
 
               <button type="submit" disabled={loading}>
                 {loading
@@ -139,7 +165,7 @@ export default function RegisterPage() {
           {!pendingVerification && (
             <p className="register-login">
               {t("register.login")}{" "}
-              <Link to="/"> {t("register.loginLink")} </Link>
+              <Link to="/login"> {t("register.loginLink")} </Link>
             </p>
           )}
         </section>

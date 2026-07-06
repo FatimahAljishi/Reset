@@ -16,7 +16,9 @@
     "classes": "Classes",
     "about": "About",
     "book": "Book a Session",
-    "register": "Register"
+    "register": "Register",
+    "profile": "Profile",
+    "login": "Log in"
   },
 
   "register": {
@@ -33,6 +35,26 @@
     "verify": "Verify",
     "enterCode": "Enter code",
     "loadingMessage": "Creating account...",
-    "passwordPlaceholder": "Create a password"
+    "passwordPlaceholder": "Create a password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNamePlaceholder": "Enter your last name"
+  },
+  "login": {
+    "title": "Log In",
+    "subtitle": "Welcome back! Please log in to your account.",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Log In",
+    "register": "Don't have an account?",
+    "registerLink": "Register",
+    "passwordPlaceholder": "Enter your password",
+    "loadingMessage": "Logging in..."
+  },
+  "profile": {
+    "welcome": "Welcome",
+    "manageAccount": "Manage Account",
+    "signOut": "Sign Out"
   }
 }

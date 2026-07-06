@@ -8,7 +8,9 @@ import { GoHome } from "react-icons/go";
 import navArt from "../assets/hero-art.png";
 import { IoMdClose } from "react-icons/io";
 import { HiOutlineUser } from "react-icons/hi";
-import { HiUserPlus } from "react-icons/hi2";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -46,26 +48,39 @@ export default function Navbar() {
           <IoMdClose />
         </button>
         <div className="mobile-links">
-          <a href="/" onClick={() => setMenuOpen(false)}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>
             <GoHome className="mobile-link-icon" />
             {t("navbar.home")}
-          </a>
-          <a href="/" onClick={() => setMenuOpen(false)}>
+          </Link>
+          <Link to="/about" onClick={() => setMenuOpen(false)}>
             <HiOutlineUser className="mobile-link-icon" />
             {t("navbar.about")}
-          </a>
-          <a href="/register" onClick={() => setMenuOpen(false)}>
-            <HiUserPlus className="mobile-link-icon" />
-            {t("navbar.register")}
-          </a>
+          </Link>
+          <SignedOut>
+            <Link to="/login" onClick={() => setMenuOpen(false)}>
+              <FaRegCircleUser className="mobile-link-icon" />
+              {t("navbar.login")}
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <Link to="/profile" onClick={() => setMenuOpen(false)}>
+              <FaRegCircleUser className="mobile-link-icon" />
+              {t("navbar.profile")}
+            </Link>
+          </SignedIn>
         </div>
         <img src={navArt} alt="" className="mobile-nav-art" />
       </div>
 
       <nav className="desktop-nav">
-        <a href="/">{t("navbar.home")}</a>
-        <a href="/">{t("navbar.about")}</a>
-        <a href="/register">{t("navbar.register")}</a>
+        <Link to="/">{t("navbar.home")}</Link>
+        <Link to="/about">{t("navbar.about")}</Link>
+        <SignedOut>
+          <Link to="/login">{t("navbar.login")}</Link>
+        </SignedOut>
+        <SignedIn>
+          <Link to="/profile">{t("navbar.profile")}</Link>
+        </SignedIn>
 
         <button>{t("navbar.book")}</button>
       </nav>
