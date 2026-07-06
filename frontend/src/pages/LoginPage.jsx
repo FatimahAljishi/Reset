@@ -39,7 +39,9 @@ export default function LoginPage() {
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        navigate("/profile");
+        navigate("/");
+      } else {
+        setError(`Login needs another step: ${result.status}`);
       }
     } catch (err) {
       setError(err.errors?.[0]?.message || "Login failed");
