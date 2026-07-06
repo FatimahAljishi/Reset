@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 
 const clerkKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
+console.log("Clerk key:", clerkKey);
+
 export default function ClerkWrapper({ children }) {
   const { i18n } = useTranslation();
 
