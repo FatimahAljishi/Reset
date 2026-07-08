@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.61.8",
     "@clerk/localizations": "^4.12.1",
+    "fitty": "^2.4.2",
     "i18next": "^26.3.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

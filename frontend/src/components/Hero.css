@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   min-height: calc(100vh - 88px);
-  padding: 42px 28px 32px;
+  padding: 100px 28px 32px;
   overflow: hidden;
 
   background: var(--background-color);
@@ -10,39 +10,64 @@
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 330px;
+  max-width: 60%;
 }
 
 .hero h1 {
   margin: 0;
   color: var(--primary-color);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(3rem, 15vw, 4.4rem);
-  line-height: 0.95;
+  font-size: clamp(1rem, 6.8vw, 5.5rem);
+  line-height: 1.3;
 }
 
-.hero h1 span {
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.hero-divider span {
+  flex: 1;
+  height: 1px;
+  background: #d8d1bc;
+}
+
+.hero-leaf {
+  width: 24px;
+  height: 24px;
+  color: #d8d1bc;
+}
+
+.hero-line {
+  display: block;
+  color: var(--primary-color);
+}
+
+.hero-line.accent {
   color: var(--secondary-color);
 }
 
 .hero p {
   margin: 28px 0 0;
-  max-width: 330px;
+  max-width: 80%;
   color: var(--text-color);
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.6;
   font-weight: 500;
 }
 
 .hero-buttons {
-  margin-top: 100px;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .hero-buttons button {
-  width: 100%;
+  width: 80%;
   min-height: 54px;
   border-radius: 16px;
   font-size: 1rem;
@@ -71,11 +96,29 @@
   max-width: none;
   z-index: 1;
   pointer-events: none;
+  opacity: 0.5;
+}
+
+.hero-portrait {
+  position: absolute;
+  right: -50px;
+  bottom: 0px;
+  width: 60%;
+  height: 90%;
+  max-width: none;
+  z-index: 2;
+  pointer-events: none;
 }
 
 html[dir="rtl"] .hero-art {
   right: auto;
   left: 0;
+  transform: scaleX(-1);
+}
+
+html[dir="rtl"] .hero-portrait {
+  right: auto;
+  left: -50px;
   transform: scaleX(-1);
 }
 
@@ -86,11 +129,11 @@ html[dir="rtl"] .hero-art {
   }
 
   .hero-content {
-    max-width: 520px;
+    max-width: 50%;
   }
 
   .hero h1 {
-    font-size: 6rem;
+    font-size: 4rem;
   }
 
   .hero p {
@@ -107,5 +150,19 @@ html[dir="rtl"] .hero-art {
     right: 0;
     bottom: 0;
     width: 100%;
+    height: 100%;
+  }
+
+  .hero-portrait {
+    right: 25%;
+    bottom: 0;
+    width: 20%;
+    height: 80%;
+  }
+
+  html[dir="rtl"] .hero-portrait {
+    right: auto;
+    left: 25%;
+    transform: scaleX(-1);
   }
 }

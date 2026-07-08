@@ -1,12 +1,14 @@
 {
   "hero": {
-    "title1": "Move.",
-    "title2": "Train.",
-    "title3": "Balance.",
-    "title4": "Reset.",
-    "description": "Personal training and ready workout plans designed for you.",
-    "explore": "Explore Plans",
-    "book": "Book a Session"
+    "mainHeading": [
+      { "text": "Your journey", "accent": false },
+      { "text": "doesn't need", "accent": false },
+      { "text": "a perfect start.", "accent": false },
+      { "text": "It only needs", "accent": true },
+      { "text": "a Reset.", "accent": true }
+    ],
+    "subHeading": "Helping women build a healthier lifestyle through movement, wellness and community.",
+    "start": "Start Your Reset"
   },
 
   "navbar": {
