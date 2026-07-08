@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  min-height: calc(100vh - 88px);
+  min-height: calc(100vh - 91.36px);
   padding: 100px 28px 32px;
   overflow: hidden;
 
@@ -137,13 +137,11 @@ html[dir="rtl"] .hero-portrait {
   }
 
   .hero p {
-    max-width: 520px;
     font-size: 1.15rem;
   }
 
   .hero-buttons {
     flex-direction: row;
-    max-width: 430px;
   }
 
   .hero-art {
