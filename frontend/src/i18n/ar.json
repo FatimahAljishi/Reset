@@ -1,8 +1,8 @@
 {
   "hero": {
     "mainHeading": [
-      { "text": "رحلتكِ لا تحتاج إلى", "accent": false },
-      { "text": "بداية مثالية.", "accent": false },
+      { "text": "رحلتكِ لا تحتاج", "accent": false },
+      { "text": "إلى بداية مثالية.", "accent": false },
       { "text": "كل ما تحتاجينه", "accent": true },
       { "text": "هو Reset.", "accent": true }
     ],
