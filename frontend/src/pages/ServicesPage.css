@@ -45,6 +45,7 @@
   margin-top: 1rem;
   z-index: 1;
   pointer-events: none;
+  display: block;
 }
 
 .services-cards {
