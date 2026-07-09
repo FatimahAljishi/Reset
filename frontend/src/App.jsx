@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import AboutPage from "./pages/AboutPage";
 import ProfileSettingsPage from "./pages/ProfileSettingsPage";
+import ServicesPage from "./pages/ServicesPage";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/profile/settings" element={<ProfileSettingsPage />} />
+        <Route path="/services" element={<ServicesPage />} />
       </Routes>
     </BrowserRouter>
   );

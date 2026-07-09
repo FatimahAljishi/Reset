@@ -66,20 +66,23 @@
   gap: 16px;
 }
 
-.hero-buttons button {
+.primary-btn {
+  border: none;
+  background: var(--primary-color);
+  color: var(--light-text-color);
+  box-shadow: 0 8px 18px rgba(49, 89, 45, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  cursor: pointer;
   width: 80%;
   min-height: 54px;
   border-radius: 16px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-}
-
-.primary-btn {
-  border: none;
-  background: var(--primary-color);
-  color: var(--light-text-color);
-  box-shadow: 0 8px 18px rgba(49, 89, 45, 0.25);
 }
 
 .secondary-btn {

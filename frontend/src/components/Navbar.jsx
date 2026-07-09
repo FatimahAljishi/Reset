@@ -11,6 +11,7 @@ import { HiOutlineUser } from "react-icons/hi";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import { CiDumbbell } from "react-icons/ci";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -55,6 +56,10 @@ export default function Navbar() {
           <Link to="/about" onClick={() => setMenuOpen(false)}>
             <HiOutlineUser className="mobile-link-icon" />
             {t("navbar.about")}
+          </Link>
+          <Link to="/services" onClick={() => setMenuOpen(false)}>
+            <CiDumbbell className="mobile-link-icon" />
+            {t("navbar.services")}
           </Link>
           <SignedOut>
             <Link to="/login" onClick={() => setMenuOpen(false)}>

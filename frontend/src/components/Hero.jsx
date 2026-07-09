@@ -3,6 +3,7 @@ import heroArt from "../assets/hero-art.png";
 import { useTranslation } from "react-i18next";
 import heroPortrait from "../assets/portrait.png";
 import { PiPlantLight } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -30,7 +31,9 @@ export default function Hero() {
         <p>{t("hero.subHeading")}</p>
 
         <div className="hero-buttons">
-          <button className="primary-btn">{t("hero.start")}</button>
+          <Link to="/services" className="primary-btn">
+            {t("hero.start")}
+          </Link>
         </div>
       </div>
 

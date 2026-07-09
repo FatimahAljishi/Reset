@@ -20,7 +20,8 @@
     "book": "Book a Session",
     "register": "Register",
     "profile": "Profile",
-    "login": "Log in"
+    "login": "Log in",
+    "services": "Services"
   },
 
   "register": {
@@ -79,5 +80,26 @@
     "invalidEmail": "Please enter a valid email address.",
     "loginNeedsAnotherStep": "Login needs another step.",
     "verificationNeedsAnotherStep": "Verification needs another step."
+  },
+  "services": {
+    "title": "Choose Your Reset",
+    "subtitle": "Find the coaching style that best fits your goals and lifestyle.",
+    "service1": {
+      "title": "Train with Me",
+      "description": "One-to-one coaching designed around your goals, lifestyle and needs."
+    },
+    "service2": {
+      "title": "Train Together ",
+      "description": "Small groups where motivation, accountability and community come together."
+    },
+    "service3": {
+      "title": "Reset Online",
+      "description": "Train from anywhere with personalized programming and continuous support. "
+    },
+    "footer": {
+      "title": "Why Reset?",
+      "subtitle1": "Because your journey should feel sustainable, not overwhelming.",
+      "subtitle2": "We don't help women chase perfection, we help them build a lifestyle they enjoy living."
+    }
   }
 }
