@@ -101,5 +101,27 @@
       "subtitle1": "Because your journey should feel sustainable, not overwhelming.",
       "subtitle2": "We don't help women chase perfection, we help them build a lifestyle they enjoy living."
     }
+  },
+  "about": {
+    "meetZainab": {
+      "title": "Meet Zainab",
+      "description1": "Hi, I'm ",
+      "description2": "Zainab. ",
+      "description3": "A registered nurse, certified personal trainer, and passionate advocate for sustainable wellness.",
+      "description4": "Throughout my journey in nursing and fitness, I realized that most women don't need another strict workout plan. They need a healthier relationship with movement.",
+      "description5": "That's why Reset was created."
+    },
+    "whyReset": {
+      "title": "Why Reset?",
+      "description1": "Because life gets busy.",
+      "description2": "We lose ourselves.",
+      "description3": "We forget to take care of ourselves.",
+      "description4": "Reset is simply an invitation to come back to yourself."
+    },
+    "aboutReset": {
+      "title": "About Reset",
+      "description1": "Reset by Zainab is more than a fitness platform. It is a wellness space that helps women build a healthier relationship with movement through sustainable habits, mindful coaching, and a supportive community.",
+      "description2": "We believe health is not a number on the scale. It is a lifestyle built one step at a time."
+    }
   }
 }

@@ -30,7 +30,9 @@ export default function Navbar() {
   }, []);
   return (
     <header className="navbar">
-      <img src={logo} alt="Reset" className="logo" />
+      <Link to="/">
+        <img src={logo} alt="Reset" className="logo" />
+      </Link>
 
       <div className="navbar-right">
         <LanguageSwitcher />
@@ -80,6 +82,7 @@ export default function Navbar() {
       <nav className="desktop-nav">
         <Link to="/">{t("navbar.home")}</Link>
         <Link to="/about">{t("navbar.about")}</Link>
+        <Link to="/services">{t("navbar.services")}</Link>
         <SignedOut>
           <Link to="/login">{t("navbar.login")}</Link>
         </SignedOut>
