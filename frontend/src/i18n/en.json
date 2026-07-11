@@ -22,7 +22,8 @@
     "profile": "Profile",
     "login": "Log in",
     "services": "Services",
-    "contact": "Contact"
+    "contact": "Contact",
+    "community": "Community"
   },
 
   "register": {
@@ -177,5 +178,35 @@
     "messagePlaceholder": "Tell us how we can help you...",
     "submit": "Book your Consultation",
     "submitting": "Submitting..."
+  },
+  "community": {
+    "title": "Community",
+    "description1": "At Reset, you're not just joining a training program. You're joining a community that celebrates progress, supports each other and grows together.",
+    "description2": "Reset is more than workouts. It is:",
+    "community1": "Community Meetups",
+    "community2": "Coffee Gatherings",
+    "community3": "Workshops",
+    "community4": "Walking events",
+    "community5": "Fitness Classes",
+    "community6": "Women's Wellness Events",
+    "community7": "A place where women support women.",
+    "testimonials": {
+      "title": "Testimonials",
+      "testimonial1": "شكراً على كل شي عملتيه اليوم بحب وحماس\n\nوشكراً جدددددداً على السيشن الجميللل حقيقي الكل محتاجه 😔\n\nوكلامك كان طبطبه على القلوب التعبانه 🥺",
+      "testimonial2": "كونش مرة كنت مبسوطة اليوم وغيرت جو شكراً على كلامك الحلو وطاقتك الإيجابية الله يقويكي ويسخرلك كل حلو يشبهك ❤️",
+      "testimonial3": "الله يسعدك مره انبسطت اليوم وعشت تجربة جديدة\n\nطلعت وانا كلي طاقة حلوة\n\nبإذن الله متقابلين على خير\n\nمره شكراً 💐",
+      "testimonial4": "شكراً من القلب الكلاس اليوم وكل مرة أكون فيها معاكي أخرج بروح متجددة وطاقة جميلة\n\nأشوفك على خير يوم السبت بإذن الله ❤️🥰",
+      "testimonial5": "انتي بطله وقادره\n\nوالهي مو مجامله\n\nيمكن لأول مرة أكون تحت عنايتك خليكي من النادي\n\nبس منحِد حنونه\n\nتعرفي لما تلقي أحد حنون ويخفف عليك\n\nإنسانة والانسانيون قليل\n\nدايماً اتذكري لا يكلف الله نفساً إلا وسعها\n\nودا وسعك وتكوني قادره بإذن الله\n\nفيك تعاطف",
+      "testimonial6": "ترى انا مرا مبسوطة، حطي في بالك حنكمل مع بعض بعد رمضان وبعد بعد رمضان 😌\n\nلأن انا مبسوطة ومرتاحه وهذا الي يحقق الاستدامه 🥰😌",
+      "testimonial7": "اليوم بديت\n\nكنت محتاره كيف أقسم يومي وأدخل الرياضه\n\nأفضل وقت لقيته الصباح قبل الدوام\n\nوبديت اليوم\n\nالحمدلله بدايه حلوه وسهله الملف مررره واضح بارك الله والله والفيديوهات ساعدتني كثير\n\nتقريباً أخذ مني نص ساعه مدري صح ولا سويت شي غلط واستعجلت 🌞😂",
+      "testimonial8": "بإذن الله أكون معاكي يا قلبي\n\nانبسطت مره واسترجعت طاقتي وجاني شعور جداً جميل بعد الكلاس، الله يمدك بالصحه والعافيه ❤️❤️",
+      "testimonial9": "وانا والله مره مره متحمسه ومبسوطه مره\n\nالحمد لله 😍😍😍❤️❤️ بإذن الله\n\nمعاليكي حقيقي أحس إني متحمسه أكثر\n\nمن أول الحماس بيطلع من خشمي 💃💃",
+      "testimonial10": "يارب حقيقي متحمسه أصلاً أول مرة\n\nاستمر على رياضه كذا لمدة شهرين حتى\n\nمره ملاحظه في جسمي ووزني كمان 😍😍😍😍😍\n\nأصلاً قولتلهم إذا زينب\n\nمحدا تدربني ماراح أكمل ❤️❤️❤️❤️🥺🥺\n\nوالله أحلى كوتش في الدنيا"
+    },
+    "footer": {
+      "title": "Ready to start your Reset?",
+      "description": "Your journey to a healthier, happier you starts here.",
+      "start": "Start Your journey"
+    }
   }
 }

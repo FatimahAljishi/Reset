@@ -40,3 +40,11 @@ select {
   --light-text-color: #fffaf0;
   --secondary-background-color: #ffeea9;
 }
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}

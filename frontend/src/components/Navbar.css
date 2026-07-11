@@ -5,6 +5,9 @@
   align-items: center;
   padding: 5px 24px;
   background: rgba(255, 250, 240, 0.9);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -63,6 +66,13 @@
   bottom: 0;
   pointer-events: none;
   align-self: center;
+  z-index: 0;
+}
+
+.close-menu,
+.mobile-links {
+  position: relative;
+  z-index: 1;
 }
 
 .menu-overlay {

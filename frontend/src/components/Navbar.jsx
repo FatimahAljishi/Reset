@@ -9,6 +9,7 @@ import { IoMdClose } from "react-icons/io";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import { LuHouse, LuDumbbell, LuLeaf, LuUser, LuMail } from "react-icons/lu";
+import { HiOutlineUserGroup } from "react-icons/hi2";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -60,6 +61,10 @@ export default function Navbar() {
             <LuDumbbell className="mobile-link-icon" />
             {t("navbar.services")}
           </Link>
+          <Link to="/community" onClick={() => setMenuOpen(false)}>
+            <HiOutlineUserGroup className="mobile-link-icon" />
+            {t("navbar.community")}
+          </Link>
           <Link to="/contact" onClick={() => setMenuOpen(false)}>
             <LuMail className="mobile-link-icon" />
             {t("navbar.contact")}
@@ -84,14 +89,13 @@ export default function Navbar() {
         <Link to="/">{t("navbar.home")}</Link>
         <Link to="/about">{t("navbar.about")}</Link>
         <Link to="/services">{t("navbar.services")}</Link>
+        <Link to="/community">{t("navbar.community")}</Link>
         <SignedOut>
           <Link to="/login">{t("navbar.login")}</Link>
         </SignedOut>
         <SignedIn>
           <Link to="/profile">{t("navbar.profile")}</Link>
         </SignedIn>
-
-        <button>{t("navbar.book")}</button>
       </nav>
     </header>
   );

@@ -1,0 +1,250 @@
+.community-page {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  min-height: calc(100vh - 91.36px);
+  background: var(--background-color);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.community {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.community-page h1 {
+  color: var(--primary-color);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 6.8vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.community-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 60%;
+}
+
+.community-divider span {
+  flex: 1;
+  height: 1px;
+  background: #d8d1bc;
+}
+
+.community-description {
+  margin-top: 1rem;
+}
+
+.community-subdescription {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  line-height: 1.5;
+}
+
+.community-description {
+  color: black;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  line-height: 1.5;
+  margin-bottom: 0.2rem;
+}
+
+.community-cards {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding: 10px 0 10px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+.community-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.community-card {
+  background: rgba(255, 250, 240, 0.75);
+  border-radius: 10px;
+  padding: 0.1rem;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0 0 120px;
+  min-height: 110px;
+  scroll-snap-align: start;
+}
+
+.community-card p {
+  line-height: 1;
+  color: var(--text-color);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  min-height: 2.4em;
+}
+
+.community-icon {
+  width: 40px;
+  height: 40px;
+  background: #465e2c2d;
+  border-radius: 50%;
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.community-text {
+  margin-top: 0.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  line-height: 1.5;
+}
+
+.testimonials {
+  width: 100%;
+  margin-top: 2rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.testimonials-slider {
+  display: flex;
+  gap: 16px;
+
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.testimonials-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonials h2,
+.community-footer h2 {
+  color: var(--primary-color);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 5vw, 2rem);
+  margin-bottom: 1rem;
+  margin-top: 0.2rem;
+}
+
+.testimonial-card {
+  position: relative;
+
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+
+  box-sizing: border-box;
+  padding: 2rem 2rem 1.5rem;
+
+  background: #465e2c2d;
+  border-radius: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+  text-align: right;
+}
+
+.testimonial-quote {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+
+  font-family: Georgia, serif;
+  font-size: 4rem;
+  line-height: 1;
+
+  color: rgba(70, 94, 44, 0.18);
+  pointer-events: none;
+}
+
+.testimonial-text {
+  position: relative;
+  z-index: 1;
+
+  margin: 1.5rem 0 0.75rem;
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  margin-bottom: 0.5rem;
+}
+
+.testimonial-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ded8c6;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.testimonial-dots span.active {
+  background: var(--secondary-color);
+  transform: scale(1.25);
+}
+
+.community-footer {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.community-btn {
+  border: none;
+  background: var(--primary-color);
+  color: var(--light-text-color);
+  box-shadow: 0 8px 18px rgba(49, 89, 45, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  width: 80%;
+  min-height: 54px;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  max-width: 300px;
+}
+
+@media (min-width: 870px) {
+  .community-cards {
+    align-items: center;
+    justify-content: center;
+  }
+}
