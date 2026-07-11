@@ -4,14 +4,11 @@ import { HiOutlineBars3 } from "react-icons/hi2";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
-import { GoHome } from "react-icons/go";
 import navArt from "../assets/hero-art.png";
 import { IoMdClose } from "react-icons/io";
-import { HiOutlineUser } from "react-icons/hi";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
-import { CiDumbbell } from "react-icons/ci";
+import { LuHouse, LuDumbbell, LuLeaf, LuUser, LuMail } from "react-icons/lu";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -52,26 +49,26 @@ export default function Navbar() {
         </button>
         <div className="mobile-links">
           <Link to="/" onClick={() => setMenuOpen(false)}>
-            <GoHome className="mobile-link-icon" />
+            <LuHouse className="mobile-link-icon" />
             {t("navbar.home")}
           </Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>
-            <HiOutlineUser className="mobile-link-icon" />
+            <LuLeaf className="mobile-link-icon" />
             {t("navbar.about")}
           </Link>
           <Link to="/services" onClick={() => setMenuOpen(false)}>
-            <CiDumbbell className="mobile-link-icon" />
+            <LuDumbbell className="mobile-link-icon" />
             {t("navbar.services")}
           </Link>
           <SignedOut>
             <Link to="/login" onClick={() => setMenuOpen(false)}>
-              <FaRegCircleUser className="mobile-link-icon" />
+              <LuUser className="mobile-link-icon" />
               {t("navbar.login")}
             </Link>
           </SignedOut>
           <SignedIn>
             <Link to="/profile" onClick={() => setMenuOpen(false)}>
-              <FaRegCircleUser className="mobile-link-icon" />
+              <LuUser className="mobile-link-icon" />
               {t("navbar.profile")}
             </Link>
           </SignedIn>

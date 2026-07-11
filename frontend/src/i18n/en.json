@@ -16,7 +16,7 @@
     "plans": "Plans",
     "training": "Training",
     "classes": "Classes",
-    "about": "About",
+    "about": "About Reset",
     "book": "Book a Session",
     "register": "Register",
     "profile": "Profile",
@@ -122,6 +122,38 @@
       "title": "About Reset",
       "description1": "Reset by Zainab is more than a fitness platform. It is a wellness space that helps women build a healthier relationship with movement through sustainable habits, mindful coaching, and a supportive community.",
       "description2": "We believe health is not a number on the scale. It is a lifestyle built one step at a time."
+    },
+    "philosophy": {
+      "title": "Our Philosophy",
+      "disbelief": "We don't believe in:",
+      "disbelief1": "Quick fixes",
+      "disbelief2": "Extreme diets",
+      "disbelief3": "Punishment workouts",
+      "disbelief4": "Perfection",
+      "belief": "We believe in:",
+      "belief1": "Consistency",
+      "belief2": "Movement that fits your life",
+      "belief3": "Strength over appearance",
+      "belief4": "Self-care",
+      "belief5": "Long-term health",
+      "belief6": "Community"
+    },
+    "mission": {
+      "title": "Mission",
+      "description": "To empower women to build sustainable healthy habits through movement, education and community."
+    },
+    "vision": {
+      "title": "Vision",
+      "description": "To create a community where women grow stronger physically and mentally while enjoying the journey."
+    },
+    "values": {
+      "title": "Values",
+      "value1": "Kindness",
+      "value2": "Science",
+      "value3": "Movement",
+      "value4": "Balance",
+      "value5": "Community",
+      "value6": "Growth"
     }
   }
 }

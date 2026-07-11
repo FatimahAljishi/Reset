@@ -43,7 +43,9 @@ html[dir="rtl"] .bg-oval img {
 }
 
 .meet-zainab-text h1,
-.about-reset h1 {
+.about-reset h1,
+.mission-vision h1,
+.values h1 {
   color: var(--primary-color);
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1rem, 5vw, 2rem);
@@ -84,7 +86,9 @@ html[dir="rtl"] .bg-oval img {
   position: relative;
 }
 
-.why-reset h2 {
+.why-reset h2,
+.beliefs h2,
+.disbeliefs h2 {
   color: var(--primary-color);
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1rem, 4vw, 2rem);
@@ -134,4 +138,144 @@ html[dir="rtl"] .bg-oval img {
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
+}
+
+.philosophy h1 {
+  color: var(--primary-color);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 5vw, 2rem);
+}
+
+.philosophy {
+  border: 1px solid #d8d1bc;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 10px;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.philosophy legend {
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.disbeliefs,
+.beliefs {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+
+.disbeliefs {
+  background: #d8ae432d;
+}
+
+.beliefs {
+  background: #465e2c2d;
+}
+
+.disbeliefs ul,
+.beliefs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.disbeliefs li,
+.beliefs li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.disbelief-icon,
+.belief-icon {
+  margin-top: 0.2em;
+  flex-shrink: 0;
+}
+
+.disbelief-icon {
+  color: var(--secondary-color);
+}
+
+.belief-icon {
+  color: var(--primary-color);
+}
+
+.disbeliefs,
+.beliefs {
+  color: black;
+  font-size: clamp(0.85rem, 2vw, 1.5rem);
+  line-height: 1.4;
+}
+
+.mission-vision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.mission {
+  border-right: 1px solid #d8d1bc;
+}
+
+html[dir="rtl"] .mission {
+  border-left: 1px solid #d8d1bc;
+  border-right: none;
+}
+
+.mission,
+.vision,
+.values {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.mission-vision p,
+.values p {
+  color: black;
+  font-size: clamp(0.85rem, 2vw, 1.5rem);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.values {
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.value-icon {
+  width: 40px;
+  height: 40px;
+  border: var(--primary-color) 1px solid;
+  border-radius: 50%;
+  color: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.values-top,
+.values-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
 }
