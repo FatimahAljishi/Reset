@@ -130,12 +130,13 @@ html.changing-dir .mobile-menu {
   text-decoration: none;
   color: var(--primary-color);
   font-weight: 600;
+  font-size: 0.5rem;
   padding: 14px 0;
   width: 100%;
 }
 
 .mobile-link-icon {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .mobile-menu a:active {
@@ -147,7 +148,7 @@ html.changing-dir .mobile-menu {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-bottom: 1px solid #eadfbd;
 }
 

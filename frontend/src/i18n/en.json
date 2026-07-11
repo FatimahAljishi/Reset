@@ -166,6 +166,7 @@
     "name": "Name",
     "namePlaceholder": "Enter your full name",
     "phone": "Phone Number",
+    "phoneTitle": "Please enter a valid Saudi mobile number.",
     "email": "Email",
     "emailPlaceholder": "Enter your email address",
     "city": "City",

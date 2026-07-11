@@ -39,7 +39,7 @@ export default function ContactPage() {
               inputMode="numeric"
               placeholder="05XXXXXXXX"
               pattern="^(\+9665|05)\d{8}$"
-              title="Please enter a valid Saudi mobile number."
+              title={t("contact.phoneTitle")}
               required
             />
           </div>
