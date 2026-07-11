@@ -37,10 +37,6 @@
   background: #d8d1bc;
 }
 
-.community-description {
-  margin-top: 1rem;
-}
-
 .community-subdescription {
   margin-top: 0.5rem;
   font-weight: bold;
@@ -54,6 +50,7 @@
   font-size: clamp(0.85rem, 2vw, 1rem);
   line-height: 1.5;
   margin-bottom: 0.2rem;
+  margin-top: 1rem;
 }
 
 .community-cards {
@@ -236,10 +233,17 @@
   width: 80%;
   min-height: 54px;
   border-radius: 16px;
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 2vw, 1rem);
   font-weight: 700;
   cursor: pointer;
-  max-width: 300px;
+  max-width: 200px;
+}
+
+.community-footer p,
+.testimonial-text {
+  color: black;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  line-height: 1.5;
 }
 
 @media (min-width: 870px) {
