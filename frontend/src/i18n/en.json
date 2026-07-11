@@ -21,7 +21,8 @@
     "register": "Register",
     "profile": "Profile",
     "login": "Log in",
-    "services": "Services"
+    "services": "Services",
+    "contact": "Contact"
   },
 
   "register": {
@@ -155,5 +156,25 @@
       "value5": "Community",
       "value6": "Growth"
     }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Let's start your",
+    "subtitle2": "Reset",
+    "subtitle3": "Have a question or ready to begin?",
+    "subtitle4": "We'd love to hear from you.",
+    "name": "Name",
+    "namePlaceholder": "Enter your full name",
+    "phone": "Phone Number",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email address",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "goal": "Fitness Goal",
+    "goalPlaceholder": "What is your main fitness goal",
+    "message": "Message",
+    "messagePlaceholder": "Tell us how we can help you...",
+    "submit": "Book your Consultation",
+    "submitting": "Submitting..."
   }
 }

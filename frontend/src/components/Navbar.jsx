@@ -60,6 +60,10 @@ export default function Navbar() {
             <LuDumbbell className="mobile-link-icon" />
             {t("navbar.services")}
           </Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>
+            <LuMail className="mobile-link-icon" />
+            {t("navbar.contact")}
+          </Link>
           <SignedOut>
             <Link to="/login" onClick={() => setMenuOpen(false)}>
               <LuUser className="mobile-link-icon" />
