@@ -33,7 +33,7 @@ def contact(data: ContactForm):
     try:
         resend.Emails.send({
             "from": "Reset by Zainab <onboarding@resend.dev>",
-            "to": ["fatimahjishi@hotmail.com"],
+            "to": ["reset.by.zainab@gmail.com"],
             "reply_to": data.email,
             "subject": f"New Contact Form from {data.name}",
             "html": f"""
