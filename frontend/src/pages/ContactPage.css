@@ -108,10 +108,18 @@
   background: #384b23;
 }
 
-.contact-error {
-  margin-top: 16px;
+.contact-status {
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 1rem;
+}
+
+.contact-status.success {
+  color: var(--primary-color);
+}
+
+.contact-status.error {
   color: #b3261e;
-  font-size: 0.9rem;
 }
 
 .contact-field {

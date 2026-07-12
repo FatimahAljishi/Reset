@@ -2,9 +2,67 @@ import "./ContactPage.css";
 import Navbar from "../components/Navbar";
 import { useTranslation } from "react-i18next";
 import { PiPlantLight } from "react-icons/pi";
+import { useState } from "react";
 
 export default function ContactPage() {
   const { t } = useTranslation();
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    city: "",
+    goal: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState({
+    message: "",
+    type: "",
+  });
+  const [sending, setSending] = useState(false);
+
+  function handleChange(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    setSending(true);
+    setStatus({ message: "", type: "" });
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) throw new Error();
+
+      setStatus({
+        message: "Thank you! We'll get back to you soon.",
+        type: "success",
+      });
+
+      setForm({
+        name: "",
+        phone: "",
+        email: "",
+        city: "",
+        goal: "",
+        message: "",
+      });
+    } catch {
+      setStatus({ message: "Unable to send message.", type: "error" });
+    }
+
+    setSending(false);
+  }
   return (
     <>
       <Navbar />
@@ -21,11 +79,13 @@ export default function ContactPage() {
         <p>{t("contact.subtitle3")}</p>
         <p>{t("contact.subtitle4")}</p>
 
-        <form className="contact-form">
+        <form className="contact-form" onSubmit={handleSubmit}>
           <div className="contact-field">
             <label>{t("contact.name")}</label>
             <input
               name="name"
+              value={form.name}
+              onChange={handleChange}
               placeholder={t("contact.namePlaceholder")}
               required
             />
@@ -36,6 +96,8 @@ export default function ContactPage() {
             <input
               type="tel"
               name="phone"
+              value={form.phone}
+              onChange={handleChange}
               inputMode="numeric"
               placeholder="05XXXXXXXX"
               pattern="^(\+9665|05)\d{8}$"
@@ -49,6 +111,8 @@ export default function ContactPage() {
             <input
               type="email"
               name="email"
+              value={form.email}
+              onChange={handleChange}
               placeholder={t("contact.emailPlaceholder")}
               required
             />
@@ -58,6 +122,8 @@ export default function ContactPage() {
             <label>{t("contact.city")}</label>
             <input
               name="city"
+              value={form.city}
+              onChange={handleChange}
               placeholder={t("contact.cityPlaceholder")}
               required
             />
@@ -67,6 +133,8 @@ export default function ContactPage() {
             <label>{t("contact.goal")}</label>
             <textarea
               name="goal"
+              value={form.goal}
+              onChange={handleChange}
               placeholder={t("contact.goalPlaceholder")}
               required
             />
@@ -76,14 +144,21 @@ export default function ContactPage() {
             <label>{t("contact.message")}</label>
             <textarea
               name="message"
+              value={form.message}
+              onChange={handleChange}
               placeholder={t("contact.messagePlaceholder")}
               required
             />
           </div>
 
           <div className="contact-button">
-            <button type="submit">{t("contact.submit")}</button>
+            <button type="submit" disabled={sending}>
+              {sending ? t("contact.submitting") : t("contact.submit")}
+            </button>
           </div>
+          {status.message && (
+            <p className={`contact-status ${status.type}`}>{status.message}</p>
+          )}
         </form>
       </div>
     </>
