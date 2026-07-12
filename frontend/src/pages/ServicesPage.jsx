@@ -23,7 +23,7 @@ export default function ServicesPage() {
         </div>
         <p className="services-subtitle">{t("services.subtitle")}</p>
         <div className="services-cards">
-          <Link to="/" className="services-card">
+          <Link to="/services/personal" className="services-card">
             <div className="services-icon">
               <HiOutlineUser />
             </div>
@@ -35,7 +35,7 @@ export default function ServicesPage() {
               <HiOutlineArrowRight />
             </div>
           </Link>
-          <Link to="/" className="services-card">
+          <Link to="/services/group" className="services-card">
             <div className="services-icon">
               <HiOutlineUserGroup />
             </div>
@@ -47,7 +47,7 @@ export default function ServicesPage() {
               <HiOutlineArrowRight />
             </div>
           </Link>
-          <Link to="/" className="services-card">
+          <Link to="/services/online" className="services-card">
             <div className="services-icon">
               <LuLaptop />
             </div>

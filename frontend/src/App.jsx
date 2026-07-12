@@ -8,6 +8,7 @@ import ProfileSettingsPage from "./pages/ProfileSettingsPage";
 import ServicesPage from "./pages/ServicesPage";
 import ContactPage from "./pages/ContactPage";
 import CommunityPage from "./pages/CommunityPage";
+import ServiceDetailsPage from "./pages/ServiceDetailsPage";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/community" element={<CommunityPage />} />
+        <Route path="/services/:serviceId" element={<ServiceDetailsPage />} />
       </Routes>
     </BrowserRouter>
   );

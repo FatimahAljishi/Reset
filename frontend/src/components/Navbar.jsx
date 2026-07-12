@@ -90,6 +90,7 @@ export default function Navbar() {
         <Link to="/about">{t("navbar.about")}</Link>
         <Link to="/services">{t("navbar.services")}</Link>
         <Link to="/community">{t("navbar.community")}</Link>
+        <Link to="/contact">{t("navbar.contact")}</Link>
         <SignedOut>
           <Link to="/login">{t("navbar.login")}</Link>
         </SignedOut>

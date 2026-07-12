@@ -208,5 +208,45 @@
       "description": "Your journey to a healthier, happier you starts here.",
       "start": "Start Your journey"
     }
+  },
+  "serviceDetails": {
+    "personal": {
+      "title": "Personal Training",
+      "subtitle": "Personalized one-to-one coaching.",
+      "features": [
+        "Initial Assessment",
+        "Customized Training Program",
+        "Progress Tracking",
+        "Technique Correction",
+        "Ongoing Support"
+      ]
+    },
+
+    "group": {
+      "title": "Small Group Training",
+      "description1": "Limited-size classes designed to create a supportive and motivating environment.",
+      "description2": "Perfect for women who enjoy training together while still receiving individual attention."
+    },
+
+    "online": {
+      "title": "Online Coaching",
+      "subtitle": "Designed for busy women who want flexibility.",
+      "features": [
+        "Personalized Workout Plan",
+        "Exercise Video Library",
+        "Weekly Follow-up",
+        "Progress Adjustments",
+        "Direct Communication"
+      ],
+      "plans": {
+        "ready": "Ready-Made Plan",
+        "personalized": "Personalized Plan"
+      }
+    },
+    "includes": "Includes:",
+    "choosePlan": "Choose Your Plan",
+    "sessions": "Sessions",
+    "total": "Total",
+    "addToCart": "Add to Cart"
   }
 }
