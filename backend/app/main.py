@@ -14,7 +14,7 @@ resend.api_key = os.getenv("RESEND_API_KEY")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://reset-by-zainab.vercel.app/"],
+    allow_origins=["http://localhost:5173", "https://reset-by-zainab.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
