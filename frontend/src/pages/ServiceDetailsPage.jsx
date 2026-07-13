@@ -124,7 +124,11 @@ export default function ServiceDetailsPage() {
                     <>
                       <strong className="sessions">{plan.sessions}</strong>
                       <span className="plan-description">
-                        {t("serviceDetails.sessions", { count: plan.sessions })}
+                        {i18n.language === "ar"
+                          ? t("serviceDetails.sessions", {
+                              count: plan.sessions,
+                            })
+                          : t("serviceDetails.sessions")}
                       </span>
                     </>
                   ) : (

@@ -243,8 +243,8 @@
     },
     "includes": "تشمل:",
     "choosePlan": "اختاري باقتكِ",
-    "sessions_few": "{{count}} جلسات",
-    "sessions_many": "{{count}} جلسة",
+    "sessions_few": "جلسات",
+    "sessions_many": "جلسة",
     "total": "الإجمالي",
     "addToCart": "أضيفي إلى السلة"
   }
