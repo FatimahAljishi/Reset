@@ -10,8 +10,10 @@ import { FaCircleCheck } from "react-icons/fa6";
 import hills from "../assets/hills.png";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { useUser } from "@clerk/clerk-react";
+import { useCart } from "../context/CartContext";
 
 export default function ServiceDetailsPage() {
+  const { addToCart } = useCart();
   const { isSignedIn } = useUser();
   const { serviceId } = useParams();
   const navigate = useNavigate();
@@ -45,18 +47,19 @@ export default function ServiceDetailsPage() {
       return;
     }
 
-    const cartItem = {
-      serviceId: service.id,
-      planId: selectedPlan.id,
-      price: selectedPlan.price,
-      quantity: 1,
-    };
-
-    if (selectedPlan.sessions) {
-      cartItem.sessions = selectedPlan.sessions;
+    if (!selectedPlan) {
+      return;
     }
 
-    console.log(cartItem);
+    addToCart({
+      cartItemId: `${serviceId}-${selectedPlan.id}`,
+      serviceId,
+      planId: selectedPlan.id,
+      sessions: selectedPlan.sessions,
+      price: selectedPlan.price,
+    });
+
+    navigate("/cart");
   }
 
   return (
@@ -137,11 +140,9 @@ export default function ServiceDetailsPage() {
                     <>
                       <strong className="sessions">{plan.sessions}</strong>
                       <span className="plan-description">
-                        {i18n.language === "ar"
-                          ? t("serviceDetails.sessions", {
-                              count: plan.sessions,
-                            })
-                          : t("serviceDetails.sessions")}
+                        {t("serviceDetails.sessions", {
+                          count: plan.sessions,
+                        })}
                       </span>
                     </>
                   ) : (

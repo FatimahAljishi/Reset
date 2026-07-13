@@ -5,11 +5,14 @@ import App from "./App.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import "./i18n/i18n";
 import ClerkWrapper from "./ClerkWrapper";
+import { CartProvider } from "./context/CartContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ClerkWrapper>
-      <App />
+      <CartProvider>
+        <App />
+      </CartProvider>
     </ClerkWrapper>
   </StrictMode>,
 );

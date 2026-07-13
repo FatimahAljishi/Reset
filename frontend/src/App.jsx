@@ -9,6 +9,9 @@ import ServicesPage from "./pages/ServicesPage";
 import ContactPage from "./pages/ContactPage";
 import CommunityPage from "./pages/CommunityPage";
 import ServiceDetailsPage from "./pages/ServiceDetailsPage";
+import CartPage from "./pages/CartPage";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
   return (
@@ -24,6 +27,21 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/services/:serviceId" element={<ServiceDetailsPage />} />
+        <Route
+          path="/cart"
+          element={
+            <>
+              <SignedIn>
+                <CartPage />
+              </SignedIn>
+
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

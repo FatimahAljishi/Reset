@@ -245,8 +245,28 @@
     },
     "includes": "Includes:",
     "choosePlan": "Choose Your Plan",
-    "sessions": "Sessions",
+    "sessions_one": "Session",
+    "sessions_other": "Sessions",
     "total": "Total",
     "addToCart": "Add to Cart"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is taking a rest...",
+    "emptyMessage": "Give it a little push to start its Reset.",
+    "checkout": "Continue to Checkout",
+    "total": "Total",
+    "summary": "Order Summary",
+    "loading": "Loading Cart...",
+    "explore": "Explore Services"
+  },
+  "notFound": {
+    "label": "Error 404",
+    "title": "Looks like this page skipped its workout.",
+    "message": "It disappeared during warm-up, and we couldn't find it anywhere.",
+    "bubble": "I was only taking a little break…",
+    "help": "Let's get you back on track.",
+    "home": "Back to Home",
+    "back": "Go Back"
   }
 }

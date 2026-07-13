@@ -9,9 +9,11 @@ import { IoMdClose } from "react-icons/io";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import { LuHouse, LuDumbbell, LuLeaf, LuUser, LuMail } from "react-icons/lu";
-import { HiOutlineUserGroup } from "react-icons/hi2";
+import { HiOutlineUserGroup, HiOutlineShoppingBag } from "react-icons/hi2";
+import { useCart } from "../context/CartContext";
 
 export default function Navbar() {
+  const { cartCount } = useCart();
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
@@ -34,6 +36,20 @@ export default function Navbar() {
 
       <div className="navbar-right">
         <LanguageSwitcher />
+
+        <Link
+          to="/cart"
+          className="navbar-cart"
+          aria-label={`Cart with ${cartCount} items`}
+        >
+          <HiOutlineShoppingBag />
+
+          {cartCount > 0 && (
+            <span className="cart-badge">
+              {cartCount > 99 ? "99+" : cartCount}
+            </span>
+          )}
+        </Link>
 
         <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
           <HiOutlineBars3 />
