@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSignIn } from "@clerk/clerk-react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import logo from "../assets/reset-logo-transparent.png";
@@ -19,6 +19,9 @@ export default function LoginPage() {
   const { t } = useTranslation();
   const { isLoaded, signIn, setActive } = useSignIn();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const redirectPath = location.state?.from || "/";
 
   const [form, setForm] = useState({
     email: "",
@@ -61,7 +64,7 @@ export default function LoginPage() {
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        navigate("/");
+        navigate(redirectPath, { replace: true });
       } else if (result.status === "needs_second_factor") {
         await signIn.prepareSecondFactor({
           strategy: "email_code",
@@ -93,7 +96,7 @@ export default function LoginPage() {
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        navigate("/");
+        navigate(redirectPath, { replace: true });
       } else {
         setError(t("errors.verificationNeedsAnotherStep"));
       }

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { services } from "../data/services";
 import "./ServiceDetailsPage.css";
@@ -9,10 +9,13 @@ import { PiPlantLight } from "react-icons/pi";
 import { FaCircleCheck } from "react-icons/fa6";
 import hills from "../assets/hills.png";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { useUser } from "@clerk/clerk-react";
 
 export default function ServiceDetailsPage() {
+  const { isSignedIn } = useUser();
   const { serviceId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, i18n } = useTranslation();
 
   const service = services[serviceId];
@@ -32,6 +35,16 @@ export default function ServiceDetailsPage() {
   }).format(selectedPlan.price);
 
   function handleAddToCart() {
+    if (!isSignedIn) {
+      navigate("/login", {
+        state: {
+          from: `${location.pathname}${location.search}`,
+        },
+      });
+
+      return;
+    }
+
     const cartItem = {
       serviceId: service.id,
       planId: selectedPlan.id,
