@@ -10,6 +10,13 @@ export function CartProvider({ children }) {
   const [cartLoaded, setCartLoaded] = useState(false);
 
   const storageKey = user?.id ? `reset-cart-${user.id}` : null;
+  const [customerPhone, setCustomerPhone] = useState(() => {
+    return localStorage.getItem("resetCustomerPhone") || "";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("resetCustomerPhone", customerPhone);
+  }, [customerPhone]);
 
   // Load this user's cart when Clerk finishes loading.
   useEffect(() => {
@@ -109,6 +116,14 @@ export function CartProvider({ children }) {
     0,
   );
 
+  const clearCheckout = () => {
+    setCartItems([]);
+    setCustomerPhone("");
+
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("resetCustomerPhone");
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -120,6 +135,9 @@ export function CartProvider({ children }) {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
+        customerPhone,
+        setCustomerPhone,
+        clearCheckout,
       }}
     >
       {children}

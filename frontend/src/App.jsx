@@ -12,6 +12,8 @@ import ServiceDetailsPage from "./pages/ServiceDetailsPage";
 import CartPage from "./pages/CartPage";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import NotFoundPage from "./pages/NotFoundPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CheckoutPage from "./pages/CheckoutPage";
 
 export default function App() {
   return (
@@ -30,17 +32,12 @@ export default function App() {
         <Route
           path="/cart"
           element={
-            <>
-              <SignedIn>
-                <CartPage />
-              </SignedIn>
-
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-            </>
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
           }
         />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

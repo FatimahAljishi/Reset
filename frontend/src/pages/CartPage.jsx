@@ -6,8 +6,11 @@ import Navbar from "../components/Navbar";
 import { useTranslation } from "react-i18next";
 import { PiPlantLight } from "react-icons/pi";
 import emptyCartImage from "../assets/cart.png";
+import { useState } from "react";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function CartPage() {
+  const [phoneError, setPhoneError] = useState("");
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
@@ -18,6 +21,8 @@ export default function CartPage() {
     removeFromCart,
     increaseQuantity,
     decreaseQuantity,
+    customerPhone,
+    setCustomerPhone,
   } = useCart();
 
   if (!cartLoaded) {
@@ -52,6 +57,31 @@ export default function CartPage() {
       </>
     );
   }
+
+  const validatePhone = () => {
+    const cleanedPhone = customerPhone.replace(/\s/g, "");
+
+    if (!cleanedPhone) {
+      setPhoneError(t("cart.phoneRequired"));
+      return false;
+    }
+
+    if (!/^05\d{8}$/.test(cleanedPhone)) {
+      setPhoneError(t("cart.phoneInvalid"));
+      return false;
+    }
+
+    setPhoneError("");
+    return true;
+  };
+
+  const handleCheckout = () => {
+    if (!validatePhone()) return;
+
+    setCustomerPhone(customerPhone.replace(/\s/g, ""));
+
+    navigate("/checkout");
+  };
 
   return (
     <>
@@ -130,6 +160,50 @@ export default function CartPage() {
             ))}
           </section>
 
+          <section className="phone-section">
+            <div className="phone-section-header">
+              <div>
+                <h2>{t("cart.phoneLabel")}</h2>
+                <p>{t("cart.phoneDescription")}</p>
+              </div>
+            </div>
+
+            <div className="phone-input-group">
+              <span className="phone-icon">
+                <FaWhatsapp />
+              </span>
+
+              <input
+                type="tel"
+                inputMode="numeric"
+                autoComplete="tel"
+                value={customerPhone}
+                onChange={(event) => {
+                  const value = event.target.value
+                    .replace(/\D/g, "")
+                    .slice(0, 10);
+
+                  setCustomerPhone(value);
+
+                  if (phoneError) {
+                    setPhoneError("");
+                  }
+                }}
+                onBlur={validatePhone}
+                placeholder="05XXXXXXXX"
+                aria-label={t("cart.phoneLabel")}
+                aria-invalid={Boolean(phoneError)}
+                aria-describedby={phoneError ? "phone-error" : "phone-help"}
+              />
+            </div>
+
+            {phoneError && (
+              <p className="phone-error" id="phone-error">
+                {phoneError}
+              </p>
+            )}
+          </section>
+
           <aside className="order-summary">
             <h2>{t("cart.summary")}</h2>
 
@@ -148,7 +222,7 @@ export default function CartPage() {
             <button
               type="button"
               className="checkout-btn"
-              onClick={() => navigate("/checkout")}
+              onClick={handleCheckout}
             >
               {t("cart.checkout")}
             </button>

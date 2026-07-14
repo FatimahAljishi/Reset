@@ -258,7 +258,12 @@
     "total": "Total",
     "summary": "Order Summary",
     "loading": "Loading Cart...",
-    "explore": "Explore Services"
+    "explore": "Explore Services",
+    "phoneDescription": "We'll use this number to contact you and schedule your training sessions.",
+    "phoneLabel": "Phone number",
+    "phonePrivacy": "Your number is safe and used only for scheduling purposes.",
+    "phoneRequired": "Please enter your phone number.",
+    "phoneInvalid": "Enter a valid Saudi mobile number starting with 05."
   },
   "notFound": {
     "label": "Error 404",
