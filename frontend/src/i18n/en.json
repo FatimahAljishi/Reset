@@ -273,5 +273,29 @@
     "help": "Let's get you back on track.",
     "home": "Back to Home",
     "back": "Go Back"
+  },
+  "checkout": {
+    "title": "Complete Your Payment",
+    "phone": "Phone Number",
+    "total": "Total",
+    "currency": "SAR",
+    "cardDetails": "Card Details",
+    "back": "Back",
+    "noOrder": "No order found",
+    "emptyCart": "Your cart is currently empty.",
+    "returnToCart": "Return to Cart"
+  },
+  "paymentResult": {
+    "checkingTitle": "Confirming Your Payment",
+    "checkingMessage": "Please do not close this page.",
+    "successTitle": "Payment Successful",
+    "successMessage": "Thank you for choosing Reset. We will contact you shortly to arrange your next steps.",
+    "failedTitle": "Payment Unsuccessful",
+    "failedMessage": "We could not confirm your payment. Your cart has not been cleared.",
+    "verificationFailed": "Payment verification failed.",
+    "missingPaymentId": "The payment reference is missing.",
+    "missingOrder": "The order information is no longer available.",
+    "returnHome": "Return to Home",
+    "tryAgain": "Try Again"
   }
 }
