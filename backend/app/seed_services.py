@@ -45,6 +45,7 @@ def seed_services():
         plans = [
             ServicePlan(
                 service_id=personal.id,
+                code="personal-8",
                 title_en="8 Sessions",
                 title_ar="8 جلسات",
                 sessions=8,
@@ -53,6 +54,7 @@ def seed_services():
             ),
             ServicePlan(
                 service_id=personal.id,
+                code="personal-12",
                 title_en="12 Sessions",
                 title_ar="12 جلسة",
                 sessions=12,
@@ -61,6 +63,7 @@ def seed_services():
             ),
             ServicePlan(
                 service_id=group.id,
+                code="group-8",
                 title_en="8 Sessions",
                 title_ar="8 جلسات",
                 sessions=8,
@@ -69,6 +72,7 @@ def seed_services():
             ),
             ServicePlan(
                 service_id=group.id,
+                code="group-12",
                 title_en="12 Sessions",
                 title_ar="12 جلسة",
                 sessions=12,
@@ -77,6 +81,7 @@ def seed_services():
             ),
             ServicePlan(
                 service_id=online.id,
+                code="online-ready",
                 title_en="Ready Plan",
                 title_ar="خطة جاهزة",
                 sessions=None,
@@ -85,6 +90,7 @@ def seed_services():
             ),
             ServicePlan(
                 service_id=online.id,
+                code="online-personalized",
                 title_en="Personalized Plan",
                 title_ar="خطة مخصصة",
                 sessions=None,

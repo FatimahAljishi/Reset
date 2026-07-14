@@ -4,6 +4,7 @@ from pydantic import EmailStr
 
 class ServicePlanResponse(SQLModel):
     id: int
+    code: str
     title_en: str
     title_ar: str 
     sessions: Optional[int] 
