@@ -102,9 +102,7 @@ export default function CartPage() {
                   <h2>{t(`serviceDetails.${item.serviceId}.title`)}</h2>
                   {!item.sessions && (
                     <p>
-                      {t(
-                        `serviceDetails.${item.serviceId}.plans.${item.planId}`,
-                      )}
+                      {t(`serviceDetails.${item.serviceId}.plans.${item.code}`)}
                     </p>
                   )}
 
@@ -116,7 +114,6 @@ export default function CartPage() {
                       })}
                     </p>
                   )}
-
                   <strong>
                     {new Intl.NumberFormat(i18n.language, {
                       style: "currency",

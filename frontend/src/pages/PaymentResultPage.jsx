@@ -36,7 +36,7 @@ function PaymentResultPage() {
 
       const pendingPayment = savedPayment ? JSON.parse(savedPayment) : null;
 
-      if (!pendingPayment?.expectedAmount) {
+      if (!pendingPayment?.orderId) {
         setPaymentStatus("failed");
         setErrorMessage(t("paymentResult.missingOrder"));
         return;
@@ -52,7 +52,7 @@ function PaymentResultPage() {
             },
             body: JSON.stringify({
               payment_id: paymentId,
-              expected_amount: pendingPayment.expectedAmount,
+              order_id: pendingPayment.orderId,
             }),
           },
         );
@@ -65,9 +65,12 @@ function PaymentResultPage() {
           throw new Error(data.detail || t("paymentResult.verificationFailed"));
         }
 
-        setPaymentStatus("success");
-
         clearCheckout();
+
+        localStorage.removeItem("resetPendingPayment");
+        localStorage.removeItem("resetPendingOrder");
+
+        setPaymentStatus("success");
 
         localStorage.removeItem("resetPendingPayment");
       } catch (error) {

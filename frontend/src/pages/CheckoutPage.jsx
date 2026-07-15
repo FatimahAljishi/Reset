@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useTranslation } from "react-i18next";
@@ -21,49 +21,108 @@ function CheckoutPage() {
     ? `+966${cleanedPhone.slice(1)}`
     : cleanedPhone;
 
+  const [order, setOrder] = useState(null);
+  const [orderLoading, setOrderLoading] = useState(true);
+  const [orderError, setOrderError] = useState("");
+  const orderCreationStarted = useRef(false);
+
   useEffect(() => {
-    if (!cartItems?.length || !cartTotal || formInitialized.current) {
+    if (orderCreationStarted.current) return;
+
+    if (!cartItems?.length || !fullPhoneNumber) {
+      setOrderLoading(false);
       return;
     }
 
-    formInitialized.current = true;
+    const savedOrder = localStorage.getItem("resetPendingOrder");
 
-    const amountInHalalas = Math.round(Number(cartTotal) * 100);
+    if (savedOrder) {
+      const parsedOrder = JSON.parse(savedOrder);
+
+      if (parsedOrder.status === "pending") {
+        setOrder(parsedOrder);
+        setOrderLoading(false);
+        orderCreationStarted.current = true;
+        return;
+      }
+    }
+
+    orderCreationStarted.current = true;
+
+    const createPendingOrder = async () => {
+      try {
+        setOrderLoading(true);
+        setOrderError("");
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            phone: fullPhoneNumber,
+            items: cartItems.map((item) => ({
+              plan_id: item.planId,
+              quantity: item.quantity ?? 1,
+            })),
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.detail || "Could not create the order.");
+        }
+
+        setOrder(data);
+
+        localStorage.setItem("resetPendingOrder", JSON.stringify(data));
+      } catch (error) {
+        console.error("Order creation error:", error);
+        setOrderError(error.message);
+        orderCreationStarted.current = false;
+      } finally {
+        setOrderLoading(false);
+      }
+    };
+
+    createPendingOrder();
+  }, [cartItems, fullPhoneNumber]);
+
+  useEffect(() => {
+    if (!order || !order.total_halalas || formInitialized.current) {
+      return;
+    }
+
+    const amountInHalalas = order.total_halalas;
 
     localStorage.setItem(
       "resetPendingPayment",
       JSON.stringify({
-        expectedAmount: amountInHalalas,
+        orderId: order.id,
         phone: fullPhoneNumber,
       }),
     );
 
+    formInitialized.current = true;
+
     Moyasar.init({
       element: ".mysr-form",
-
-      amount: Math.round(cartTotal * 100),
-
+      amount: amountInHalalas,
       currency: "SAR",
-
-      description: "Reset by Zainab order",
-
+      description: `Reset order #${order.id}`,
       publishable_api_key: import.meta.env.VITE_MOYASAR_PUBLISHABLE_KEY,
-
       callback_url: `${window.location.origin}/payment-result`,
-
       methods: ["creditcard"],
-
       supported_networks: ["mada", "visa", "mastercard"],
-
       language: i18n.language === "ar" ? "ar" : "en",
-
       fixed_width: false,
-
       metadata: {
+        order_id: String(order.id),
         customer_phone: fullPhoneNumber,
       },
     });
-  }, [cartItems, cartTotal, i18n.language, fullPhoneNumber]);
+  }, [order, i18n.language, fullPhoneNumber]);
 
   if (!cartItems || cartItems.length === 0) {
     return (

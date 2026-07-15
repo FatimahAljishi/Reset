@@ -239,8 +239,8 @@
         "Direct Communication"
       ],
       "plans": {
-        "ready": "Ready-Made Plan",
-        "personalized": "Personalized Plan"
+        "online-ready": "Ready-Made Plan",
+        "online-personalized": "Personalized Plan"
       }
     },
     "includes": "Includes:",

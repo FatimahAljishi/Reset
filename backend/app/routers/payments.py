@@ -1,8 +1,11 @@
-from fastapi import APIRouter, HTTPException
 from app.schemas import PaymentVerificationRequest
 import os
 from dotenv import load_dotenv
 import httpx
+from fastapi import APIRouter, Depends, HTTPException
+from sqlmodel import Session
+from app.database import get_session
+from app.models import Order
 
 load_dotenv()
 
@@ -13,7 +16,41 @@ router = APIRouter(
 
 
 @router.post("/verify")
-async def verify_payment(data: PaymentVerificationRequest):
+async def verify_payment(
+    data: PaymentVerificationRequest,
+    session: Session = Depends(get_session),
+):
+    order = session.get(Order, data.order_id)
+
+    if not order:
+        raise HTTPException(
+            status_code=404,
+            detail="Order not found.",
+        )
+
+    # Makes repeated verification safe.
+    if order.status == "paid":
+        if order.payment_id != data.payment_id:
+            raise HTTPException(
+                status_code=400,
+                detail="This order was paid using another payment.",
+            )
+
+        return {
+            "verified": True,
+            "order_id": order.id,
+            "payment_id": order.payment_id,
+            "status": order.status,
+            "amount": order.total_halalas,
+            "currency": "SAR",
+        }
+
+    if order.status != "pending":
+        raise HTTPException(
+            status_code=400,
+            detail="This order cannot be paid.",
+        )
+
     secret_key = os.getenv("MOYASAR_SECRET_KEY")
 
     if not secret_key:
@@ -32,7 +69,6 @@ async def verify_payment(data: PaymentVerificationRequest):
                 payment_url,
                 auth=(secret_key, ""),
             )
-
     except httpx.RequestError:
         raise HTTPException(
             status_code=502,
@@ -53,32 +89,44 @@ async def verify_payment(data: PaymentVerificationRequest):
 
     payment = response.json()
 
-    is_paid = payment.get("status") == "paid"
-    amount_matches = payment.get("amount") == data.expected_amount
-    currency_matches = payment.get("currency") == "SAR"
-
-    if not is_paid:
+    if payment.get("status") != "paid":
         raise HTTPException(
             status_code=400,
             detail="Payment was not successful.",
         )
 
-    if not amount_matches:
+    if payment.get("amount") != order.total_halalas:
         raise HTTPException(
             status_code=400,
             detail="Payment amount does not match the order.",
         )
 
-    if not currency_matches:
+    if payment.get("currency") != "SAR":
         raise HTTPException(
             status_code=400,
             detail="Payment currency does not match the order.",
         )
 
+    metadata = payment.get("metadata") or {}
+
+    if str(metadata.get("order_id")) != str(order.id):
+        raise HTTPException(
+            status_code=400,
+            detail="Payment does not belong to this order.",
+        )
+
+    order.status = "paid"
+    order.payment_id = payment.get("id")
+
+    session.add(order)
+    session.commit()
+    session.refresh(order)
+
     return {
         "verified": True,
-        "payment_id": payment.get("id"),
-        "status": payment.get("status"),
-        "amount": payment.get("amount"),
+        "order_id": order.id,
+        "payment_id": order.payment_id,
+        "status": order.status,
+        "amount": order.total_halalas,
         "currency": payment.get("currency"),
     }

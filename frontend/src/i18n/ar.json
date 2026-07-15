@@ -237,8 +237,8 @@
         "تواصل مباشر"
       ],
       "plans": {
-        "ready": "خطة جاهزة",
-        "personalized": "خطة مخصصة"
+        "online-ready": "خطة جاهزة",
+        "online-personalized": "خطة مخصصة"
       }
     },
     "includes": "تشمل:",
