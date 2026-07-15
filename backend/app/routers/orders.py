@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from app.database import get_session
 from sqlmodel import Session, select
-from app.models import Order, OrderItem, ServicePlan
+from app.models import Order, OrderItem, ServicePlan, Service
 from app.auth import get_current_user_id
 
 load_dotenv()
@@ -26,6 +26,10 @@ def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_use
         plan = session.get(ServicePlan, requested_item.plan_id)
         if not plan:
             raise HTTPException(status_code=404, detail=(f"Service plan {requested_item.plan_id} was not found."))
+        service = session.get(Service, plan.service_id)
+
+        if not service:
+            raise HTTPException(status_code=404, detail="The service connected to this plan was not found.")
         item_total = (plan.price_halalas * requested_item.quantity)
         total_halalas += item_total
         order_items.append(
@@ -34,6 +38,10 @@ def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_use
                 quantity=requested_item.quantity,
                 unit_price_halalas=plan.price_halalas,
                 sessions=plan.sessions,
+                service_title_en=service.title_en,
+                service_title_ar=service.title_ar,
+                plan_title_en=plan.title_en,
+                plan_title_ar=plan.title_ar,
             )
         )
 

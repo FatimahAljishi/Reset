@@ -1,13 +1,18 @@
+from requests import session
+
 from app.schemas import PaymentVerificationRequest
 import os
 from dotenv import load_dotenv
 import httpx
 from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session
+from sqlmodel import Session, select
 from app.database import get_session
-from app.models import Order
+from app.models import Order, OrderItem
+from app.services.order_notifications import send_paid_order_email
+import logging
 
 load_dotenv()
+logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/payments",
@@ -121,6 +126,23 @@ async def verify_payment(
     session.add(order)
     session.commit()
     session.refresh(order)
+
+    items_statement = select(OrderItem).where(
+        OrderItem.order_id == order.id
+    )
+
+    order_items = list(session.exec(items_statement).all())
+
+    try:
+        await send_paid_order_email(
+            order=order,
+            items=order_items,
+        )
+    except Exception:
+        logger.exception(
+            "Order %s was paid, but the trainer email could not be sent.",
+            order.id,
+        )
 
     return {
         "verified": True,

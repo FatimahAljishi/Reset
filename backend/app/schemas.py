@@ -46,6 +46,10 @@ class OrderItemRead(SQLModel):
     quantity: int
     unit_price_halalas: int
     sessions: Optional[int]
+    service_title_en: str
+    service_title_ar: str
+    plan_title_en: str
+    plan_title_ar: str
 
 
 class OrderRead(SQLModel):

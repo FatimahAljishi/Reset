@@ -41,5 +41,9 @@ class OrderItem(SQLModel, table=True):
     quantity: int = Field(default=1, gt=0)
     unit_price_halalas: int = Field(gt=0)
     sessions: Optional[int] = Field(default=None)
+    service_title_en: str = Field(max_length=200)
+    service_title_ar: str = Field(max_length=200)
+    plan_title_en: str = Field(max_length=200)
+    plan_title_ar: str = Field(max_length=200)
     order: Optional[Order] = Relationship(back_populates="items")
 
