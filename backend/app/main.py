@@ -6,6 +6,7 @@ from app.routers.services import router as services_router
 from app.routers.contact import router as contact_router
 from app.routers.payments import router as payments_router
 from app.routers.orders import router as orders_router
+from app.seed_services import seed_services
 
 app = FastAPI(title="Reset API")
 
@@ -20,6 +21,7 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup():
     create_db()
+    seed_services()
 
 app.include_router(services_router)
 app.include_router(contact_router)
