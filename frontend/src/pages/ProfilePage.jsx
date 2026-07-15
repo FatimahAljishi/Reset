@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useClerk } from "@clerk/clerk-react";
 import "./ProfilePage.css";
 import Navbar from "../components/Navbar";
@@ -24,12 +24,13 @@ export default function ProfilePage() {
           </h1>
 
           <div className="profile-actions">
-            <button
-              className="profile-btn"
-              onClick={() => navigate("/profile/settings")}
-            >
+            <Link to="/profile/settings" className="profile-btn">
               {t("profile.manageAccount")}
-            </button>
+            </Link>
+
+            <Link to="/my-orders" className="profile-btn">
+              {t("myOrders.title")}
+            </Link>
 
             <button
               className="profile-btn profile-btn-secondary"

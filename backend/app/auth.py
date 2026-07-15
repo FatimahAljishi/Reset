@@ -65,3 +65,8 @@ async def get_current_user_id(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid session token",
         )
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not verify session token",
+    )

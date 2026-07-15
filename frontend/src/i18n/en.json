@@ -297,5 +297,33 @@
     "missingOrder": "The order information is no longer available.",
     "returnHome": "Return to Home",
     "tryAgain": "Try Again"
+  },
+  "myOrders": {
+    "title": "My Orders",
+    "subtitle": "View your Reset purchases.",
+    "loading": "Loading your orders...",
+    "loadError": "Could not load your orders.",
+    "errorTitle": "Something went wrong",
+    "tryAgain": "Try Again",
+
+    "signInTitle": "Sign in to view your orders",
+    "signInMessage": "Your purchases will appear here after you sign in.",
+    "signIn": "Sign In",
+
+    "emptyTitle": "No orders yet",
+    "emptyMessage": "Your Reset journey can begin whenever you're ready.",
+    "exploreServices": "Explore Services",
+
+    "orderNumber": "Order #{{number}}",
+    "quantity": "Quantity: {{count}}",
+    "total": "Total",
+    "currency": "SAR",
+
+    "status": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "failed": "Failed",
+      "expired": "Expired"
+    }
   }
 }

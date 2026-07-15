@@ -64,3 +64,9 @@ def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_use
     session.refresh(order)
 
     return order
+
+@router.get("/me", response_model=list[OrderRead])
+def get_my_orders(user_id: str = Depends(get_current_user_id), session: Session = Depends(get_session)):
+    statement = select(Order).where(Order.user_id == user_id).order_by(Order.created_at.desc())
+    orders = session.exec(statement).all()
+    return orders
