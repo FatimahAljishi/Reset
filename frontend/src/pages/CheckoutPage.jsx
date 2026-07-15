@@ -6,6 +6,7 @@ import Moyasar from "moyasar-payment-form";
 import "moyasar-payment-form/dist/moyasar.css";
 import Navbar from "../components/Navbar";
 import "./CheckoutPage.css";
+import { useAuth } from "@clerk/clerk-react";
 
 function CheckoutPage() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function CheckoutPage() {
   const [orderLoading, setOrderLoading] = useState(true);
   const [orderError, setOrderError] = useState("");
   const orderCreationStarted = useRef(false);
+  const { getToken } = useAuth();
 
   useEffect(() => {
     if (orderCreationStarted.current) return;
@@ -53,11 +55,12 @@ function CheckoutPage() {
       try {
         setOrderLoading(true);
         setOrderError("");
-
+        const token = await getToken();
         const response = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             phone: fullPhoneNumber,

@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from app.database import get_session
 from sqlmodel import Session, select
 from app.models import Order, OrderItem, ServicePlan
+from app.auth import get_current_user_id
 
 load_dotenv()
 
@@ -15,7 +16,8 @@ router = APIRouter(
 )
 
 @router.post("", response_model=OrderRead, status_code=status.HTTP_201_CREATED)
-def create_order(order_data: OrderCreate, session: Session = Depends(get_session)):
+def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_user_id),
+                 session: Session = Depends(get_session)):
     if not order_data.items:
         raise HTTPException(status_code=400, detail="The order must contain at least one item.")
     total_halalas = 0
@@ -39,6 +41,7 @@ def create_order(order_data: OrderCreate, session: Session = Depends(get_session
         phone=order_data.phone,
         status="pending",
         total_halalas=total_halalas,
+        user_id=user_id,
     )
 
     session.add(order)
