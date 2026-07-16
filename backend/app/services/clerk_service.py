@@ -21,6 +21,7 @@ async def get_clerk_user(user_id: str) -> dict[str, Any]:
             response = await client.get(
                 url,
                 headers={
+                    "Content-Type": "application/json",
                     "Authorization": (
                         f"Bearer {CLERK_SECRET_KEY}"
                     ),
