@@ -11,6 +11,7 @@ export default function ProfilePage() {
   const { signOut } = useClerk();
   const { user, isLoaded } = useUser();
   const { t } = useTranslation();
+  const isTrainer = user?.publicMetadata?.role === "trainer";
 
   if (!isLoaded) return <p>Loading...</p>;
 
@@ -32,6 +33,12 @@ export default function ProfilePage() {
             <Link to="/my-orders" className="profile-btn">
               {t("myOrders.title")}
             </Link>
+
+            {isTrainer && (
+              <Link to="/trainer-dashboard" className="profile-btn">
+                {t("profile.trainerDashboard")}
+              </Link>
+            )}
 
             <button
               className="profile-btn profile-btn-secondary"

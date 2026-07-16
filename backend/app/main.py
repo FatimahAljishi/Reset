@@ -7,6 +7,7 @@ from app.routers.contact import router as contact_router
 from app.routers.payments import router as payments_router
 from app.routers.orders import router as orders_router
 from app.seed_services import seed_services
+from app.routers.trainer import router as trainer_router
 
 app = FastAPI(title="Reset API")
 
@@ -27,3 +28,4 @@ app.include_router(services_router)
 app.include_router(contact_router)
 app.include_router(payments_router)
 app.include_router(orders_router)
+app.include_router(trainer_router)

@@ -64,7 +64,8 @@
   "profile": {
     "welcome": "مرحبًا",
     "manageAccount": "إدارة الحساب",
-    "signOut": "تسجيل الخروج"
+    "signOut": "تسجيل الخروج",
+    "trainerDashboard": "لوحة تحكم المدربة"
   },
   "errors": {
     "generic": "حدث خطأ ما.",
@@ -329,5 +330,59 @@
     "subtitle2": "وعيشي بتوازن.",
     "connect": "تواصلي معنا",
     "copyright": "جميع الحقوق محفوظة © Reset by Zainab"
+  },
+  "trainerDashboard": {
+    "title": "لوحة المدربة",
+    "loading": "جارٍ تحميل لوحة التحكم...",
+    "loadError": "تعذر تحميل لوحة المدربة.",
+    "tokenError": "تعذر الحصول على رمز الجلسة.",
+    "errorTitle": "حدث خطأ",
+    "tryAgain": "حاولي مرة أخرى",
+
+    "summary": {
+      "totalOrders": "إجمالي الطلبات",
+      "paidOrders": "الطلبات المدفوعة",
+      "pendingOrders": "الطلبات المعلقة",
+      "revenue": "إجمالي الإيرادات"
+    },
+
+    "searchLabel": "البحث",
+    "searchPlaceholder": "ابحثي بالاسم أو الجوال أو البريد أو الخدمة",
+    "filterLabel": "الحالة",
+
+    "filters": {
+      "all": "جميع الطلبات",
+      "paid": "تم الدفع",
+      "pending": "قيد الانتظار",
+      "failed": "لم يكتمل",
+      "expired": "منتهي"
+    },
+
+    "emptyTitle": "لا توجد طلبات بعد",
+    "emptyMessage": "ستظهر طلبات العميلات هنا.",
+    "noResultsTitle": "لا توجد نتائج مطابقة",
+    "noResultsMessage": "جرّبي تغيير البحث أو حالة الطلب.",
+
+    "orderNumber": "الطلب رقم {{number}}",
+    "customerName": "العميلة",
+    "customerEmail": "البريد الإلكتروني",
+    "phone": "رقم الجوال",
+    "purchasedServices": "الخدمات المشتراة",
+    "quantity": "الكمية: {{count}}",
+    "total": "الإجمالي",
+    "currency": "ر.س",
+
+    "status": {
+      "pending": "قيد الانتظار",
+      "paid": "تم الدفع",
+      "failed": "لم يكتمل",
+      "expired": "منتهي"
+    },
+    "sortLabel": "ترتيب حسب",
+
+    "sort": {
+      "newest": "الأحدث أولاً",
+      "oldest": "الأقدم أولاً"
+    }
   }
 }

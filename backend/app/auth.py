@@ -1,7 +1,8 @@
 import os
 import jwt
-from fastapi import Header, HTTPException, status
+from fastapi import Header, HTTPException, status, Depends
 from jwt import PyJWKClient
+from app.services.clerk_service import get_clerk_user
 
 
 CLERK_ISSUER = os.getenv("CLERK_ISSUER")
@@ -70,3 +71,20 @@ async def get_current_user_id(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not verify session token",
     )
+
+async def get_current_trainer_id(
+    user_id: str = Depends(get_current_user_id),
+) -> str:
+    clerk_user = await get_clerk_user(user_id)
+
+    public_metadata = (
+        clerk_user.get("public_metadata") or {}
+    )
+
+    if public_metadata.get("role") != "trainer":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Trainer access is required.",
+        )
+
+    return user_id

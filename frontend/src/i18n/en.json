@@ -66,7 +66,8 @@
   "profile": {
     "welcome": "Welcome",
     "manageAccount": "Manage Account",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "trainerDashboard": "Trainer Dashboard"
   },
   "errors": {
     "generic": "Something went wrong.",
@@ -331,5 +332,59 @@
     "subtitle2": "Live with balance.",
     "connect": "Connect With Us",
     "copyright": "Copyright © Reset by Zainab"
+  },
+  "trainerDashboard": {
+    "title": "Trainer Dashboard",
+    "loading": "Loading dashboard...",
+    "loadError": "Could not load the trainer dashboard.",
+    "tokenError": "Could not retrieve your session token.",
+    "errorTitle": "Something went wrong",
+    "tryAgain": "Try Again",
+
+    "summary": {
+      "totalOrders": "Total Orders",
+      "paidOrders": "Paid Orders",
+      "pendingOrders": "Pending Orders",
+      "revenue": "Paid Revenue"
+    },
+
+    "searchLabel": "Search",
+    "searchPlaceholder": "Search by name, phone, email or service",
+    "filterLabel": "Status",
+
+    "filters": {
+      "all": "All Orders",
+      "paid": "Paid",
+      "pending": "Pending",
+      "failed": "Failed",
+      "expired": "Expired"
+    },
+
+    "emptyTitle": "No orders yet",
+    "emptyMessage": "Customer orders will appear here.",
+    "noResultsTitle": "No matching orders",
+    "noResultsMessage": "Try changing the search or status filter.",
+
+    "orderNumber": "Order #{{number}}",
+    "customerName": "Customer",
+    "customerEmail": "Email",
+    "phone": "Phone",
+    "purchasedServices": "Purchased Services",
+    "quantity": "Quantity: {{count}}",
+    "total": "Total",
+    "currency": "SAR",
+
+    "status": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "failed": "Failed",
+      "expired": "Expired"
+    },
+    "sortLabel": "Sort By",
+
+    "sort": {
+      "newest": "Newest First",
+      "oldest": "Oldest First"
+    }
   }
 }

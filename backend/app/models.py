@@ -26,6 +26,8 @@ class Order(SQLModel, table=True):
     __tablename__ = "order"
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: Optional[str] = Field(default=None, index=True, max_length=255)
+    customer_name: str = Field(max_length=255)
+    customer_email: str = Field(default=None, max_length=255)
     phone: str = Field(max_length=20)
     status: str = Field(default="pending", index=True, max_length=20)
     total_halalas: int = Field(gt=0)

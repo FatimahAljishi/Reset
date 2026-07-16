@@ -6,49 +6,7 @@ import httpx
 import resend
 
 from app.models import Order, OrderItem
-
-
-async def get_clerk_user(user_id: str) -> dict[str, Any]:
-    clerk_secret_key = os.getenv("CLERK_SECRET_KEY")
-
-    if not clerk_secret_key:
-        raise RuntimeError("CLERK_SECRET_KEY is not configured.")
-
-    url = f"https://api.clerk.com/v1/users/{user_id}"
-
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        response = await client.get(
-            url,
-            headers={
-                "Authorization": f"Bearer {clerk_secret_key}",
-                "Content-Type": "application/json",
-            },
-        )
-
-    if response.status_code != 200:
-        raise RuntimeError(
-            f"Could not retrieve Clerk user: {response.status_code}"
-        )
-
-    return response.json()
-
-
-def get_customer_name(clerk_user: dict[str, Any]) -> str:
-    first_name = clerk_user.get("first_name") or ""
-    last_name = clerk_user.get("last_name") or ""
-
-    full_name = f"{first_name} {last_name}".strip()
-
-    if full_name:
-        return full_name
-
-    # Fall back to the username if the user has no first/last name.
-    username = clerk_user.get("username")
-
-    if username:
-        return username
-
-    return "Reset customer"
+from app.services.clerk_service import get_clerk_user, get_customer_name
 
 
 def build_items_html(items: list[OrderItem]) -> str:

@@ -55,7 +55,25 @@ class OrderItemRead(SQLModel):
 class OrderRead(SQLModel):
     id: int
     phone: str
+    customer_name: str
+    customer_email: str
     status: str
     total_halalas: int
     created_at: datetime
     items: list[OrderItemRead] = []
+
+class TrainerOrderItem(SQLModel):
+    service: str
+    plan: str
+    quantity: int
+
+
+class TrainerOrder(SQLModel):
+    id: int
+    customer_name: str
+    customer_email: str
+    phone: str
+    status: str
+    total_halalas: int
+    created_at: datetime
+    items: list[TrainerOrderItem]

@@ -16,6 +16,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CheckoutPage from "./pages/CheckoutPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
+import TrainerRoute from "./components/TrainerRoute";
+import TrainerDashboardPage from "./pages/TrainerDashboardPage";
 
 export default function App() {
   return (
@@ -49,6 +51,15 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/trainer-dashboard"
+          element={
+            <TrainerRoute>
+              <TrainerDashboardPage />
+            </TrainerRoute>
+          }
+        />
+        <Route path="/sign-in" element={<RedirectToSignIn />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

@@ -6,6 +6,7 @@ from app.database import get_session
 from sqlmodel import Session, select
 from app.models import Order, OrderItem, ServicePlan, Service
 from app.auth import get_current_user_id
+from app.services.clerk_service import get_clerk_user, get_customer_name, get_customer_email
 
 load_dotenv()
 
@@ -16,7 +17,7 @@ router = APIRouter(
 )
 
 @router.post("", response_model=OrderRead, status_code=status.HTTP_201_CREATED)
-def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_user_id),
+async def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_user_id),
                  session: Session = Depends(get_session)):
     if not order_data.items:
         raise HTTPException(status_code=400, detail="The order must contain at least one item.")
@@ -30,6 +31,9 @@ def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_use
 
         if not service:
             raise HTTPException(status_code=404, detail="The service connected to this plan was not found.")
+        clerk_user = await get_clerk_user(user_id)
+        customer_name = get_customer_name(clerk_user)
+        customer_email = get_customer_email(clerk_user)
         item_total = (plan.price_halalas * requested_item.quantity)
         total_halalas += item_total
         order_items.append(
@@ -50,6 +54,8 @@ def create_order(order_data: OrderCreate, user_id: str = Depends(get_current_use
         status="pending",
         total_halalas=total_halalas,
         user_id=user_id,
+        customer_name=customer_name,
+        customer_email=customer_email,
     )
 
     session.add(order)
