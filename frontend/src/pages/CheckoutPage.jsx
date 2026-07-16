@@ -7,6 +7,7 @@ import "moyasar-payment-form/dist/moyasar.css";
 import Navbar from "../components/Navbar";
 import "./CheckoutPage.css";
 import { useAuth } from "@clerk/clerk-react";
+import Footer from "../components/Footer";
 
 function CheckoutPage() {
   const navigate = useNavigate();
@@ -181,6 +182,7 @@ function CheckoutPage() {
           <div className="mysr-form"></div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

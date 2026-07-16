@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useTranslation } from "react-i18next";
 import { PiPlantLight } from "react-icons/pi";
 import { useState } from "react";
+import Footer from "../components/Footer";
 
 export default function ContactPage() {
   const { t } = useTranslation();
@@ -161,6 +162,7 @@ export default function ContactPage() {
           )}
         </form>
       </div>
+      <Footer />
     </>
   );
 }

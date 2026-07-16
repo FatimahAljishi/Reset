@@ -1,6 +1,7 @@
 import { UserProfile } from "@clerk/clerk-react";
 import Navbar from "../components/Navbar";
 import "./ProfileSettingsPage.css";
+import Footer from "../components/Footer";
 
 export default function ProfileSettingsPage() {
   return (
@@ -9,6 +10,7 @@ export default function ProfileSettingsPage() {
       <div className="profile-settings-page">
         <UserProfile />
       </div>
+      <Footer />
     </>
   );
 }

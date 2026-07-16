@@ -8,6 +8,7 @@ import { PiPlantLight } from "react-icons/pi";
 import emptyCartImage from "../assets/cart.png";
 import { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
+import Footer from "../components/Footer";
 
 export default function CartPage() {
   const [phoneError, setPhoneError] = useState("");
@@ -54,6 +55,7 @@ export default function CartPage() {
             </button>
           </div>
         </main>
+        <Footer />
       </>
     );
   }
@@ -226,6 +228,7 @@ export default function CartPage() {
           </aside>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

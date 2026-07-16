@@ -13,6 +13,7 @@ import { LuBookOpen } from "react-icons/lu";
 import { CiDumbbell } from "react-icons/ci";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import { PiPlantLight } from "react-icons/pi";
+import Footer from "../components/Footer";
 
 export default function AboutPage() {
   const { t } = useTranslation();
@@ -164,6 +165,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

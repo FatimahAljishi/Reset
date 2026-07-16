@@ -4,6 +4,7 @@ import "./ProfilePage.css";
 import Navbar from "../components/Navbar";
 import { useUser } from "@clerk/clerk-react";
 import { useTranslation } from "react-i18next";
+import Footer from "../components/Footer";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export default function ProfilePage() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

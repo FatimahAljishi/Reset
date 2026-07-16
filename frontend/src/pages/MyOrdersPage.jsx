@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function MyOrdersPage() {
   const { t, i18n } = useTranslation();
@@ -116,6 +117,7 @@ export default function MyOrdersPage() {
             </button>
           </section>
         </main>
+        <Footer />
       </>
     );
   }
@@ -207,6 +209,7 @@ export default function MyOrdersPage() {
           </div>
         )}
       </main>
+      <Footer />
     </>
   );
 }

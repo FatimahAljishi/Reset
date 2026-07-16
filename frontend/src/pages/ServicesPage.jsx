@@ -8,6 +8,7 @@ import { HiOutlineUserGroup } from "react-icons/hi2";
 import { LuLaptop } from "react-icons/lu";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function ServicesPage() {
   const { t } = useTranslation();
@@ -72,6 +73,7 @@ export default function ServicesPage() {
         </div>
         <img src={hills} className="services-hills" />
       </div>
+      <Footer />
     </>
   );
 }

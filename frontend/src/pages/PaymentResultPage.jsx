@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useCart } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import "./PaymentResultPage.css";
+import Footer from "../components/Footer";
 
 function PaymentResultPage() {
   const navigate = useNavigate();
@@ -128,6 +129,7 @@ function PaymentResultPage() {
           </section>
         )}
       </main>
+      <Footer />
     </>
   );
 }

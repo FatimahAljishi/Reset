@@ -325,5 +325,11 @@
       "failed": "Failed",
       "expired": "Expired"
     }
+  },
+  "footer": {
+    "subtitle1": "Move with Purpose.",
+    "subtitle2": "Live with balance.",
+    "connect": "Connect With Us",
+    "copyright": "Copyright © Reset by Zainab"
   }
 }

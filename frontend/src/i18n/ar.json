@@ -323,5 +323,11 @@
       "failed": "لم يكتمل",
       "expired": "منتهي"
     }
+  },
+  "footer": {
+    "subtitle1": "تحركي بهدف.",
+    "subtitle2": "وعيشي بتوازن.",
+    "connect": "تواصلي معنا",
+    "copyright": "جميع الحقوق محفوظة © Reset by Zainab"
   }
 }

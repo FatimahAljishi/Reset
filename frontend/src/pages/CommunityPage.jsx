@@ -12,6 +12,7 @@ import {
   PiBarbellLight,
   PiHeartLight,
 } from "react-icons/pi";
+import Footer from "../components/Footer";
 
 export default function CommunityPage() {
   const { t } = useTranslation();
@@ -168,6 +169,7 @@ export default function CommunityPage() {
           </Link>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

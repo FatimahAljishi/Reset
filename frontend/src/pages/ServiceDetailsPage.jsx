@@ -11,6 +11,7 @@ import hills from "../assets/hills.png";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { useUser } from "@clerk/clerk-react";
 import { useCart } from "../context/CartContext";
+import Footer from "../components/Footer";
 
 export default function ServiceDetailsPage() {
   const { addToCart } = useCart();
@@ -217,6 +218,7 @@ export default function ServiceDetailsPage() {
           <img src={hills} className="service-details-hills" />
         </div>
       </div>
+      <Footer />
     </>
   );
 }
