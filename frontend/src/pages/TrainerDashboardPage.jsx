@@ -1,19 +1,53 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
-import { useTranslation } from "react-i18next";
+import {
+  FiChevronDown,
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronUp,
+  FiSearch,
+  FiX,
+} from "react-icons/fi";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "./TrainerDashboardPage.css";
+
+const ORDERS_PER_PAGE = 5;
+
+function SortIcon({ column, sortConfig }) {
+  if (sortConfig.key !== column) {
+    return (
+      <span className="trainer-sort-icon trainer-sort-icon-inactive">
+        <FiChevronUp />
+        <FiChevronDown />
+      </span>
+    );
+  }
+
+  return sortConfig.direction === "asc" ? (
+    <FiChevronUp className="trainer-sort-icon" />
+  ) : (
+    <FiChevronDown className="trainer-sort-icon" />
+  );
+}
 
 function TrainerDashboardPage() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
-  const { t, i18n } = useTranslation();
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOrder, setSortOrder] = useState("newest");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const [sortConfig, setSortConfig] = useState({
+    key: "created_at",
+    direction: "desc",
+  });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -60,276 +94,554 @@ function TrainerDashboardPage() {
     };
 
     fetchOrders();
-  }, [getToken, isLoaded, isSignedIn, t]);
+  }, [getToken, isLoaded, isSignedIn]);
 
-  const filteredOrders = useMemo(() => {
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, statusFilter, sortConfig]);
+
+  useEffect(() => {
+    if (!selectedOrder) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSelectedOrder(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [selectedOrder]);
+
+  const handleSort = (key) => {
+    setSortConfig((currentSort) => {
+      if (currentSort.key === key) {
+        return {
+          key,
+          direction: currentSort.direction === "asc" ? "desc" : "asc",
+        };
+      }
+
+      return {
+        key,
+        direction: "desc",
+      };
+    });
+  };
+
+  const processedOrders = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase();
 
-    const filtered = orders.filter((order) => {
-      const matchesStatus =
-        statusFilter === "all" || order.status === statusFilter;
+    const filteredOrders = orders.filter((order) => {
+      const orderStatus = order.status?.toLowerCase() || "";
 
-      const searchableText = [
-        order.customer_name,
-        order.customer_email,
-        order.phone,
-        String(order.id),
-        ...order.items.flatMap((item) => [item.service, item.plan]),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+      const matchesStatus =
+        statusFilter === "all" || orderStatus === statusFilter;
+
+      const customerName = order.customer_name;
+
+      const matchesCustomer = customerName
+        .toLowerCase()
+        .includes(normalizedSearch);
+
+      const matchesOrderNumber = String(order.id).includes(
+        normalizedSearch.replace("#", ""),
+      );
+
+      const matchesService = order.items?.some((item) => {
+        const serviceName = item.service;
+
+        const planName = item.plan;
+
+        return (
+          serviceName.toLowerCase().includes(normalizedSearch) ||
+          planName.toLowerCase().includes(normalizedSearch)
+        );
+      });
 
       const matchesSearch =
-        !normalizedSearch || searchableText.includes(normalizedSearch);
+        normalizedSearch === "" ||
+        matchesCustomer ||
+        matchesOrderNumber ||
+        matchesService;
 
       return matchesStatus && matchesSearch;
     });
 
-    filtered.sort((a, b) => {
-      const first = new Date(a.created_at).getTime();
-      const second = new Date(b.created_at).getTime();
+    return [...filteredOrders].sort((firstOrder, secondOrder) => {
+      let firstValue;
+      let secondValue;
 
-      return sortOrder === "newest" ? second - first : first - second;
+      if (sortConfig.key === "created_at") {
+        firstValue = new Date(firstOrder.created_at).getTime();
+        secondValue = new Date(secondOrder.created_at).getTime();
+      } else {
+        firstValue = Number(firstOrder.id);
+        secondValue = Number(secondOrder.id);
+      }
+
+      if (firstValue < secondValue) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+
+      if (firstValue > secondValue) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+
+      return 0;
     });
+  }, [orders, searchTerm, statusFilter, sortConfig]);
 
-    return filtered;
-  }, [orders, searchTerm, statusFilter, sortOrder]);
+  const totalPages = Math.ceil(processedOrders.length / ORDERS_PER_PAGE);
 
-  const summary = useMemo(() => {
-    return {
-      total: orders.length,
-      paid: orders.filter((order) => order.status === "paid").length,
-      pending: orders.filter((order) => order.status === "pending").length,
-      revenueHalalas: orders
-        .filter((order) => order.status === "paid")
-        .reduce((sum, order) => sum + order.total_halalas, 0),
-    };
-  }, [orders]);
+  const startIndex = (currentPage - 1) * ORDERS_PER_PAGE;
 
-  const formatDate = (dateValue) => {
-    return new Intl.DateTimeFormat(i18n.language === "ar" ? "ar-SA" : "en-GB", {
+  const paginatedOrders = processedOrders.slice(
+    startIndex,
+    startIndex + ORDERS_PER_PAGE,
+  );
+
+  useEffect(() => {
+    if (totalPages === 0 && currentPage !== 1) {
+      setCurrentPage(1);
+      return;
+    }
+
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "—";
+
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }).format(new Date(dateString));
+  };
+
+  const formatLongDate = (dateString) => {
+    if (!dateString) return "—";
+
+    return new Intl.DateTimeFormat("en-GB", {
       day: "numeric",
       month: "long",
       year: "numeric",
       hour: "numeric",
       minute: "2-digit",
-    }).format(new Date(dateValue));
+    }).format(new Date(dateString));
   };
 
-  const formatPrice = (halalas) => {
-    return new Intl.NumberFormat(i18n.language === "ar" ? "ar-SA" : "en-SA", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }).format(halalas / 100);
+  const formatTime = (dateString) => {
+    if (!dateString) return "";
+
+    return new Intl.DateTimeFormat("en-GB", {
+      hour: "numeric",
+      minute: "2-digit",
+    }).format(new Date(dateString));
   };
 
-  if (!isLoaded || loading) {
-    return (
-      <>
-        <Navbar />
+  const getCustomerName = (order) => {
+    return order.customer_name || "Unknown customer";
+  };
 
-        <main className="trainer-dashboard-page">
-          <p className="trainer-dashboard-message">
-            {t("trainerDashboard.loading")}
-          </p>
-        </main>
-      </>
-    );
-  }
+  const getCustomerEmail = (order) => {
+    return order.customer_email || "";
+  };
 
-  if (error) {
-    return (
-      <>
-        <Navbar />
+  const getCustomerPhone = (order) => {
+    return order.phone || "";
+  };
 
-        <main className="trainer-dashboard-page">
-          <section className="trainer-dashboard-state">
-            <h1>{t("trainerDashboard.errorTitle")}</h1>
+  const getOrderTotalHalalas = (order) => {
+    return order.total_halalas;
+  };
 
-            <p>{error}</p>
+  const formatPrice = (order) => {
+    const totalHalalas = getOrderTotalHalalas(order);
 
-            <button type="button" onClick={() => window.location.reload()}>
-              {t("trainerDashboard.tryAgain")}
-            </button>
-          </section>
-        </main>
-      </>
-    );
-  }
+    return `${(totalHalalas / 100).toFixed(0)} SAR`;
+  };
+
+  const getServiceTitle = (item) => {
+    return item.service;
+  };
+
+  const getPlanTitle = (item) => {
+    if (item.plan) return item.plan;
+
+    if (item.sessions) {
+      return `${item.sessions} Sessions`;
+    }
+
+    return "";
+  };
 
   return (
     <>
       <Navbar />
 
       <main className="trainer-dashboard-page">
-        <h1>{t("trainerDashboard.title")}</h1>
+        <section className="trainer-dashboard-header">
+          <div>
+            <p className="trainer-dashboard-eyebrow">Trainer Dashboard</p>
 
-        <section className="trainer-summary-grid">
-          <article className="trainer-summary-card">
-            <span>{t("trainerDashboard.summary.totalOrders")}</span>
-            <strong>{summary.paid}</strong>
-          </article>
+            <h1>Orders</h1>
 
-          <article className="trainer-summary-card">
-            <span>{t("trainerDashboard.summary.revenue")}</span>
-
-            <strong>
-              {formatPrice(summary.revenueHalalas)}{" "}
-              {t("trainerDashboard.currency")}
-            </strong>
-          </article>
+            <p>Review customer purchases and manage training orders.</p>
+          </div>
         </section>
 
-        <section className="trainer-dashboard-controls">
-          <label className="trainer-search-field">
-            <span>{t("trainerDashboard.searchLabel")}</span>
+        <section className="trainer-orders-section">
+          <div className="trainer-orders-top">
+            <div>
+              <h2>Recent Orders</h2>
+              <p>{orders.length} total orders</p>
+            </div>
 
-            <input
-              type="search"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder={t("trainerDashboard.searchPlaceholder")}
-            />
-          </label>
+            <div className="trainer-orders-controls">
+              <label className="trainer-order-search">
+                <FiSearch />
 
-          <label className="trainer-filter-field">
-            <span>{t("trainerDashboard.filterLabel")}</span>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  placeholder="Search order, customer or service"
+                  aria-label="Search order number, customer or service"
+                />
 
-            <select
-              value={statusFilter}
-              onChange={(event) => setStatusFilter(event.target.value)}
-            >
-              <option value="all">{t("trainerDashboard.filters.all")}</option>
-
-              <option value="paid">{t("trainerDashboard.filters.paid")}</option>
-
-              <option value="pending">
-                {t("trainerDashboard.filters.pending")}
-              </option>
-
-              <option value="failed">
-                {t("trainerDashboard.filters.failed")}
-              </option>
-
-              <option value="expired">
-                {t("trainerDashboard.filters.expired")}
-              </option>
-            </select>
-          </label>
-
-          <label className="trainer-filter-field">
-            <span>{t("trainerDashboard.sortLabel")}</span>
-
-            <select
-              value={sortOrder}
-              onChange={(event) => setSortOrder(event.target.value)}
-            >
-              <option value="newest">
-                {t("trainerDashboard.sort.newest")}
-              </option>
-
-              <option value="oldest">
-                {t("trainerDashboard.sort.oldest")}
-              </option>
-            </select>
-          </label>
-        </section>
-
-        {orders.length === 0 ? (
-          <section className="trainer-dashboard-state">
-            <h2>{t("trainerDashboard.emptyTitle")}</h2>
-            <p>{t("trainerDashboard.emptyMessage")}</p>
-          </section>
-        ) : filteredOrders.length === 0 ? (
-          <section className="trainer-dashboard-state">
-            <h2>{t("trainerDashboard.noResultsTitle")}</h2>
-            <p>{t("trainerDashboard.noResultsMessage")}</p>
-          </section>
-        ) : (
-          <section className="trainer-orders-list">
-            {filteredOrders.map((order) => (
-              <article key={order.id} className="trainer-order-card">
-                <div className="trainer-order-header">
-                  <div>
-                    <span className="trainer-order-number">
-                      {t("trainerDashboard.orderNumber", {
-                        number: order.id,
-                      })}
-                    </span>
-
-                    <p>{formatDate(order.created_at)}</p>
-                  </div>
-
-                  <span
-                    className={`trainer-order-status trainer-order-status-${order.status}`}
+                {searchTerm && (
+                  <button
+                    type="button"
+                    className="trainer-search-clear"
+                    onClick={() => setSearchTerm("")}
+                    aria-label="Clear search"
                   >
-                    {t(`trainerDashboard.status.${order.status}`, {
-                      defaultValue: order.status,
-                    })}
-                  </span>
-                </div>
+                    <FiX />
+                  </button>
+                )}
+              </label>
 
-                <div className="trainer-customer-details">
-                  <div>
-                    <span>{t("trainerDashboard.customerName")}</span>
-                    <strong>{order.customer_name}</strong>
-                  </div>
+              <select
+                className="trainer-status-filter"
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value)}
+                aria-label="Filter orders by status"
+              >
+                <option value="all">All statuses</option>
+                <option value="paid">Paid</option>
+                <option value="pending">Pending</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="expired">Expired</option>
+              </select>
+            </div>
+          </div>
 
-                  <div>
-                    <span>{t("trainerDashboard.customerEmail")}</span>
+          {loading && (
+            <div className="trainer-orders-message">Loading orders...</div>
+          )}
 
-                    <a href={`mailto:${order.customer_email}`}>
-                      {order.customer_email}
-                    </a>
-                  </div>
+          {!loading && error && (
+            <div className="trainer-orders-message trainer-orders-error">
+              {error}
+            </div>
+          )}
 
-                  <div>
-                    <span>{t("trainerDashboard.phone")}</span>
+          {!loading && !error && (
+            <>
+              <div className="trainer-orders-table-container">
+                <table className="trainer-orders-table">
+                  <thead>
+                    <tr>
+                      <th>
+                        <button
+                          type="button"
+                          className="trainer-sort-button"
+                          onClick={() => handleSort("id")}
+                        >
+                          Order #
+                          <SortIcon column="id" sortConfig={sortConfig} />
+                        </button>
+                      </th>
 
-                    <a href={`tel:${order.phone}`} dir="ltr">
-                      {order.phone}
-                    </a>
-                  </div>
-                </div>
+                      <th>Customer</th>
 
-                <div className="trainer-order-items">
-                  <h2>{t("trainerDashboard.purchasedServices")}</h2>
+                      <th>Service / Plan</th>
 
-                  {order.items.map((item, index) => (
-                    <div
-                      key={`${order.id}-${item.service}-${item.plan}-${index}`}
-                      className="trainer-order-item"
+                      <th>Amount</th>
+
+                      <th>
+                        <button
+                          type="button"
+                          className="trainer-sort-button"
+                          onClick={() => handleSort("created_at")}
+                        >
+                          Purchase Date
+                          <SortIcon
+                            column="created_at"
+                            sortConfig={sortConfig}
+                          />
+                        </button>
+                      </th>
+
+                      <th>Status</th>
+
+                      <th aria-label="Open order details"></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {paginatedOrders.map((order) => (
+                      <tr
+                        key={order.id}
+                        className="trainer-order-row"
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => setSelectedOrder(order)}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            setSelectedOrder(order);
+                          }
+                        }}
+                      >
+                        <td className="trainer-order-number">#{order.id}</td>
+
+                        <td>
+                          <strong>{getCustomerName(order)}</strong>
+                        </td>
+
+                        <td>
+                          <div className="trainer-order-items">
+                            {order.items?.map((item, index) => (
+                              <div
+                                className="trainer-order-item"
+                                key={item.id ?? index}
+                              >
+                                <strong>{getServiceTitle(item)}</strong>
+
+                                <span>
+                                  {getPlanTitle(item)}
+
+                                  {item.quantity > 1
+                                    ? ` × ${item.quantity}`
+                                    : ""}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </td>
+
+                        <td className="trainer-order-amount">
+                          {formatPrice(order)}
+                        </td>
+
+                        <td>
+                          <div className="trainer-order-date">
+                            <span>{formatDate(order.created_at)}</span>
+
+                            <small>{formatTime(order.created_at)}</small>
+                          </div>
+                        </td>
+
+                        <td>
+                          <span
+                            className={`trainer-order-status trainer-order-status-${order.status?.toLowerCase()}`}
+                          >
+                            {order.status || "Unknown"}
+                          </span>
+                        </td>
+
+                        <td className="trainer-order-open">
+                          <FiChevronRight />
+                        </td>
+                      </tr>
+                    ))}
+
+                    {paginatedOrders.length === 0 && (
+                      <tr>
+                        <td colSpan="7" className="trainer-no-orders">
+                          No matching orders found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="trainer-pagination">
+                <p>
+                  Showing {processedOrders.length === 0 ? 0 : startIndex + 1}–
+                  {Math.min(
+                    startIndex + ORDERS_PER_PAGE,
+                    processedOrders.length,
+                  )}{" "}
+                  of {processedOrders.length} orders
+                </p>
+
+                {totalPages > 1 && (
+                  <div className="trainer-pagination-buttons">
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage((page) => page - 1)}
+                      disabled={currentPage === 1}
+                      aria-label="Previous page"
                     >
-                      <div>
-                        <strong>{item.service}</strong>
-                        <span>{item.plan}</span>
-                      </div>
+                      <FiChevronLeft />
+                    </button>
 
-                      {item.quantity > 1 && (
-                        <span className="trainer-order-quantity">
-                          {t("trainerDashboard.quantity", {
-                            count: item.quantity,
-                          })}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    {Array.from({ length: totalPages }, (_, index) => {
+                      const pageNumber = index + 1;
 
-                <div className="trainer-order-total">
-                  <span>{t("trainerDashboard.total")}</span>
+                      return (
+                        <button
+                          key={pageNumber}
+                          type="button"
+                          className={
+                            currentPage === pageNumber
+                              ? "trainer-pagination-active"
+                              : ""
+                          }
+                          onClick={() => setCurrentPage(pageNumber)}
+                          aria-current={
+                            currentPage === pageNumber ? "page" : undefined
+                          }
+                        >
+                          {pageNumber}
+                        </button>
+                      );
+                    })}
 
-                  <strong>
-                    {formatPrice(order.total_halalas)}{" "}
-                    {t("trainerDashboard.currency")}
-                  </strong>
-                </div>
-              </article>
-            ))}
-          </section>
-        )}
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage((page) => page + 1)}
+                      disabled={currentPage === totalPages}
+                      aria-label="Next page"
+                    >
+                      <FiChevronRight />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </section>
       </main>
+
+      {selectedOrder && (
+        <div
+          className="trainer-order-modal-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setSelectedOrder(null);
+            }
+          }}
+        >
+          <article
+            className="trainer-order-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="trainer-order-modal-title"
+          >
+            <button
+              type="button"
+              className="trainer-order-modal-close"
+              onClick={() => setSelectedOrder(null)}
+              aria-label="Close order details"
+            >
+              <FiX />
+            </button>
+
+            <div className="trainer-order-modal-header">
+              <div>
+                <h2 id="trainer-order-modal-title">
+                  Order #{selectedOrder.id}
+                </h2>
+
+                <p>{formatLongDate(selectedOrder.created_at)}</p>
+              </div>
+
+              <span
+                className={`trainer-order-status trainer-order-status-${selectedOrder.status?.toLowerCase()}`}
+              >
+                {selectedOrder.status || "Unknown"}
+              </span>
+            </div>
+
+            <div className="trainer-order-customer-details">
+              <div className="trainer-order-detail-group">
+                <span>Customer</span>
+                <strong>{getCustomerName(selectedOrder)}</strong>
+              </div>
+
+              <div className="trainer-order-detail-group">
+                <span>Email</span>
+
+                {getCustomerEmail(selectedOrder) ? (
+                  <a href={`mailto:${getCustomerEmail(selectedOrder)}`}>
+                    {getCustomerEmail(selectedOrder)}
+                  </a>
+                ) : (
+                  <strong>Not provided</strong>
+                )}
+              </div>
+
+              <div className="trainer-order-detail-group">
+                <span>Phone</span>
+
+                {getCustomerPhone(selectedOrder) ? (
+                  <a href={`tel:${getCustomerPhone(selectedOrder)}`}>
+                    {getCustomerPhone(selectedOrder)}
+                  </a>
+                ) : (
+                  <strong>Not provided</strong>
+                )}
+              </div>
+            </div>
+
+            <div className="trainer-order-modal-divider" />
+
+            <section className="trainer-order-purchased-services">
+              <h3>Purchased Services</h3>
+
+              {selectedOrder.items?.map((item, index) => (
+                <div
+                  className="trainer-order-modal-item"
+                  key={item.id ?? index}
+                >
+                  <div>
+                    <strong>{getServiceTitle(item)}</strong>
+                    <span>{getPlanTitle(item)}</span>
+                  </div>
+
+                  {item.quantity > 1 && (
+                    <span className="trainer-order-item-quantity">
+                      × {item.quantity}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </section>
+
+            <div className="trainer-order-modal-divider" />
+
+            <div className="trainer-order-modal-total">
+              <strong>Total</strong>
+              <strong>{formatPrice(selectedOrder)}</strong>
+            </div>
+          </article>
+        </div>
+      )}
+
+      <Footer />
     </>
   );
 }
