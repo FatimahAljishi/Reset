@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from app.database import get_session
 from app.models import Order, OrderItem
-from app.services.order_notifications import send_paid_order_email
+from app.services.order_notifications import send_paid_order_email, send_customer_confirmation_email
 import logging
 from datetime import datetime, timedelta, timezone
 
@@ -162,6 +162,17 @@ async def verify_payment(
     except Exception:
         logger.exception(
             "Order %s was paid, but the trainer email could not be sent.",
+            order.id,
+        )
+
+    try:
+        await send_customer_confirmation_email(
+            order=order,
+            items=order_items,
+        )
+    except Exception:
+        logger.exception(
+            "Order %s was paid, but the customer email failed.",
             order.id,
         )
 
