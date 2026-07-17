@@ -10,6 +10,13 @@ from app.database import get_session
 from app.models import Order, OrderItem
 from app.services.order_notifications import send_paid_order_email
 import logging
+from datetime import datetime, timedelta, timezone
+
+def ensure_utc(value: datetime) -> datetime:
+    if value.tzinfo is None:
+        return value.replace(tzinfo=timezone.utc)
+
+    return value.astimezone(timezone.utc)
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -54,6 +61,20 @@ async def verify_payment(
         raise HTTPException(
             status_code=400,
             detail="This order cannot be paid.",
+        )
+    
+    created_at_utc = ensure_utc(order.created_at)
+    expiration_time = created_at_utc + timedelta(hours=1)
+
+    if datetime.now(timezone.utc) >= expiration_time:
+        order.status = "expired"
+
+        session.add(order)
+        session.commit()
+
+        raise HTTPException(
+            status_code=400,
+            detail="This order has expired.",
         )
 
     secret_key = os.getenv("MOYASAR_SECRET_KEY")

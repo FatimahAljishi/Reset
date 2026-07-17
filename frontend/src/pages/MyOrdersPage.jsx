@@ -143,69 +143,77 @@ export default function MyOrdersPage() {
           </section>
         ) : (
           <div className="orders-list">
-            {orders.map((order) => (
-              <article key={order.id} className="order-card">
-                <div className="order-card-header">
-                  <div>
-                    <span className="order-number">
-                      {t("myOrders.orderNumber", {
-                        number: order.id,
-                      })}
-                    </span>
+            {orders.map(
+              (order) =>
+                order.status === "paid" && (
+                  <article key={order.id} className="order-card">
+                    <div className="order-card-header">
+                      <div>
+                        <span className="order-number">
+                          {t("myOrders.orderNumber", {
+                            number: order.id,
+                          })}
+                        </span>
 
-                    <p>{formatDate(order.created_at)}</p>
-                  </div>
-
-                  <span className={`order-status order-status-${order.status}`}>
-                    {t(`myOrders.status.${order.status}`)}
-                  </span>
-                </div>
-
-                <div className="order-items">
-                  {order.items.map((item) => {
-                    const serviceTitle =
-                      i18n.language === "ar"
-                        ? item.service_title_ar
-                        : item.service_title_en;
-
-                    const planTitle =
-                      i18n.language === "ar"
-                        ? item.plan_title_ar
-                        : item.plan_title_en;
-
-                    return (
-                      <div key={item.id} className="order-item">
-                        <div>
-                          <h2>{serviceTitle}</h2>
-                          <p>{planTitle}</p>
-
-                          {item.quantity > 1 && (
-                            <span>
-                              {t("myOrders.quantity", {
-                                count: item.quantity,
-                              })}
-                            </span>
-                          )}
-                        </div>
-
-                        <strong>
-                          {formatPrice(item.unit_price_halalas * item.quantity)}{" "}
-                          {t("myOrders.currency")}
-                        </strong>
+                        <p>{formatDate(order.created_at)}</p>
                       </div>
-                    );
-                  })}
-                </div>
 
-                <div className="order-total">
-                  <span>{t("myOrders.total")}</span>
+                      <span
+                        className={`order-status order-status-${order.status}`}
+                      >
+                        {t(`myOrders.status.${order.status}`)}
+                      </span>
+                    </div>
 
-                  <strong>
-                    {formatPrice(order.total_halalas)} {t("myOrders.currency")}
-                  </strong>
-                </div>
-              </article>
-            ))}
+                    <div className="order-items">
+                      {order.items.map((item) => {
+                        const serviceTitle =
+                          i18n.language === "ar"
+                            ? item.service_title_ar
+                            : item.service_title_en;
+
+                        const planTitle =
+                          i18n.language === "ar"
+                            ? item.plan_title_ar
+                            : item.plan_title_en;
+
+                        return (
+                          <div key={item.id} className="order-item">
+                            <div>
+                              <h2>{serviceTitle}</h2>
+                              <p>{planTitle}</p>
+
+                              {item.quantity > 1 && (
+                                <span>
+                                  {t("myOrders.quantity", {
+                                    count: item.quantity,
+                                  })}
+                                </span>
+                              )}
+                            </div>
+
+                            <strong>
+                              {formatPrice(
+                                item.unit_price_halalas * item.quantity,
+                              )}{" "}
+                              {t("myOrders.currency")}
+                            </strong>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="order-total">
+                      <span>{t("myOrders.total")}</span>
+
+                      <strong>
+                        {formatPrice(order.total_halalas)}{" "}
+                        {t("myOrders.currency")}
+                      </strong>
+                    </div>
+                  </article>
+                ),
+            )}
           </div>
         )}
       </main>

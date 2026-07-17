@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useTranslation } from "react-i18next";
@@ -9,11 +9,27 @@ import "./CheckoutPage.css";
 import { useAuth } from "@clerk/clerk-react";
 import Footer from "../components/Footer";
 
+const getCartFingerprint = (items) => {
+  return items
+    .map((item) => ({
+      planId: item.planId,
+      quantity: item.quantity ?? 1,
+    }))
+    .sort((a, b) => a.planId - b.planId)
+    .map((item) => `${item.planId}:${item.quantity}`)
+    .join("|");
+};
+
 function CheckoutPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
   const { cartItems, cartTotal, customerPhone } = useCart();
+
+  const currentCartFingerprint = useMemo(
+    () => getCartFingerprint(cartItems),
+    [cartItems],
+  );
 
   const formInitialized = useRef(false);
 
@@ -41,13 +57,20 @@ function CheckoutPage() {
 
     if (savedOrder) {
       const parsedOrder = JSON.parse(savedOrder);
+      const createdAt = new Date(parsedOrder.created_at).getTime();
+      const oneHour = 60 * 60 * 1000;
+      const isStillValid = Date.now() - createdAt < oneHour;
+      const cartMatches =
+        parsedOrder.cartFingerprint === currentCartFingerprint;
 
-      if (parsedOrder.status === "pending") {
+      if (parsedOrder.status === "pending" && isStillValid && cartMatches) {
         setOrder(parsedOrder);
         setOrderLoading(false);
         orderCreationStarted.current = true;
         return;
       }
+      localStorage.removeItem("resetPendingOrder");
+      localStorage.removeItem("resetPendingPayment");
     }
 
     orderCreationStarted.current = true;
@@ -80,7 +103,13 @@ function CheckoutPage() {
 
         setOrder(data);
 
-        localStorage.setItem("resetPendingOrder", JSON.stringify(data));
+        localStorage.setItem(
+          "resetPendingOrder",
+          JSON.stringify({
+            ...data,
+            cartFingerprint: currentCartFingerprint,
+          }),
+        );
       } catch (error) {
         console.error("Order creation error:", error);
         setOrderError(error.message);
@@ -91,7 +120,7 @@ function CheckoutPage() {
     };
 
     createPendingOrder();
-  }, [cartItems, fullPhoneNumber]);
+  }, [cartItems, fullPhoneNumber, currentCartFingerprint]);
 
   useEffect(() => {
     if (!order || !order.total_halalas || formInitialized.current) {
