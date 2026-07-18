@@ -18,6 +18,36 @@
   margin-bottom: 1rem;
 }
 
+.orders-list-summary {
+  width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.order-card-summary {
+  padding: 1.25rem;
+  background: #fffdf8;
+  border: 1px solid #d8d1bc;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-card-summary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px rgba(48, 70, 39, 0.14);
+  background: #fffdf7;
+  cursor: pointer;
+}
+
+.order-info {
+  display: flex;
+  justify-content: space-between;
+}
+
 .orders-list {
   width: min(100%, 700px);
   margin: 0 auto;
@@ -31,6 +61,9 @@
   background: #fffdf8;
   border: 1px solid #d8d1bc;
   border-radius: 22px;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .order-card-header {
@@ -152,6 +185,212 @@
   cursor: pointer;
 }
 
+.my-orders-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.my-orders-search {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: min(100%, 380px);
+  min-height: 46px;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(70, 94, 44, 0.25);
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.my-orders-search svg {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.my-orders-search input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.my-orders-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.my-orders-search-clear {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.my-orders-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
+.my-orders-sort select {
+  min-height: 46px;
+  padding: 0 2.2rem 0 0.9rem;
+  border: 1px solid rgba(70, 94, 44, 0.25);
+  border-radius: 10px;
+  outline: none;
+  background-color: #fff;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+[dir="rtl"] .my-orders-sort select {
+  padding: 0 0.9rem 0 2.2rem;
+}
+
+.my-orders-search:focus-within,
+.my-orders-sort select:focus {
+  border-color: #465e2c;
+  box-shadow: 0 0 0 3px rgba(70, 94, 44, 0.1);
+}
+
+.my-orders-no-results {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.my-orders-no-results h2 {
+  margin-bottom: 0.5rem;
+}
+
+.my-orders-no-results p {
+  margin-bottom: 1.25rem;
+}
+
+.my-orders-no-results button {
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #465e2c;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.my-orders-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+}
+
+.pagination-pages {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pagination-page,
+.pagination-arrow {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(70, 94, 44, 0.25);
+  border-radius: 8px;
+  background-color: #fff;
+  color: #465e2c;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pagination-page:hover,
+.pagination-arrow:hover:not(:disabled) {
+  border-color: #465e2c;
+  background-color: rgba(70, 94, 44, 0.08);
+}
+
+.pagination-page-active {
+  border-color: #465e2c;
+  background-color: #465e2c;
+  color: #fff;
+}
+
+.pagination-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.pagination-arrow svg {
+  font-size: 1.2rem;
+}
+
+[dir="rtl"] .pagination-arrow svg {
+  transform: rotate(180deg);
+}
+
+.my-orders-results-info {
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.my-orders-results-info p {
+  margin: 0;
+  color: rgba(33, 33, 33, 0.7);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 450px) {
+  .my-orders-pagination {
+    gap: 0.35rem;
+  }
+
+  .pagination-pages {
+    gap: 0.25rem;
+  }
+
+  .pagination-page,
+  .pagination-arrow {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 650px) {
+  .my-orders-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .my-orders-search {
+    width: 100%;
+  }
+
+  .my-orders-sort {
+    justify-content: space-between;
+  }
+
+  .my-orders-sort select {
+    flex: 1;
+  }
+}
+
 @media (max-width: 480px) {
   .my-orders-page {
     padding: 1.5rem;
@@ -164,5 +403,9 @@
 
   .order-item strong {
     font-size: 0.9rem;
+  }
+
+  .orders-list-summary {
+    width: 300px;
   }
 }

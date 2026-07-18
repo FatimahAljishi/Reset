@@ -316,6 +316,9 @@
     "exploreServices": "Explore Services",
 
     "orderNumber": "Order #{{number}}",
+    "orderNumber2": "Order Number:",
+    "orderDate": "Order Date:",
+    "orderStatus": "Order Status:",
     "quantity": "Quantity: {{count}}",
     "total": "Total",
     "currency": "SAR",

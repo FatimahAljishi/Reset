@@ -314,6 +314,9 @@
     "exploreServices": "استكشفي الخدمات",
 
     "orderNumber": "الطلب رقم {{number}}",
+    "orderNumber2": "رقم الطلب:",
+    "orderDate": "تاريخ الطلب:",
+    "orderStatus": "حالة الطلب:",
     "quantity": "الكمية: {{count}}",
     "total": "الإجمالي",
     "currency": "ر.س",
