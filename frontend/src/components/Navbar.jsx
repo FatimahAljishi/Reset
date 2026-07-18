@@ -30,7 +30,7 @@ export default function Navbar() {
   }, []);
   return (
     <header className="navbar">
-      <Link to="/">
+      <Link to="/" className="navbar-logo-link">
         <img src={logo} alt="Reset" className="logo" />
       </Link>
 
@@ -39,7 +39,7 @@ export default function Navbar() {
 
         <Link
           to="/cart"
-          className="navbar-cart"
+          className="navbar-icon"
           aria-label={`Cart with ${cartCount} items`}
         >
           <HiOutlineShoppingBag />
@@ -50,6 +50,17 @@ export default function Navbar() {
             </span>
           )}
         </Link>
+
+        <SignedOut>
+          <Link to="/login" className="navbar-icon" aria-label="Login">
+            <LuUser />
+          </Link>
+        </SignedOut>
+        <SignedIn>
+          <Link to="/profile" className="navbar-icon" aria-label="Profile">
+            <LuUser />
+          </Link>
+        </SignedIn>
 
         <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
           <HiOutlineBars3 />
@@ -85,18 +96,6 @@ export default function Navbar() {
             <LuMail className="mobile-link-icon" />
             {t("navbar.contact")}
           </Link>
-          <SignedOut>
-            <Link to="/login" onClick={() => setMenuOpen(false)}>
-              <LuUser className="mobile-link-icon" />
-              {t("navbar.login")}
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <Link to="/profile" onClick={() => setMenuOpen(false)}>
-              <LuUser className="mobile-link-icon" />
-              {t("navbar.profile")}
-            </Link>
-          </SignedIn>
         </div>
         <img src={navArt} alt="" className="mobile-nav-art" />
       </div>
@@ -107,12 +106,6 @@ export default function Navbar() {
         <Link to="/services">{t("navbar.services")}</Link>
         <Link to="/community">{t("navbar.community")}</Link>
         <Link to="/contact">{t("navbar.contact")}</Link>
-        <SignedOut>
-          <Link to="/login">{t("navbar.login")}</Link>
-        </SignedOut>
-        <SignedIn>
-          <Link to="/profile">{t("navbar.profile")}</Link>
-        </SignedIn>
       </nav>
     </header>
   );
