@@ -64,7 +64,7 @@
     "verify": "Verify"
   },
   "profile": {
-    "welcome": "Welcome",
+    "welcome": "Hello",
     "manageAccount": "Manage Account",
     "signOut": "Sign Out",
     "trainerDashboard": "Trainer Dashboard"

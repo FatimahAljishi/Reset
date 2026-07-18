@@ -24,7 +24,7 @@ export default function AboutPage() {
         <div className="meet-zainab">
           <div className="meet-zainab-text">
             <h1>{t("about.meetZainab.title")}</h1>
-            <p>
+            <div>
               <span>{t("about.meetZainab.description1")}</span>
               <span className="accent">
                 {t("about.meetZainab.description2")}
@@ -34,7 +34,7 @@ export default function AboutPage() {
               <span className="accent">
                 {t("about.meetZainab.description5")}
               </span>
-            </p>
+            </div>
           </div>
           <div className="meet-zainab-image">
             <div className="bg-oval">

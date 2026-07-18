@@ -73,6 +73,13 @@ html[dir="rtl"] .bg-oval img {
   font-weight: 600;
 }
 
+.meet-zainab-text span {
+  font-size: clamp(0.85rem, 2vw, 1.5rem);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
 .why-reset {
   display: flex;
   flex-direction: column;

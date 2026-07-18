@@ -73,14 +73,16 @@
   z-index: 1;
 }
 
-.menu-overlay {
+.menu-overlay,
+.profile-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
   z-index: 90;
 }
 
-.mobile-menu {
+.mobile-menu,
+.profile-menu {
   position: fixed;
   top: 0;
   right: 0;
@@ -98,20 +100,24 @@
   overflow: hidden;
 }
 
-.mobile-menu.open {
+.mobile-menu.open,
+.profile-menu.open {
   transform: translateX(0);
 }
 
-html[dir="rtl"] .mobile-menu {
+html[dir="rtl"] .mobile-menu,
+html[dir="rtl"] .profile-menu {
   right: auto;
   left: 0;
 }
 
-html[dir="rtl"] .mobile-menu:not(.open) {
+html[dir="rtl"] .mobile-menu:not(.open),
+html[dir="rtl"] .profile-menu:not(.open) {
   transform: translateX(-100%);
 }
 
-html[dir="rtl"] .mobile-menu.open {
+html[dir="rtl"] .mobile-menu.open,
+html[dir="rtl"] .profile-menu.open {
   transform: translateX(0);
 }
 
@@ -121,7 +127,8 @@ html[dir="rtl"] .mobile-nav-art {
   transform: scaleX(-1);
 }
 
-html.changing-dir .mobile-menu {
+html.changing-dir .mobile-menu,
+html.changing-dir .profile-menu {
   transition: none;
 }
 
@@ -134,7 +141,9 @@ html.changing-dir .mobile-menu {
   cursor: pointer;
 }
 
-.mobile-menu a {
+.mobile-menu a,
+.profile-menu a,
+.sign-out-btn {
   text-decoration: none;
   color: var(--primary-color);
   font-weight: 600;
@@ -147,21 +156,32 @@ html.changing-dir .mobile-menu {
   font-size: 1.5rem;
 }
 
-.mobile-menu a:active {
+.mobile-menu a:active,
+.profile-menu a:active,
+.sign-out-btn:active {
   background: var(--secondary-background-color);
   border-radius: 8px;
 }
 
-.mobile-links a {
+.mobile-links a,
+.mobile-links button {
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 1rem;
+  border: none;
   border-bottom: 1px solid #eadfbd;
+  background: none;
+  cursor: pointer;
+}
+
+.sign-out-btn {
+  color: #b3261e;
 }
 
 .navbar-icon,
-.menu-btn {
+.menu-btn,
+.profile-btn {
   position: relative;
   display: grid;
   place-items: center;
@@ -195,6 +215,13 @@ html.changing-dir .mobile-menu {
   font-size: 0.65rem;
   font-weight: 700;
   line-height: 1;
+}
+
+.profile-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  object-fit: cover;
 }
 
 @media (min-width: 900px) {
