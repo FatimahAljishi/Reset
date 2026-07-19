@@ -160,64 +160,6 @@
   pointer-events: none;
 }
 
-.hero-content {
-  opacity: 0;
-  transform: translateY(15px);
-
-  animation: heroFadeUp 700ms ease-out forwards;
-}
-
-@keyframes heroFadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-portrait {
-  opacity: 0;
-  transform: translateY(15px);
-
-  animation: trainerFade 700ms ease-out forwards;
-  animation-delay: 150ms;
-}
-
-@keyframes trainerFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.primary-btn {
-  opacity: 0;
-  transform: translateY(10px);
-
-  animation: buttonFade 700ms ease-out forwards;
-  animation-delay: 300ms;
-}
-
-@keyframes buttonFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-hills {
-  opacity: 0;
-  transform: translateY(5px);
-
-  animation: hillsFade 700ms ease-out forwards;
-}
-
-@keyframes hillsFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 html[dir="rtl"] .hero-art {
   right: auto;
   left: 0;
