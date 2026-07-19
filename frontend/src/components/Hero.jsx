@@ -1,5 +1,5 @@
 import "./Hero.css";
-import heroArt from "../assets/hero-art.png";
+import heroArt from "../assets/hills.png";
 import { useTranslation } from "react-i18next";
 import heroPortrait from "../assets/portrait.png";
 import { PiPlantLight } from "react-icons/pi";
@@ -37,7 +37,9 @@ export default function Hero() {
         </div>
       </div>
 
-      <img src={heroArt} alt="" className="hero-art" />
+      <div className="hero-hills">
+        <img src={heroArt} alt="" className="hero-art" />
+      </div>
       <img src={heroPortrait} alt="" className="hero-portrait" />
     </section>
   );
