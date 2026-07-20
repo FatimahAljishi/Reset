@@ -5,6 +5,7 @@ import heroPortrait from "../assets/portrait.png";
 import { PiPlantLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import plant from "../assets/plant.png";
+import plants from "../assets/plants.png";
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -45,6 +46,7 @@ export default function Hero() {
       {/*<div className="plant-decoration" aria-hidden="true">
         <img src={plant} />
       </div>*/}
+      <img src={plants} className="side-plants" />
     </section>
   );
 }

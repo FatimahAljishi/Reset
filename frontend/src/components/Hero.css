@@ -142,36 +142,12 @@
 .hero-art {
   position: absolute;
   right: 0px;
-  bottom: -4px;
+  bottom: 0px;
   width: 125%;
   max-width: none;
   z-index: 1;
 
   opacity: 0.5;
-  transform-origin: center bottom;
-  animation: hillsWave 5s ease-in-out infinite;
-}
-
-@keyframes hillsWave {
-  0% {
-    transform: translateY(0) rotate(0deg) scaleX(1);
-  }
-
-  25% {
-    transform: translateY(-4px) rotate(-0.3deg) scaleX(1.005);
-  }
-
-  50% {
-    transform: translateY(0) rotate(0deg) scaleX(1);
-  }
-
-  75% {
-    transform: translateY(4px) rotate(0.3deg) scaleX(0.995);
-  }
-
-  100% {
-    transform: translateY(0) rotate(0deg) scaleX(1);
-  }
 }
 
 .hero-portrait {
@@ -228,6 +204,12 @@ html[dir="rtl"] .hero-portrait {
   }
 }
 
+@media (max-width: 1200px) {
+  .side-plants {
+    display: none;
+  }
+}
+
 @media (min-width: 1000px) {
   .hero {
     max-height: calc(100vh - 91.36px);
@@ -240,16 +222,12 @@ html[dir="rtl"] .hero-portrait {
   }
 
   .hero h1 {
-    font-size: clamp(1rem, 4vw, 3.5rem);
+    font-size: clamp(1rem, 5vw, 3.5rem);
   }
 
   html[dir="rtl"] .hero-line {
     display: inline-block;
     margin-left: 0.25em;
-  }
-
-  .hero p {
-    font-size: clamp(0.85rem, 1vw, 1.25rem);
   }
 
   .hero-content {
@@ -283,9 +261,7 @@ html[dir="rtl"] .hero-portrait {
     padding-left: 0;
     padding-right: 8%;
   }
-}
 
-@media (min-width: 1000px) {
   .hero-art {
     bottom: -10vh;
     width: 100%;
@@ -303,6 +279,18 @@ html[dir="rtl"] .hero-portrait {
     right: 55%;
     transform: scaleX(-1);
   }
+
+  .hero-divider {
+    width: 60%;
+  }
+
+  .hero p {
+    max-width: 60%;
+  }
+
+  .primary-btn {
+    width: 60%;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -312,21 +300,37 @@ html[dir="rtl"] .hero-portrait {
     height: auto;
   }
 
-  .hero-portrait {
-    left: 55%;
-    bottom: 0;
-    width: auto;
-    height: 90%;
+  .hero h1 {
+    font-size: clamp(1rem, 4vw, 3.5rem);
   }
 
-  html[dir="rtl"] .hero-portrait {
-    right: 55%;
-    transform: scaleX(-1);
+  .side-plants {
+    position: absolute;
+    bottom: 20vh;
+    right: 0px;
+    width: auto;
+    height: 500px;
+    z-index: 1;
+    pointer-events: none;
+    rotate: -15deg;
+    opacity: 0.7;
+  }
+
+  html[dir="rtl"] .side-plants {
+    right: auto;
+    left: 0px;
+    transform: scaleX(-1) rotate(-20deg);
   }
 }
 
 @media (min-width: 1720px) {
   .hero-content {
     max-width: 40%;
+  }
+}
+
+@media (max-height: 650px) {
+  .hero h1 {
+    font-size: clamp(1rem, 4vw, 2rem);
   }
 }
