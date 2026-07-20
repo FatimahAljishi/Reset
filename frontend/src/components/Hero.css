@@ -204,7 +204,7 @@ html[dir="rtl"] .hero-portrait {
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1000px) {
   .side-plants {
     display: none;
   }
@@ -291,18 +291,6 @@ html[dir="rtl"] .hero-portrait {
   .primary-btn {
     width: 60%;
   }
-}
-
-@media (min-width: 1200px) {
-  .hero-art {
-    bottom: -20vh;
-    width: 100%;
-    height: auto;
-  }
-
-  .hero h1 {
-    font-size: clamp(1rem, 4vw, 3.5rem);
-  }
 
   .side-plants {
     position: absolute;
@@ -319,7 +307,20 @@ html[dir="rtl"] .hero-portrait {
   html[dir="rtl"] .side-plants {
     right: auto;
     left: 0px;
-    transform: scaleX(-1) rotate(-20deg);
+    rotate: 15deg;
+    transform: scaleX(-1);
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero-art {
+    bottom: -20vh;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero h1 {
+    font-size: clamp(1rem, 4vw, 3.5rem);
   }
 }
 
