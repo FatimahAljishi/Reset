@@ -3,7 +3,7 @@
     "mainHeading": [
       { "text": "رحلتكِ لا تحتاج", "accent": false },
       { "text": "إلى بداية مثالية.", "accent": false },
-      { "text": "كل ما تحتاجينه", "accent": true },
+      { "text": "كل ما تحتاجينه", "accent": false },
       { "text": "هو Reset.", "accent": true }
     ],
     "subHeading": "مساعدة النساء على بناء أسلوب حياة صحي من خلال الحركة ومجتمع داعم.",

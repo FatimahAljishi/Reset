@@ -4,7 +4,7 @@
       { "text": "Your journey", "accent": false },
       { "text": "doesn't need", "accent": false },
       { "text": "a perfect start.", "accent": false },
-      { "text": "It only needs", "accent": true },
+      { "text": "It only needs", "accent": false },
       { "text": "a Reset.", "accent": true }
     ],
     "subHeading": "Helping women build a healthier lifestyle through movement, wellness and community.",
