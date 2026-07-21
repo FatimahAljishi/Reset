@@ -1,17 +1,25 @@
 import "./Hero.css";
 import heroArt from "../assets/hills.png";
 import { useTranslation } from "react-i18next";
-import heroPortrait from "../assets/portrait.png";
+import heroPortrait from "../assets/portrait3.png";
 import { PiPlantLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import plant from "../assets/plant.png";
 import plants from "../assets/plants.png";
+import leaf from "../assets/leaf.png";
 
 export default function Hero() {
   const { t } = useTranslation();
   const heading = t("hero.mainHeading", { returnObjects: true });
   return (
     <section className="hero">
+      <div className="floating-leaves" aria-hidden="true">
+        <img src={leaf} className="leaf leaf1" alt="" />
+        <img src={leaf} className="leaf leaf2" alt="" />
+        <img src={leaf} className="leaf leaf3" alt="" />
+        <img src={leaf} className="leaf leaf4" alt="" />
+        <img src={leaf} className="leaf leaf5" alt="" />
+      </div>
       <div className="hero-content">
         <h1>
           {heading.map((line, index) => (

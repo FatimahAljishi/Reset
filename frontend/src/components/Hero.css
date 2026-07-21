@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  width: 100%;
+  width: 80%;
   margin-top: 2rem;
 }
 
@@ -52,11 +52,11 @@
 
 .hero p {
   margin: 28px 0 0;
-  max-width: 80%;
   color: var(--text-color);
   font-size: 1rem;
   line-height: 1.4;
   font-weight: 500;
+  text-wrap: balance;
 }
 
 .hero-buttons {
@@ -146,30 +146,29 @@
   width: 125%;
   max-width: none;
   z-index: 1;
-
   opacity: 0.5;
 }
 
 .hero-portrait {
   position: absolute;
-  right: -50px;
-  bottom: 0px;
-  width: 55%;
-  height: 90%;
+  left: 60%;
+  bottom: -100px;
+  width: auto;
+  height: 100%;
   max-width: none;
   z-index: 2;
   pointer-events: none;
 }
 
-html[dir="rtl"] .hero-art {
+html[dir="rtl"] .hero-portrait {
   right: auto;
-  left: 0;
+  right: 60%;
   transform: scaleX(-1);
 }
 
-html[dir="rtl"] .hero-portrait {
+html[dir="rtl"] .hero-art {
   right: auto;
-  left: -50px;
+  left: 0;
   transform: scaleX(-1);
 }
 
@@ -204,9 +203,191 @@ html[dir="rtl"] .hero-portrait {
   }
 }
 
-@media (max-width: 1000px) {
+.floating-leaves {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.leaf {
+  position: absolute;
+  width: clamp(20px, 2vw, 38px);
+  opacity: 0.2;
+  will-change: transform;
+}
+
+.leaf1 {
+  left: -8%;
+  top: 8%;
+  animation: drift1 18s linear infinite;
+}
+
+.leaf2 {
+  left: -12%;
+  top: 30%;
+  animation: drift2 22s linear infinite;
+  animation-delay: -8s;
+}
+
+.leaf3 {
+  left: -10%;
+  top: 55%;
+  animation: drift3 20s linear infinite;
+  animation-delay: -14s;
+}
+
+.leaf4 {
+  left: -15%;
+  top: 70%;
+  animation: drift4 24s linear infinite;
+  animation-delay: -5s;
+}
+
+.leaf5 {
+  left: -10%;
+  top: 15%;
+  animation: drift5 26s linear infinite;
+  animation-delay: -18s;
+}
+
+@keyframes drift1 {
+  0% {
+    transform: translate(-80px, -20px) rotate(0deg);
+  }
+
+  20% {
+    transform: translate(20vw, 40px) rotate(80deg);
+  }
+
+  40% {
+    transform: translate(40vw, -10px) rotate(160deg);
+  }
+
+  60% {
+    transform: translate(60vw, 70px) rotate(240deg);
+  }
+
+  80% {
+    transform: translate(82vw, 20px) rotate(320deg);
+  }
+
+  100% {
+    transform: translate(115vw, 80px) rotate(420deg);
+  }
+}
+
+@keyframes drift2 {
+  0% {
+    transform: translate(-100px, 0) rotate(-40deg);
+  }
+
+  25% {
+    transform: translate(25vw, -40px) rotate(30deg);
+  }
+
+  50% {
+    transform: translate(55vw, 30px) rotate(120deg);
+  }
+
+  75% {
+    transform: translate(85vw, -20px) rotate(220deg);
+  }
+
+  100% {
+    transform: translate(120vw, 40px) rotate(340deg);
+  }
+}
+
+@keyframes drift3 {
+  0% {
+    transform: translate(-80px, 20px) rotate(0);
+  }
+
+  30% {
+    transform: translate(35vw, -35px) rotate(110deg);
+  }
+
+  60% {
+    transform: translate(70vw, 40px) rotate(220deg);
+  }
+
+  100% {
+    transform: translate(120vw, -20px) rotate(390deg);
+  }
+}
+
+@keyframes drift4 {
+  0% {
+    transform: translate(-120px, 0) rotate(20deg);
+  }
+
+  50% {
+    transform: translate(55vw, -50px) rotate(170deg);
+  }
+
+  100% {
+    transform: translate(120vw, 30px) rotate(350deg);
+  }
+}
+
+@keyframes drift5 {
+  0% {
+    transform: translate(-80px, 0) rotate(0);
+  }
+
+  15% {
+    transform: translate(18vw, 35px) rotate(70deg);
+  }
+
+  35% {
+    transform: translate(40vw, -25px) rotate(150deg);
+  }
+
+  65% {
+    transform: translate(70vw, 40px) rotate(260deg);
+  }
+
+  100% {
+    transform: translate(120vw, -10px) rotate(420deg);
+  }
+}
+
+.side-plants {
+  position: absolute;
+  bottom: 20vh;
+  right: 0px;
+  width: auto;
+  height: 350px;
+  z-index: 1;
+  pointer-events: none;
+  rotate: -15deg;
+  opacity: 0.7;
+}
+
+html[dir="rtl"] .side-plants {
+  right: auto;
+  left: 0px;
+  rotate: 15deg;
+  transform: scaleX(-1);
+}
+
+html[dir="rtl"] .hero-line {
+  display: inline-block;
+  margin-left: 0.25em;
+}
+
+@media (max-width: 500px) {
   .side-plants {
     display: none;
+  }
+}
+
+@media (min-width: 500px) {
+  html[dir="rtl"] .hero-line {
+    display: inline-block;
+    margin-left: 0.25em;
   }
 }
 
@@ -225,36 +406,12 @@ html[dir="rtl"] .hero-portrait {
     font-size: clamp(1rem, 5vw, 3.5rem);
   }
 
-  html[dir="rtl"] .hero-line {
-    display: inline-block;
-    margin-left: 0.25em;
-  }
-
   .hero-content {
-    width: 55%;
+    width: 60%;
   }
 
   .hero-buttons {
     flex-direction: row;
-  }
-
-  .hero-art {
-    bottom: -5vh;
-    width: 100%;
-    height: auto;
-  }
-
-  .hero-portrait {
-    right: 20px;
-    bottom: 0;
-    width: auto;
-    height: 90%;
-  }
-
-  html[dir="rtl"] .hero-portrait {
-    right: auto;
-    left: 20px;
-    transform: scaleX(-1);
   }
 
   html[dir="rtl"] .hero {
@@ -269,23 +426,23 @@ html[dir="rtl"] .hero-portrait {
   }
 
   .hero-portrait {
-    left: 55%;
-    bottom: 0;
+    left: 60%;
+    bottom: -20%;
     width: auto;
-    height: 90%;
+    height: 110%;
   }
 
   html[dir="rtl"] .hero-portrait {
-    right: 55%;
+    right: 60%;
     transform: scaleX(-1);
   }
 
   .hero-divider {
-    width: 60%;
+    width: 80%;
   }
 
   .hero p {
-    max-width: 60%;
+    max-width: 100%;
   }
 
   .primary-btn {
@@ -293,22 +450,7 @@ html[dir="rtl"] .hero-portrait {
   }
 
   .side-plants {
-    position: absolute;
-    bottom: 20vh;
-    right: 0px;
-    width: auto;
     height: 500px;
-    z-index: 1;
-    pointer-events: none;
-    rotate: -15deg;
-    opacity: 0.7;
-  }
-
-  html[dir="rtl"] .side-plants {
-    right: auto;
-    left: 0px;
-    rotate: 15deg;
-    transform: scaleX(-1);
   }
 }
 
@@ -333,5 +475,21 @@ html[dir="rtl"] .hero-portrait {
 @media (max-height: 650px) {
   .hero h1 {
     font-size: clamp(1rem, 4vw, 2rem);
+  }
+
+  .hero-content {
+    width: 50%;
+  }
+
+  .hero-portrait {
+    left: 50%;
+    bottom: -20%;
+    width: auto;
+    height: 110%;
+  }
+
+  html[dir="rtl"] .hero-portrait {
+    right: 50%;
+    transform: scaleX(-1);
   }
 }
