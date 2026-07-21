@@ -214,7 +214,7 @@ html[dir="rtl"] .hero-art {
 .leaf {
   position: absolute;
   width: clamp(20px, 2vw, 38px);
-  opacity: 0.2;
+  opacity: 0.3;
   will-change: transform;
 }
 
@@ -369,8 +369,8 @@ html[dir="rtl"] .hero-art {
 html[dir="rtl"] .side-plants {
   right: auto;
   left: 0px;
-  rotate: 15deg;
-  transform: scaleX(-1);
+
+  transform: scaleX(-1) rotate(-30deg);
 }
 
 html[dir="rtl"] .hero-line {
