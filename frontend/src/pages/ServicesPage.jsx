@@ -9,6 +9,7 @@ import { LuLaptop } from "react-icons/lu";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import plant from "../assets/plants.png";
 
 export default function ServicesPage() {
   const { t } = useTranslation();
@@ -16,6 +17,8 @@ export default function ServicesPage() {
     <>
       <Navbar />
       <div className="services-page">
+        <img src={plant} className="services-plant-right" />
+        <img src={plant} className="services-plant-left" />
         <h1>{t("services.title")}</h1>
         <div className="services-divider">
           <span></span>

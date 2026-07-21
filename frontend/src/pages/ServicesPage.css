@@ -31,21 +31,21 @@
 
 .services-subtitle {
   color: var(--text-color);
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.4;
   text-align: center;
   max-width: 80%;
-  margin-top: 1rem;
+  margin-top: clamp(1rem, 2vh, 2rem);
+  margin-bottom: clamp(1rem, 2vh, 2rem);
 }
 
 .services-hills {
   position: relative;
   width: 125%;
   max-width: none;
-  max-height: 200px;
   margin-top: auto;
   z-index: 1;
-  pointer-events: none;
+
   display: block;
 }
 
@@ -59,12 +59,11 @@
 
 .services-card {
   background: rgba(255, 250, 240, 0.75);
-
   border-radius: 10px;
   padding: 1rem;
   margin-top: 1rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 450px;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -78,6 +77,7 @@
     transform 0.22s ease,
     box-shadow 0.22s ease,
     background-color 0.22s ease;
+  height: 182px;
 }
 
 .services-card:hover {
@@ -126,15 +126,16 @@
 .services-card-content h2 {
   margin: 0;
   color: var(--primary-color);
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-family: Georgia, "Times New Roman", serif;
 }
 
 .services-card-content p {
   margin: 0.5rem 0 0;
   color: black;
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.4;
+  text-wrap: balance;
 }
 
 .arrow-btn {
@@ -158,16 +159,18 @@ html[dir="rtl"] .arrow-btn svg {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 450px;
   background: rgba(255, 250, 240, 0.6);
   border-radius: 10px;
-  padding: 0.5rem;
+  padding: 1rem;
+  margin-top: clamp(1rem, 5vh, 5rem);
 }
 
 .services-footer h3 {
   margin: 0;
   color: var(--primary-color);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1rem, 3.4vw, 2rem);
+  font-size: clamp(1.25rem, 3.4vw, 2rem);
   text-align: center;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -175,10 +178,10 @@ html[dir="rtl"] .arrow-btn svg {
 
 .services-footer p {
   color: var(--text-color);
-  font-size: 0.85rem;
+  font-size: 1rem;
+  text-wrap: balance;
   line-height: 1.4;
   text-align: center;
-
   padding-top: 0.5rem;
 }
 
@@ -194,4 +197,51 @@ html[dir="rtl"] .arrow-btn svg {
   flex: 1;
   height: 1px;
   background: #d8d1bc;
+}
+
+@media (max-width: 1200px) {
+  .services-plant-left,
+  .services-plant-right {
+    display: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  .services-hills {
+    bottom: -10vh;
+  }
+}
+
+@media (min-width: 1200px) {
+  .services-hills {
+    display: none;
+  }
+
+  .services-footer {
+    margin-bottom: 2rem;
+  }
+
+  .services-plant-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30%;
+    height: auto;
+    max-width: 250px;
+    z-index: 1;
+    transform: rotate(-10deg);
+    pointer-events: none;
+  }
+
+  .services-plant-left {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 30%;
+    max-width: 250px;
+    height: auto;
+    z-index: 1;
+    transform: scaleX(-1) rotate(-10deg);
+    pointer-events: none;
+  }
 }
