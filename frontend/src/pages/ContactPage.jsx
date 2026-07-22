@@ -46,7 +46,7 @@ export default function ContactPage() {
       if (!res.ok) throw new Error();
 
       setStatus({
-        message: "Thank you! We'll get back to you soon.",
+        message: t("contact.successMessage"),
         type: "success",
       });
 
@@ -59,7 +59,7 @@ export default function ContactPage() {
         message: "",
       });
     } catch {
-      setStatus({ message: "Unable to send message.", type: "error" });
+      setStatus({ message: t("contact.errorMessage"), type: "error" });
     }
 
     setSending(false);
@@ -153,7 +153,11 @@ export default function ContactPage() {
           </div>
 
           <div className="contact-button">
-            <button type="submit" disabled={sending}>
+            <button
+              type="submit"
+              disabled={sending}
+              className="contact-form-btn"
+            >
               {sending ? t("contact.submitting") : t("contact.submit")}
             </button>
           </div>

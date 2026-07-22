@@ -20,7 +20,7 @@
 .community-page h1 {
   color: var(--primary-color);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1rem, 6.8vw, 3rem);
+  font-size: clamp(1rem, 6.8vw, 2rem);
   margin-bottom: 1rem;
 }
 
