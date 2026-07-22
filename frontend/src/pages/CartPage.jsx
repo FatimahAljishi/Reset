@@ -162,7 +162,7 @@ export default function CartPage() {
           <section className="phone-section">
             <div className="phone-section-header">
               <div>
-                <h2>{t("cart.phoneLabel")}</h2>
+                <h3>{t("cart.phoneLabel")}</h3>
                 <p>{t("cart.phoneDescription")}</p>
               </div>
             </div>
