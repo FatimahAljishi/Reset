@@ -12,6 +12,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { useUser } from "@clerk/clerk-react";
 import { useCart } from "../context/CartContext";
 import Footer from "../components/Footer";
+import plant from "../assets/plants.png";
 
 export default function ServiceDetailsPage() {
   const { addToCart } = useCart();
@@ -101,6 +102,8 @@ export default function ServiceDetailsPage() {
     <>
       <Navbar />
       <div className="service-details-page">
+        <img src={plant} className="services-plant-right" />
+        <img src={plant} className="services-plant-left" />
         <button
           type="button"
           className="back-button"
