@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import "./CheckoutPage.css";
 import { useAuth } from "@clerk/clerk-react";
 import Footer from "../components/Footer";
+import { HiOutlineArrowLeft } from "react-icons/hi";
 
 const getCartFingerprint = (items) => {
   return items
@@ -182,10 +183,10 @@ function CheckoutPage() {
       <main className="checkout-page">
         <button
           type="button"
-          className="checkout-back-button"
+          className="back-button"
           onClick={() => navigate("/cart")}
         >
-          {t("checkout.back")}
+          <HiOutlineArrowLeft />
         </button>
 
         <h1>{t("checkout.title")}</h1>

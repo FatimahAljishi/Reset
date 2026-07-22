@@ -3,6 +3,8 @@
   padding: 2rem;
   background: var(--background-color);
   color: var(--text-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .checkout-back-button {
@@ -20,6 +22,24 @@
   margin-bottom: 2rem;
   color: var(--primary-color);
   font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 6.8vw, 2rem);
+  justify-self: center;
+  text-align: center;
+}
+
+.back-button {
+  display: flex;
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  align-self: flex-start;
+  padding: 0;
+}
+
+html[dir="rtl"] .back-button {
+  align-self: flex-end;
 }
 
 .checkout-details {
@@ -31,6 +51,9 @@
   background: #fffdf8;
   border: 1px solid #d8d1bc;
   border-radius: 18px;
+  width: 100%;
+  max-width: 400px;
+  align-self: center;
 }
 
 .checkout-detail {
@@ -53,6 +76,9 @@
   background: #fffdf8;
   border: 1px solid #d8d1bc;
   border-radius: 18px;
+  width: 100%;
+  max-width: 400px;
+  align-self: center;
 }
 
 .payment-section h2 {
