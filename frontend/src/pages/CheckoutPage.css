@@ -65,12 +65,10 @@ html[dir="rtl"] .back-button {
 
 .checkout-detail span {
   color: var(--text-color);
-  font-family: var(--font-body);
 }
 
 .checkout-detail strong {
   color: var(--primary-color);
-  font-family: var(--font-body);
 }
 
 .payment-section {
@@ -86,7 +84,7 @@ html[dir="rtl"] .back-button {
 .payment-section h2 {
   margin-bottom: 1.5rem;
   color: var(--primary-color);
-  font-family: var(--font-heading);
+  font-family: var;
 }
 
 .payment-form {

@@ -44,7 +44,6 @@ html[dir="rtl"] .back-button {
   line-height: 1.4;
   margin-bottom: clamp(1rem, 2vh, 2rem);
   margin-top: clamp(1rem, 2vh, 2rem);
-  font-family: var(--font-body);
 }
 
 .service-features,
@@ -89,7 +88,6 @@ html[dir="rtl"] .back-button {
   margin-bottom: 0.75rem;
   font-size: 1rem;
   line-height: 1.4;
-  font-family: var(--font-body);
 }
 
 .feature-text {
@@ -163,7 +161,6 @@ html[dir="rtl"] .back-button {
 .plan-card span {
   color: var(--text-color);
   font-size: 1rem;
-  font-family: var(--font-body);
 }
 
 .sessions {
@@ -248,14 +245,12 @@ html[dir="rtl"] .back-button {
 .total-price span {
   color: var(--text-color);
   font-size: clamp(1rem, 2vw, 1.5rem);
-  font-family: var(--font-body);
 }
 
 .total-price strong {
   color: var(--primary-color);
   font-size: clamp(1.2rem, 4vw, 1.5rem);
   font-weight: bold;
-  font-family: var(--font-body);
 }
 
 .add-to-cart-button {
@@ -270,7 +265,6 @@ html[dir="rtl"] .back-button {
   font-size: 1rem;
   cursor: pointer;
   padding: 0 1rem;
-  font-family: var(--font-body);
 }
 
 .cart-icon {

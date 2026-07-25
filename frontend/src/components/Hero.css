@@ -57,7 +57,6 @@
   line-height: 1.4;
   font-weight: 500;
   text-wrap: balance;
-  font-family: var(--font-body);
 }
 
 .hero-buttons {
@@ -80,7 +79,6 @@
     box-shadow 0.3s ease,
     filter 0.3s ease;
   color: var(--light-text-color);
-  font-family: var(--font-body);
   display: inline-flex;
   align-items: center;
   justify-content: center;

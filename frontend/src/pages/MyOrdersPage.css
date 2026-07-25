@@ -86,7 +86,6 @@
   margin: 0;
   font-size: 0.9rem;
   opacity: 0.75;
-  font-family: var(--font-body);
 }
 
 .order-status {
@@ -95,7 +94,6 @@
   font-size: 0.85rem;
   font-weight: 600;
   white-space: nowrap;
-  font-family: var(--font-body);
 }
 
 .order-status-paid {
@@ -174,7 +172,6 @@
 
 .my-orders-state p {
   line-height: 1.6;
-  font-family: var(--font-body);
 }
 
 .my-orders-state button {

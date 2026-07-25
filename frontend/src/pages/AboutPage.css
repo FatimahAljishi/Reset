@@ -47,7 +47,6 @@
 .meet-zainab-text span {
   line-height: clamp(1.5rem, 4vh, 2.5rem);
   font-size: 1rem;
-  font-family: var(--font-body);
   color: black;
 }
 
@@ -121,7 +120,6 @@
 .why-reset p {
   max-width: 750px;
   line-height: 1.8;
-  font-family: var(--font-body);
 }
 
 .plant-wrapper {
@@ -192,7 +190,6 @@
 .about-reset span {
   line-height: clamp(1.8rem, 5vh, 2.5rem);
   font-size: 1rem;
-  font-family: var(--font-body);
   color: var(--text-color);
 }
 
@@ -519,7 +516,6 @@
 .philosophy span {
   line-height: clamp(0.8rem, 4vh, 2.5rem);
   font-size: 1rem;
-  font-family: var(--font-body);
   color: black;
 }
 
@@ -611,7 +607,6 @@
 .mission-vision-values-container p {
   line-height: clamp(0.8rem, 4vh, 2.5rem);
   font-size: 1rem;
-  font-family: var(--font-body);
   color: black;
   text-wrap: balance;
   text-align: center;
