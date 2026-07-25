@@ -9,12 +9,15 @@
   max-width: 100%;
   min-width: 0;
   overflow-x: clip;
+  padding-top: 0;
 }
 
 .community {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: calc(100vh - 91.36px);
+  justify-content: center;
 }
 
 .community-page h1 {
@@ -43,13 +46,14 @@
   color: var(--text-color);
   font-size: 1rem;
   line-height: 1.5;
+  margin-bottom: clamp(1rem, 4vh, 2rem);
 }
 
 .community-description {
   color: black;
   font-size: 1rem;
   line-height: 1.5;
-  margin-bottom: 0.2rem;
+  margin-bottom: clamp(1rem, 4vh, 2rem);
   margin-top: 1rem;
 }
 
@@ -108,7 +112,7 @@
 }
 
 .community-text {
-  margin-top: 0.2rem;
+  margin-top: clamp(1rem, 4vh, 2rem);
   font-weight: bold;
   color: var(--text-color);
   font-size: 1rem;
@@ -117,9 +121,12 @@
 
 .testimonials {
   width: 100%;
-  margin-top: 2rem;
   text-align: center;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100vh - 91.36px);
 }
 
 .testimonials-slider {
@@ -217,6 +224,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: calc(100vh - 91.36px);
+  gap: clamp(1rem, 4vh, 2rem);
 }
 
 .community-btn {

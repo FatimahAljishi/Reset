@@ -13,6 +13,7 @@ import {
   PiHeartLight,
 } from "react-icons/pi";
 import Footer from "../components/Footer";
+import SnapSection from "../components/SnapSection";
 
 export default function CommunityPage() {
   const { t } = useTranslation();
@@ -85,7 +86,7 @@ export default function CommunityPage() {
     <>
       <Navbar />
       <div className="community-page">
-        <div className="community">
+        <SnapSection className="community">
           <h1>{t("community.title")}</h1>
           <div className="community-divider">
             <span></span>
@@ -135,8 +136,8 @@ export default function CommunityPage() {
             </div>
           </div>
           <p className="community-text">{t("community.community7")}</p>
-        </div>
-        <div className="testimonials" dir="rtl">
+        </SnapSection>
+        <SnapSection className="testimonials" dir="rtl">
           <h2>{t("community.testimonials.title")}</h2>
 
           <div
@@ -160,14 +161,14 @@ export default function CommunityPage() {
               />
             ))}
           </div>
-        </div>
-        <div className="community-footer">
+        </SnapSection>
+        <SnapSection className="community-footer">
           <h2>{t("community.footer.title")}</h2>
           <p>{t("community.footer.description")}</p>
           <Link to="/services" className="community-btn">
             {t("community.footer.start")}
           </Link>
-        </div>
+        </SnapSection>
       </div>
       <Footer />
     </>
