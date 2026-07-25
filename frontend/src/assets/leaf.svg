@@ -1,0 +1,17 @@
+<svg width="28" height="44" viewBox="-14 -22 28 44" xmlns="http://www.w3.org/2000/svg" fill="none">
+
+    <!-- Leaf -->
+
+    <path d="
+        M0 -20
+        C7 -17 10 -8 9 0
+        C8 9 5 17 0 20
+        C-5 17 -8 9 -9 0
+        C-10 -8 -7 -17 0 -20
+        Z" fill="#7A8F5A"></path>
+
+    <!-- Vein -->
+
+    <path d="M0 -16 L0 16" stroke="#AEBE90" stroke-width="1" stroke-linecap="round" opacity="0.55"></path>
+
+</svg>

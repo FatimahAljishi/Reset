@@ -1,0 +1,123 @@
+<svg width="220" height="320" viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg" fill="none">
+
+    <!-- Shadow -->
+    <ellipse cx="110" cy="296" rx="42" ry="8" fill="#000" opacity="0.06"></ellipse>
+
+    <!-- Pot -->
+    <ellipse cx="110" cy="208" rx="38" ry="8" fill="#C78D63"></ellipse>
+
+    <path d="
+        M72 208
+        L80 285
+        C82 297 92 304 110 304
+        C128 304 138 297 140 285
+        L148 208
+        Z" fill="#D7A27C"></path>
+
+    <ellipse cx="110" cy="208" rx="30" ry="5" fill="#876347"></ellipse>
+
+    <!-- Stem -->
+
+    <path d="
+        M110 208
+        C108 180 110 145 110 70" stroke="#66764B" stroke-width="2.5" stroke-linecap="round"></path>
+
+    <!-- Branches -->
+
+    <path d="
+        M110 165
+        C90 154 74 132 65 108" stroke="#66764B" stroke-width="2" stroke-linecap="round"></path>
+
+    <path d="
+        M110 150
+        C132 142 145 122 154 94" stroke="#66764B" stroke-width="2" stroke-linecap="round"></path>
+
+    <path d="
+        M110 118
+        C95 105 86 84 80 56" stroke="#66764B" stroke-width="2" stroke-linecap="round"></path>
+
+    <path d="
+        M110 102
+        C126 90 136 68 141 42" stroke="#66764B" stroke-width="2" stroke-linecap="round"></path>
+
+    <!-- ========= LEAF SHAPE ========= -->
+
+    <!-- Left -->
+
+    <g id="leaf1" transform="translate(64 108) rotate(-55)">
+        <path d="
+            M0 -20
+            C8 -17 11 -8 10 0
+            C10 9 6 17 0 20
+            C-6 17 -10 9 -10 0
+            C-11 -8 -8 -17 0 -20Z" fill="#6F8351"></path>
+        <path d="M0 -16 L0 16" stroke="#AEBE90" stroke-width="1" stroke-linecap="round" opacity=".55"></path>
+    </g>
+
+    <g id="leaf2" transform="translate(83 58) rotate(-28)">
+        <path d="
+            M0 -18
+            C7 -15 10 -8 9 0
+            C9 8 5 15 0 18
+            C-5 15 -9 8 -9 0
+            C-10 -8 -7 -15 0 -18Z" fill="#7A8F5A"></path>
+        <path d="M0 -15 L0 15" stroke="#B6C59A" stroke-width="1" opacity=".5"></path>
+    </g>
+
+    <!-- Top -->
+
+    <g id="leaf3" transform="translate(110 42)">
+        <path d="
+            M0 -21
+            C8 -18 11 -8 10 0
+            C9 9 5 18 0 21
+            C-5 18 -9 9 -10 0
+            C-11 -8 -8 -18 0 -21Z" fill="#728856"></path>
+        <path d="M0 -16 L0 16" stroke="#B4C397" stroke-width="1" opacity=".5"></path>
+    </g>
+
+    <!-- Right -->
+
+    <g id="leaf4" transform="translate(153 95) rotate(42)">
+        <path d="
+            M0 -20
+            C8 -17 11 -8 10 0
+            C10 9 6 17 0 20
+            C-6 17 -10 9 -10 0
+            C-11 -8 -8 -17 0 -20Z" fill="#6F8351"></path>
+        <path d="M0 -16 L0 16" stroke="#AEBE90" stroke-width="1" opacity=".5"></path>
+    </g>
+
+    <g id="leaf5" transform="translate(138 45) rotate(18)">
+        <path d="
+            M0 -18
+            C7 -15 10 -8 9 0
+            C9 8 5 15 0 18
+            C-5 15 -9 8 -9 0
+            C-10 -8 -7 -15 0 -18Z" fill="#7E925F"></path>
+        <path d="M0 -15 L0 15" stroke="#B6C59A" stroke-width="1" opacity=".5"></path>
+    </g>
+
+    <!-- Lower -->
+
+    <g id="leaf6" transform="translate(90 145) rotate(-25)">
+        <path d="
+            M0 -18
+            C7 -15 10 -8 9 0
+            C9 8 5 15 0 18
+            C-5 15 -9 8 -9 0
+            C-10 -8 -7 -15 0 -18Z" fill="#7A8F5A"></path>
+        <path d="M0 -15 L0 15" stroke="#B6C59A" stroke-width="1" opacity=".5"></path>
+    </g>
+
+    <g id="leaf7" transform="translate(130 138) rotate(25)">
+        <path d="
+            M0 -18
+            C7 -15 10 -8 9 0
+            C9 8 5 15 0 18
+            C-5 15 -9 8 -9 0
+            C-10 -8 -7 -15 0 -18Z" fill="#738857"></path>
+        <path d="M0 -15 L0 15" stroke="#B6C59A" stroke-width="1" opacity=".5"></path>
+    </g>
+
+</svg>

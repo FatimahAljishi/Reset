@@ -1,0 +1,15 @@
+<svg width="42" height="72" viewBox="0 0 42 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Stem -->
+    <path d="M21 6V66" stroke="#6B7751" stroke-width="1.8" stroke-linecap="round"></path>
+
+    <!-- Leaf -->
+    <path d="M21 12
+           C34 18 37 31 21 42
+           C5 31 8 18 21 12Z" fill="#7E8F5A"></path>
+
+    <!-- Highlight -->
+    <path d="M21 16
+           C29 21 30 29 21 36" stroke="#A7B88B" stroke-width="1" stroke-linecap="round" opacity="0.5"></path>
+
+</svg>

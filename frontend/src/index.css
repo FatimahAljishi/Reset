@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Fraunces:opsz,wght@9..144,100..900&family=Manrope:wght@200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mirza:wght@400;500;600;700&display=swap");
+
 *,
 *::before,
 *::after {
@@ -39,6 +42,8 @@ select {
   --text-color: #374a23;
   --light-text-color: #fffaf0;
   --secondary-background-color: #ffeea9;
+  --font-body: "Manrope", sans-serif;
+  --font-heading: "Mirza", serif;
 }
 
 html,
@@ -46,5 +51,4 @@ body,
 #root {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
 }
