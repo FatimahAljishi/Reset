@@ -14,6 +14,7 @@
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1rem, 6.8vw, 2rem);
   margin-bottom: 1rem;
+  font-family: var(--font-heading);
 }
 
 .services-divider {
@@ -37,6 +38,7 @@
   max-width: 80%;
   margin-top: clamp(1rem, 2vh, 2rem);
   margin-bottom: clamp(1rem, 2vh, 2rem);
+  font-family: var(--font-body);
 }
 
 .services-hills {
@@ -127,12 +129,13 @@
   margin: 0;
   color: var(--primary-color);
   font-size: 1.25rem;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
 }
 
 .services-card-content p {
   margin: 0.5rem 0 0;
   color: black;
+  font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.4;
   text-wrap: balance;
@@ -169,7 +172,7 @@ html[dir="rtl"] .arrow-btn svg {
 .services-footer h3 {
   margin: 0;
   color: var(--primary-color);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-size: clamp(1.25rem, 3.4vw, 1.5rem);
   text-align: center;
   padding-top: 0.5rem;
@@ -178,6 +181,7 @@ html[dir="rtl"] .arrow-btn svg {
 
 .services-footer p {
   color: var(--text-color);
+  font-family: var(--font-body);
   font-size: 1rem;
   text-wrap: balance;
   line-height: 1.4;
