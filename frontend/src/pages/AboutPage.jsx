@@ -14,7 +14,7 @@ import { CiDumbbell } from "react-icons/ci";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import { PiPlantLight } from "react-icons/pi";
 import Footer from "../components/Footer";
-import capsule from "../assets/vector.svg";
+import capsule from "../assets/Vector.svg";
 import AnimatedClock from "./AnimatedClock";
 import SickZZPlant from "./SickZZPlant";
 import DeadSwayingZZPlant from "./DeadSwayingZZPlant";
