@@ -20,11 +20,12 @@
 .payment-result-card h1 {
   margin: 1.25rem 0 0.75rem;
   color: var(--primary-color);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
 }
 
 .payment-result-card p {
   line-height: 1.6;
+  font-family: var(--font-body);
 }
 
 .payment-result-card button {
@@ -35,6 +36,8 @@
   border-radius: 999px;
   background: var(--primary-color);
   color: white;
+  font-size: 1rem;
+  font-family: var(--font-body);
   font: inherit;
   cursor: pointer;
 }

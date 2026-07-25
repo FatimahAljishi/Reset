@@ -13,7 +13,7 @@
 
 .my-orders-header h1 {
   color: var(--primary-color);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   font-size: clamp(1rem, 6.8vw, 2rem);
   margin-bottom: 1rem;
 }
@@ -86,6 +86,7 @@
   margin: 0;
   font-size: 0.9rem;
   opacity: 0.75;
+  font-family: var(--font-body);
 }
 
 .order-status {
@@ -94,6 +95,7 @@
   font-size: 0.85rem;
   font-weight: 600;
   white-space: nowrap;
+  font-family: var(--font-body);
 }
 
 .order-status-paid {
@@ -167,11 +169,12 @@
 .my-orders-state h1,
 .my-orders-state h2 {
   color: var(--primary-color);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
 }
 
 .my-orders-state p {
   line-height: 1.6;
+  font-family: var(--font-body);
 }
 
 .my-orders-state button {
