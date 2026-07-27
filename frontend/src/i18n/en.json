@@ -178,7 +178,9 @@
     "message": "Message",
     "messagePlaceholder": "Tell us how we can help you...",
     "submit": "Book your Consultation",
-    "submitting": "Submitting..."
+    "submitting": "Submitting...",
+    "successMessage": "Thank you! We'll get back to you soon.",
+    "errorMessage": "Something went wrong. Please try again later."
   },
   "community": {
     "title": "Community",

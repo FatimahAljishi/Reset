@@ -11,6 +11,12 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./TrainerDashboardPage.css";
+import {
+  FaPhone,
+  FaRegFileLines,
+  FaCircleCheck,
+  FaSpinner,
+} from "react-icons/fa6";
 
 const ORDERS_PER_PAGE = 5;
 
@@ -34,7 +40,7 @@ function SortIcon({ column, sortConfig }) {
 function TrainerDashboardPage() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
 
-  const [orders, setOrders] = useState([]);
+  const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -48,53 +54,237 @@ function TrainerDashboardPage() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [loadingContactId, setLoadingContactId] = useState(null);
+  const [loadingPackageId, setLoadingPackageId] = useState(null);
+
+  const formatFulfillmentStatus = (status) => {
+    switch (status) {
+      case "needs_contact":
+        return "Needs Contact";
+
+      case "contacted":
+        return "Contacted";
+
+      case "in_progress":
+        return "In Progress";
+
+      case "completed":
+        return "Completed";
+
+      case "needs_delivery":
+        return "Needs Delivery";
+
+      case "delivered":
+        return "Delivered";
+
+      default:
+        return status;
+    }
+  };
+
+  const fetchDashboard = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error(t("trainerDashboard.tokenError"));
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/dashboard`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || t("trainerDashboard.loadError"));
+      }
+
+      setDashboard(data);
+    } catch (error) {
+      console.error("Trainer dashboard fetch error:", error);
+      setError(error.message || t("trainerDashboard.loadError"));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!isLoaded) return;
-
-    if (!isSignedIn) {
-      setLoading(false);
+    if (!isLoaded || !isSignedIn) {
       return;
     }
 
-    const fetchOrders = async () => {
-      try {
-        setLoading(true);
-        setError("");
+    fetchDashboard();
+  }, [getToken, isLoaded, isSignedIn]);
 
-        const token = await getToken();
+  const orders = dashboard?.recent_orders ?? [];
+  const needsAction = dashboard?.needs_action ?? [];
+  const activeClients = dashboard?.active_clients ?? [];
 
-        if (!token) {
-          throw new Error(t("trainerDashboard.tokenError"));
-        }
+  const markContacted = async (orderItemId) => {
+    try {
+      setLoadingContactId(orderItemId);
+      const token = await getToken();
 
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/trainer/orders`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+      if (!token) {
+        throw new Error(t("trainerDashboard.tokenError"));
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/mark-contacted`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail);
+      }
+
+      await fetchDashboard();
+    } catch (error) {
+      console.error("Mark contacted failed:", error);
+      alert(error.message);
+    } finally {
+      setLoadingContactId(null);
+    }
+  };
+
+  const undoContact = async (orderItemId) => {
+    try {
+      setLoadingContactId(orderItemId);
+
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error(t("trainerDashboard.tokenError"));
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/undo-contact`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Failed to undo contact.");
+      }
+
+      await fetchDashboard();
+
+      // refresh the selected order in the modal
+      const updatedOrder = dashboard.recent_orders.find(
+        (order) => order.id === selectedOrder.id,
+      );
+
+      if (updatedOrder) {
+        setSelectedOrder(updatedOrder);
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    } finally {
+      setLoadingContactId(null);
+    }
+  };
+
+  const recordSession = async (packageId) => {
+    try {
+      setLoadingPackageId(packageId);
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error(t("trainerDashboard.tokenError"));
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/packages/${packageId}/sessions`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Failed to record session.");
+      }
+
+      await fetchDashboard();
+    } catch (error) {
+      console.error("Record session failed:", error);
+      alert(error.message);
+    } finally {
+      setLoadingPackageId(null);
+    }
+  };
+
+  const removeLastSession = async (packageId) => {
+    try {
+      setLoadingPackageId(packageId);
+
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error(t("trainerDashboard.tokenError"));
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/packages/${packageId}/sessions/latest`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Failed to remove session.");
+      }
+
+      await fetchDashboard();
+
+      if (selectedOrder) {
+        const refreshed = dashboard.recent_orders.find(
+          (order) => order.id === selectedOrder.id,
         );
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.detail || t("trainerDashboard.loadError"));
+        if (refreshed) {
+          setSelectedOrder(refreshed);
         }
-
-        setOrders(data);
-      } catch (error) {
-        console.error("Trainer orders fetch error:", error);
-
-        setError(error.message || t("trainerDashboard.loadError"));
-      } finally {
-        setLoading(false);
       }
-    };
-
-    fetchOrders();
-  }, [getToken, isLoaded, isSignedIn]);
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    } finally {
+      setLoadingPackageId(null);
+    }
+  };
 
   useEffect(() => {
     setCurrentPage(1);
@@ -292,11 +482,188 @@ function TrainerDashboardPage() {
         <section className="trainer-dashboard-header">
           <div>
             <p className="trainer-dashboard-eyebrow">Trainer Dashboard</p>
-
-            <h1>Orders</h1>
-
-            <p>Review customer purchases and manage training orders.</p>
           </div>
+        </section>
+
+        <section className="trainer-needs-action-section">
+          <div className="trainer-needs-action-header">
+            <h2>Orders Needing Your Action</h2>
+
+            <span className="trainer-needs-action-count">
+              {needsAction.length}
+            </span>
+          </div>
+
+          <div className="trainer-action-cards">
+            {needsAction.length === 0 ? (
+              <div className="trainer-empty-actions">No actions required</div>
+            ) : (
+              needsAction.map((item) => (
+                <div key={item.order_item_id} className="trainer-action-card">
+                  <div
+                    className={`trainer-action-icon ${
+                      item.fulfillment_status === "needs_contact"
+                        ? "contact"
+                        : "delivery"
+                    }`}
+                  >
+                    {item.fulfillment_status === "needs_contact" ? (
+                      <FaPhone />
+                    ) : (
+                      <FaRegFileLines />
+                    )}
+                  </div>
+
+                  <div className="trainer-action-info">
+                    <h3>{item.customer_name}</h3>
+
+                    <p>Order #{item.order_id}</p>
+
+                    <p>
+                      {item.service} • {item.plan}
+                    </p>
+
+                    <span>
+                      {item.phone} • Paid on {formatDate(item.created_at)}
+                    </span>
+                  </div>
+
+                  <div className="trainer-action-status">
+                    <span
+                      className={`trainer-order-progress-badge trainer-order-progress-${item.fulfillment_status}`}
+                    >
+                      {formatFulfillmentStatus(item.fulfillment_status)}
+                    </span>
+                  </div>
+
+                  <div className="trainer-action-buttons">
+                    {item.fulfillment_status === "needs_contact" && (
+                      <button
+                        className="trainer-primary-button"
+                        disabled={loadingContactId === item.order_item_id}
+                        onClick={() => markContacted(item.order_item_id)}
+                      >
+                        {loadingContactId === item.order_item_id ? (
+                          <>
+                            <FaSpinner className="spinner" />
+                            Updating...
+                          </>
+                        ) : (
+                          <>
+                            <FaPhone />
+                            Mark Contacted
+                          </>
+                        )}
+                      </button>
+                    )}
+
+                    {item.fulfillment_status === "needs_delivery" && (
+                      <button className="trainer-primary-button">
+                        Mark Delivered
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+
+        <section className="trainer-active-clients-section">
+          <div className="trainer-section-header">
+            <div className="trainer-section-title">
+              <h2>Active Clients</h2>
+              <span className="trainer-active-clients-count">
+                {activeClients.length}
+              </span>
+            </div>
+            <div className="trainer-active-clients-grid">
+              {activeClients.map((client) => (
+                <div
+                  key={client.package_id}
+                  className="trainer-active-client-card"
+                >
+                  <div className="trainer-active-client-header">
+                    <div className="trainer-active-client-avatar">
+                      {client.customer_name.charAt(0)}
+                    </div>
+
+                    <div className="trainer-active-client-info">
+                      <h3>{client.customer_name}</h3>
+
+                      <p className="trainer-active-client-order">
+                        Order #{client.order_id}
+                      </p>
+
+                      <p>
+                        {client.service} • {client.plan}
+                      </p>
+                    </div>
+
+                    <span
+                      className={`trainer-progress-badge ${client.progress
+                        .toLowerCase()
+                        .replace(" ", "-")}`}
+                    >
+                      {client.progress}
+                    </span>
+                  </div>
+                  <div className="trainer-active-client-progress">
+                    <div className="trainer-progress-text">
+                      <span>
+                        {client.sessions_completed} of {client.total_sessions}{" "}
+                        sessions completed
+                      </span>
+
+                      <span>{Math.round(client.progress_percentage)}%</span>
+                    </div>
+
+                    <div className="trainer-progress-bar">
+                      <div
+                        className="trainer-progress-fill"
+                        style={{
+                          width: `${client.progress_percentage}%`,
+                        }}
+                      />
+                    </div>
+
+                    <p className="trainer-sessions-remaining">
+                      Remaining: {client.sessions_remaining}{" "}
+                      {client.sessions_remaining === 1 ? "session" : "sessions"}
+                    </p>
+                  </div>
+                  <div className="trainer-active-client-actions">
+                    <button
+                      className="trainer-record-session-button"
+                      onClick={() => recordSession(client.package_id)}
+                      disabled={
+                        client.progress === "Completed" ||
+                        loadingPackageId === client.package_id
+                      }
+                    >
+                      {loadingPackageId === client.package_id ? (
+                        <>
+                          <FaSpinner className="spinner" />
+                          Recording...
+                        </>
+                      ) : (
+                        <>
+                          <FaCircleCheck />
+                          {client.progress === "Not Started"
+                            ? "Start Session"
+                            : client.progress === "Completed"
+                              ? "Completed"
+                              : "Record Session"}
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="trainer-active-clients-grid"></div>
         </section>
 
         <section className="trainer-orders-section">
@@ -394,6 +761,8 @@ function TrainerDashboardPage() {
 
                       <th>Status</th>
 
+                      <th>Progress</th>
+
                       <th aria-label="Open order details"></th>
                     </tr>
                   </thead>
@@ -458,6 +827,24 @@ function TrainerDashboardPage() {
                           >
                             {order.status || "Unknown"}
                           </span>
+                        </td>
+                        <td>
+                          <div className="trainer-order-fulfillment-status-container">
+                            {order.items?.map((item, index) => (
+                              <div
+                                className="trainer-order-fulfillment-status"
+                                key={`${item.service}-${item.plan}`}
+                              >
+                                <span
+                                  className={`trainer-order-progress-badge trainer-order-progress-${item.fulfillment_status}`}
+                                >
+                                  {formatFulfillmentStatus(
+                                    item.fulfillment_status,
+                                  )}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
                         </td>
 
                         <td className="trainer-order-open">
@@ -621,12 +1008,47 @@ function TrainerDashboardPage() {
                     <strong>{getServiceTitle(item)}</strong>
                     <span>{getPlanTitle(item)}</span>
                   </div>
-
                   {item.quantity > 1 && (
                     <span className="trainer-order-item-quantity">
                       × {item.quantity}
                     </span>
                   )}
+
+                  {item.fulfillment_status === "contacted" && (
+                    <button
+                      className="trainer-secondary-button"
+                      onClick={() => undoContact(item.id)}
+                      disabled={loadingContactId === item.id}
+                    >
+                      {loadingContactId === item.id ? (
+                        <>
+                          <FaSpinner className="spinner" />
+                          Updating...
+                        </>
+                      ) : (
+                        "Undo Contact"
+                      )}
+                    </button>
+                  )}
+
+                  {(item.fulfillment_status === "in_progress" ||
+                    item.fulfillment_status === "completed") &&
+                    item.package_id && (
+                      <button
+                        className="trainer-secondary-button"
+                        onClick={() => removeLastSession(item.package_id)}
+                        disabled={loadingPackageId === item.package_id}
+                      >
+                        {loadingPackageId === item.package_id ? (
+                          <>
+                            <FaSpinner className="spinner" />
+                            Updating...
+                          </>
+                        ) : (
+                          "Undo Last Session"
+                        )}
+                      </button>
+                    )}
                 </div>
               ))}
             </section>

@@ -1,7 +1,7 @@
 from sqlmodel import Session, select
-
 from app.database import engine
-from app.models import Service, ServicePlan
+from app.models import Service, ServicePlan, FulfillmentType
+
 
 def seed_services():
     with Session(engine) as session:
@@ -19,28 +19,40 @@ def seed_services():
             slug="personal",
             title_en="Personal Training",
             title_ar="التدريب الشخصي",
+            fulfillment_type=FulfillmentType.SESSION,
         )
 
         group = Service(
             slug="group",
             title_en="Small Group Training",
             title_ar="التدريب الجماعي المصغّر",
+            fulfillment_type=FulfillmentType.SESSION,
         )
 
         online = Service(
             slug="online",
             title_en="Online Coaching",
             title_ar="التدريب أونلاين",
+            fulfillment_type=FulfillmentType.SESSION,
         )
+
+        plans = Service(
+            slug="plans",
+            title_en="Workout Plans",
+            title_ar="الجداول الرياضية",
+            fulfillment_type=FulfillmentType.DIGITAL,
+       )
 
         session.add(personal)
         session.add(group)
         session.add(online)
+        session.add(plans)
         session.commit()
 
         session.refresh(personal)
         session.refresh(group)
         session.refresh(online)
+        session.refresh(plans)
 
         plans = [
             ServicePlan(

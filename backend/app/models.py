@@ -1,6 +1,24 @@
 from typing import Optional
 from sqlmodel import SQLModel, Field, Relationship #type: ignore
 from datetime import datetime, timezone
+from enum import Enum
+
+class FulfillmentType(str, Enum):
+    SESSION = "session"
+    DIGITAL = "digital"
+
+class OrderStatus(str, Enum):
+    PENDING = "pending"
+    PAID = "paid"
+    EXPIRED = "expired"
+
+class FulfillmentStatus(str, Enum):
+    NEEDS_CONTACT = "needs_contact"
+    CONTACTED = "contacted"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    NEEDS_DELIVERY = "needs_delivery"
+    DELIVERED = "delivered"
 
 class Service(SQLModel, table=True):
     __tablename__ = "service"
@@ -8,6 +26,7 @@ class Service(SQLModel, table=True):
     slug: str = Field(unique=True, index=True, max_length=100)
     title_en: str = Field(max_length=200)
     title_ar: str = Field(max_length=200)
+    fulfillment_type: FulfillmentType = Field(default=FulfillmentType.SESSION)
     plans: list["ServicePlan"] = Relationship(back_populates="service")
 
 class ServicePlan(SQLModel, table=True):
@@ -29,7 +48,7 @@ class Order(SQLModel, table=True):
     customer_name: str = Field(max_length=255)
     customer_email: str = Field(default=None, max_length=255)
     phone: str = Field(max_length=20)
-    status: str = Field(default="pending", index=True, max_length=20)
+    status: OrderStatus = Field(default=OrderStatus.PENDING, index=True)
     total_halalas: int = Field(gt=0)
     payment_id: Optional[str] = Field(default=None, index=True, unique=True, max_length=255)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -43,9 +62,29 @@ class OrderItem(SQLModel, table=True):
     quantity: int = Field(default=1, gt=0)
     unit_price_halalas: int = Field(gt=0)
     sessions: Optional[int] = Field(default=None)
+    fulfillment_status: FulfillmentStatus = Field(default=FulfillmentStatus.NEEDS_CONTACT)
     service_title_en: str = Field(max_length=200)
     service_title_ar: str = Field(max_length=200)
     plan_title_en: str = Field(max_length=200)
     plan_title_ar: str = Field(max_length=200)
     order: Optional[Order] = Relationship(back_populates="items")
+    training_package: Optional["TrainingPackage"] = Relationship()
+
+class TrainingPackage(SQLModel, table=True):
+    __tablename__ = "training_package"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    order_item_id: int = Field(foreign_key="order_item.id", unique=True, index=True)
+    total_sessions: int = Field(gt=0)
+    started_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+    sessions: list["TrainingSession"] = Relationship(back_populates="training_package")
+
+class TrainingSession(SQLModel, table=True):
+    __tablename__ = "training_session"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    training_package_id: int = Field(foreign_key="training_package.id", index=True)
+    session_number: int = Field(gt=0)
+    completed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    notes: Optional[str] = Field(default=None)
+    training_package: Optional["TrainingPackage"] = Relationship(back_populates="sessions")
 

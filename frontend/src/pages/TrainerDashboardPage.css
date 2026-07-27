@@ -7,6 +7,9 @@
   padding: 2rem;
   background: var(--background-color);
   color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .trainer-dashboard-header {
@@ -38,11 +41,482 @@
   line-height: 1.6;
 }
 
+/* ===== Orders Needing Action ===== */
+
+.trainer-needs-action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.trainer-needs-action-header,
+.trainer-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trainer-section-title {
+  margin-bottom: 1.5rem;
+}
+
+.trainer-needs-action-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.trainer-needs-action-count,
+.trainer-active-clients-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 2rem;
+  height: 2rem;
+
+  padding: 0 0.75rem;
+
+  border-radius: 999px;
+
+  background: #465e2c;
+  color: white;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ===== Cards ===== */
+
+.trainer-action-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.trainer-action-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 1.5rem;
+
+  padding: 1.25rem 1.5rem;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 18px;
+
+  background: white;
+
+  transition: 0.2s ease;
+}
+
+.trainer-action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* ===== Avatar ===== */
+
+.trainer-action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+
+  font-size: 1.1rem;
+}
+
+.trainer-action-icon.contact {
+  background: #fff4e5;
+  color: #c97a00;
+}
+
+.trainer-action-icon.delivery {
+  background: #e8f1ff;
+  color: #1e4fbc;
+}
+
+/* ===== Information ===== */
+
+.trainer-action-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.trainer-action-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.trainer-action-info p {
+  margin: 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.trainer-action-info span {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+/* ===== Status ===== */
+
+.trainer-action-status {
+  display: flex;
+  justify-content: center;
+  min-width: 150px;
+}
+
+/* ===== Buttons ===== */
+
+.trainer-action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.trainer-primary-button,
+.trainer-secondary-button {
+  border: none;
+  border-radius: 10px;
+
+  padding: 0.7rem 1rem;
+
+  cursor: pointer;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.trainer-whatsapp-button {
+  background: #f4f4f4;
+  color: #333;
+}
+
+.trainer-whatsapp-button:hover {
+  background: #e7e7e7;
+}
+
+.trainer-primary-button,
+.trainer-secondary-button {
+  background: #465e2c;
+  color: white;
+}
+
+.trainer-primary-button:hover,
+.trainer-secondary-button:hover {
+  background: #394c23;
+}
+
+/* ===== Empty State ===== */
+
+.trainer-empty-actions {
+  padding: 3rem;
+
+  border: 2px dashed #ddd;
+  border-radius: 18px;
+
+  text-align: center;
+
+  color: #888;
+  background: #fafafa;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 900px) {
+  .trainer-action-card {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+
+  .trainer-action-avatar {
+    display: none;
+  }
+
+  .trainer-action-status {
+    justify-content: flex-start;
+    min-width: auto;
+  }
+
+  .trainer-action-buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .trainer-primary-button,
+  .trainer-secondary-button,
+  .trainer-whatsapp-button {
+    flex: 1;
+  }
+}
+
+/* ============================= */
+/* Active Clients */
+/* ============================= */
+
+.trainer-active-clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ============================= */
+/* Card */
+/* ============================= */
+
+.trainer-active-client-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  padding: 1.5rem;
+
+  background: #ffffff;
+
+  border: 1px solid #ececec;
+  border-radius: 20px;
+
+  transition: all 0.25s ease;
+}
+
+.trainer-active-client-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================= */
+/* Header */
+/* ============================= */
+
+.trainer-active-client-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.trainer-active-client-avatar {
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(70, 94, 44, 0.12);
+  color: #465e2c;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  flex-shrink: 0;
+}
+
+.trainer-active-client-info {
+  flex: 1;
+}
+
+.trainer-active-client-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.trainer-active-client-info p {
+  margin-top: 0.35rem;
+
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* ============================= */
+/* Progress Badge */
+/* ============================= */
+
+.trainer-progress-badge {
+  padding: 0.4rem 0.8rem;
+
+  border-radius: 999px;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.trainer-progress-badge.not-started {
+  background: #fff4db;
+  color: #b7791f;
+}
+
+.trainer-progress-badge.in-progress {
+  background: #e6f7ea;
+  color: #2f6b2f;
+}
+
+.trainer-progress-badge.completed {
+  background: #e7f8ec;
+  color: #2f855a;
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================= */
+/* Progress */
+/* ============================= */
+
+.trainer-active-client-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.trainer-progress-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: #374151;
+}
+
+.trainer-progress-bar {
+  width: 100%;
+  height: 10px;
+
+  background: #ececec;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.trainer-progress-fill {
+  height: 100%;
+
+  background: #465e2c;
+
+  border-radius: inherit;
+
+  transition: width 0.4s ease;
+}
+
+.trainer-sessions-remaining {
+  margin: 0;
+
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* ============================= */
+/* Button */
+/* ============================= */
+
+.trainer-active-client-actions {
+  margin-top: auto;
+}
+
+.trainer-record-session-button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  padding: 0.9rem;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #465e2c;
+  color: white;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.trainer-record-session-button:hover:not(:disabled) {
+  background: #3b4f24;
+}
+
+.trainer-record-session-button:disabled,
+.trainer-primary-button:disabled,
+.trainer-secondary-button:disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.trainer-record-session-button svg {
+  font-size: 1rem;
+}
+
+/* ============================= */
+/* Responsive */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .trainer-active-clients-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trainer-active-client-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .trainer-progress-badge {
+    margin-left: 4rem;
+  }
+
+  .trainer-progress-text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+}
+
 /* =========================================
    ORDERS SECTION
 ========================================= */
 
-.trainer-orders-section {
+.trainer-orders-section,
+.trainer-needs-action-section,
+.trainer-active-clients-section {
   width: min(1200px, 100%);
   margin: 0 auto;
 }
@@ -55,7 +529,9 @@
   margin-bottom: 1rem;
 }
 
-.trainer-orders-top h2 {
+.trainer-orders-top h2,
+.trainer-needs-action-section h2,
+.trainer-active-clients-section h2 {
   margin: 0;
   color: var(--primary-color);
   font-family: var(--font-heading);
@@ -727,6 +1203,57 @@
   color: var(--primary-color) !important;
   font-weight: 700;
   white-space: nowrap;
+}
+
+.trainer-order-fulfillment-status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 33.6px;
+}
+
+.trainer-order-fulfillment-status {
+  display: flex;
+}
+
+.trainer-order-progress-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.trainer-order-progress-needs_contact {
+  background: #fff4e5;
+  color: #b76e00;
+}
+
+.trainer-order-progress-contacted {
+  background: #e8f1ff;
+  color: #2563eb;
+}
+
+.trainer-order-progress-in_progress {
+  background: #e6f7ea;
+  color: #2f6b2f;
+}
+
+.trainer-order-progress-completed {
+  background: #dff7e6;
+  color: #15803d;
+}
+
+.trainer-order-progress-needs_delivery {
+  background: #fff7d6;
+  color: #a16207;
+}
+
+.trainer-order-progress-delivered {
+  background: #e8f7ed;
+  color: #15803d;
 }
 
 /* =========================================

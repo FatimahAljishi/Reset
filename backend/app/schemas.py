@@ -1,17 +1,19 @@
-from sqlmodel import SQLModel, Field #type: ignore
+from sqlmodel import SQLModel, Field  # type: ignore
 from typing import Optional
 from pydantic import EmailStr
 from datetime import datetime
+from app.models import FulfillmentStatus
 
 
 class ServicePlanResponse(SQLModel):
     id: int
     code: str
     title_en: str
-    title_ar: str 
-    sessions: Optional[int] 
-    price_halalas: int 
+    title_ar: str
+    sessions: Optional[int]
+    price_halalas: int
     sort_order: int
+
 
 class ServiceResponse(SQLModel):
     id: int
@@ -20,25 +22,30 @@ class ServiceResponse(SQLModel):
     title_ar: str
     plans: list[ServicePlanResponse] = []
 
+
 class ContactForm(SQLModel):
-    name: str 
+    name: str
     phone: str
     email: EmailStr
-    city: str 
-    goal: str 
-    message: str 
+    city: str
+    goal: str
+    message: str
+
 
 class PaymentVerificationRequest(SQLModel):
     payment_id: str
     order_id: int
 
+
 class OrderItemCreate(SQLModel):
     plan_id: int
     quantity: int = Field(default=1, gt=0)
 
+
 class OrderCreate(SQLModel):
     phone: str
     items: list[OrderItemCreate]
+
 
 class OrderItemRead(SQLModel):
     id: int
@@ -62,10 +69,14 @@ class OrderRead(SQLModel):
     created_at: datetime
     items: list[OrderItemRead] = []
 
+
 class TrainerOrderItem(SQLModel):
+    id: int
+    package_id: Optional[int] = None
     service: str
     plan: str
     quantity: int
+    fulfillment_status: FulfillmentStatus
 
 
 class TrainerOrder(SQLModel):
@@ -77,3 +88,46 @@ class TrainerOrder(SQLModel):
     total_halalas: int
     created_at: datetime
     items: list[TrainerOrderItem]
+
+
+class ActiveClient(SQLModel):
+    package_id: int
+    order_id: int
+    customer_name: str
+    service: str
+    plan: str
+    sessions_completed: int
+    total_sessions: int
+    sessions_remaining: int
+    progress: str
+    progress_percentage: float
+
+
+class TrainerDashboard(SQLModel):
+    needs_action: list[ActionItem]
+    active_clients: list[ActiveClient]
+    recent_orders: list[TrainerOrder]
+
+
+class MessageResponse(SQLModel):
+    message: str
+
+
+class TrainingSessionResponse(SQLModel):
+    session_number: int
+    sessions_completed: int
+    sessions_remaining: int
+    completed: bool
+
+
+class ActionItem(SQLModel):
+    order_item_id: int
+    order_id: int
+    customer_name: str
+    phone: str
+    created_at: datetime
+
+    service: str
+    plan: str
+
+    fulfillment_status: FulfillmentStatus

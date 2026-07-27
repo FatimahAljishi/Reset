@@ -7,7 +7,15 @@ import httpx
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from app.database import get_session
-from app.models import Order, OrderItem
+from app.models import (
+    Order,
+    OrderItem,
+    Service,
+    ServicePlan,
+    TrainingPackage,
+    FulfillmentType,
+    FulfillmentStatus,
+)
 from app.services.order_notifications import send_paid_order_email, send_customer_confirmation_email
 import logging
 from datetime import datetime, timedelta, timezone
@@ -153,6 +161,49 @@ async def verify_payment(
     )
 
     order_items = list(session.exec(items_statement).all())
+
+    for item in order_items:
+
+        plan = session.get(ServicePlan, item.service_plan_id)
+
+        if not plan:
+            continue
+
+        service = session.get(Service, plan.service_id)
+
+        if not service:
+            continue
+
+        if service.fulfillment_type == FulfillmentType.SESSION:
+            item.fulfillment_status = FulfillmentStatus.NEEDS_CONTACT
+        else:
+            item.fulfillment_status = FulfillmentStatus.NEEDS_DELIVERY
+
+        session.add(item)
+
+        if service.fulfillment_type != FulfillmentType.SESSION:
+            continue
+
+        existing_package = session.exec(
+            select(TrainingPackage).where(
+                TrainingPackage.order_item_id == item.id
+            )
+        ).first()
+
+        if existing_package:
+            continue
+
+        if plan.sessions is None:
+            continue
+
+        package = TrainingPackage(
+            order_item_id=item.id,
+            total_sessions=plan.sessions,
+        )
+
+        session.add(package)
+
+    session.commit()
 
     try:
         await send_paid_order_email(
