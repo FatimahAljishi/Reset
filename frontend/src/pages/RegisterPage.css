@@ -98,3 +98,17 @@
   font-weight: 700;
   text-decoration: none;
 }
+
+.forgot-password-link {
+  align-self: center;
+  margin-top: 0.3rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.forgot-password-link:hover {
+  opacity: 0.75;
+}

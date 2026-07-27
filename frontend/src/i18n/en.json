@@ -31,6 +31,8 @@
     "subtitle": "Start your fitness journey with Reset.",
     "email": "Email",
     "password": "Password",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Re-enter your password",
     "registerButton": "Create Account",
     "login": "Already have an account?",
     "loginLink": "Log in",
@@ -63,6 +65,21 @@
     "verifying": "Verifying...",
     "verify": "Verify"
   },
+  "forgotPassword": {
+    "title": "Forgot your password?",
+    "subtitle": "Enter your email address and we'll send you a verification code.",
+    "email": "Email",
+    "sendCode": "Send verification code",
+    "sending": "Sending...",
+    "resetSubtitle": "Enter the verification code and choose a new password.",
+    "code": "Verification code",
+    "codePlaceholder": "123456",
+    "newPassword": "New password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "resetButton": "Reset password",
+    "resetting": "Resetting...",
+    "unexpected": "Something went wrong. Please try again."
+  },
   "profile": {
     "welcome": "Hello",
     "manageAccount": "Manage Account",
@@ -82,7 +99,8 @@
     "incorrectPassword": "Incorrect password.",
     "invalidEmail": "Please enter a valid email address.",
     "loginNeedsAnotherStep": "Login needs another step.",
-    "verificationNeedsAnotherStep": "Verification needs another step."
+    "verificationNeedsAnotherStep": "Verification needs another step.",
+    "passwordsDoNotMatch": "Passwords do not match."
   },
   "services": {
     "title": "Choose Your Reset",

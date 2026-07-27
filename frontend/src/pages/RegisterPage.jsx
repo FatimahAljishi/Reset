@@ -26,12 +26,15 @@ export default function RegisterPage() {
     lastName: "",
     email: "",
     password: "",
+    confirmPassword: "",
     code: "",
   });
 
   const [pendingVerification, setPendingVerification] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const passwordsMatch =
+    form.confirmPassword === "" || form.password === form.confirmPassword;
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,6 +55,15 @@ export default function RegisterPage() {
   async function handleRegister(e) {
     e.preventDefault();
     if (!isLoaded) return;
+
+    setError("");
+
+    if (form.password !== form.confirmPassword) {
+      setError(t("errors.passwordsDoNotMatch"));
+      return;
+    }
+
+    setLoading(true);
 
     try {
       setLoading(true);
@@ -164,6 +176,23 @@ export default function RegisterPage() {
                 disabled={loading}
                 required
               />
+
+              <label>{t("register.confirmPassword")}</label>
+              <input
+                name="confirmPassword"
+                type="password"
+                placeholder={t("register.confirmPasswordPlaceholder")}
+                value={form.confirmPassword}
+                onChange={handleChange}
+                disabled={loading}
+                required
+              />
+
+              {!passwordsMatch && (
+                <p className="register-error">
+                  {t("errors.passwordsDoNotMatch")}
+                </p>
+              )}
 
               <div id="clerk-captcha" />
 

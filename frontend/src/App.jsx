@@ -18,6 +18,7 @@ import PaymentResultPage from "./pages/PaymentResultPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 import TrainerRoute from "./components/TrainerRoute";
 import TrainerDashboardPage from "./pages/TrainerDashboardPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 export default function App() {
   return (
@@ -60,6 +61,7 @@ export default function App() {
           }
         />
         <Route path="/sign-in" element={<RedirectToSignIn />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

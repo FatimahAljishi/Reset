@@ -29,6 +29,8 @@
     "subtitle": "ابدأي رحلتكِ الرياضية مع Reset.",
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "أعيدي إدخال كلمة المرور",
     "registerButton": "إنشاء حساب",
     "login": "هل لديكِ حساب بالفعل?",
     "loginLink": "تسجيل الدخول",
@@ -61,6 +63,21 @@
     "verifying": "جاري التحقق...",
     "verify": "تحقق"
   },
+  "forgotPassword": {
+    "title": "نسيتِ كلمة المرور؟",
+    "subtitle": "أدخلي بريدكِ الإلكتروني وسنرسل إليكِ رمز تحقق.",
+    "email": "البريد الإلكتروني",
+    "sendCode": "إرسال رمز التحقق",
+    "sending": "جارٍ الإرسال...",
+    "resetSubtitle": "أدخلي رمز التحقق واختاري كلمة مرور جديدة.",
+    "code": "رمز التحقق",
+    "codePlaceholder": "123456",
+    "newPassword": "كلمة المرور الجديدة",
+    "newPasswordPlaceholder": "أدخلي كلمة المرور الجديدة",
+    "resetButton": "إعادة تعيين كلمة المرور",
+    "resetting": "جارٍ إعادة التعيين...",
+    "unexpected": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  },
   "profile": {
     "welcome": "مرحبًا",
     "manageAccount": "إدارة الحساب",
@@ -80,7 +97,8 @@
     "incorrectPassword": "كلمة المرور غير صحيحة.",
     "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح.",
     "loginNeedsAnotherStep": "تسجيل الدخول يحتاج إلى خطوة إضافية.",
-    "verificationNeedsAnotherStep": "التحقق يحتاج إلى خطوة إضافية."
+    "verificationNeedsAnotherStep": "التحقق يحتاج إلى خطوة إضافية.",
+    "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين."
   },
   "services": {
     "title": "اختاري البداية التي تناسبكِ",

@@ -149,6 +149,10 @@ export default function LoginPage() {
                 required
               />
 
+              <Link to="/forgot-password" className="forgot-password-link">
+                {t("forgotPassword.title")}
+              </Link>
+
               <button type="submit" disabled={loading}>
                 {loading ? t("login.loadingMessage") : t("login.loginButton")}
               </button>
