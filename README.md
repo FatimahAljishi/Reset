@@ -10,15 +10,15 @@ Designed with a clean, responsive interface and powered by a FastAPI backend, Re
 
 ### Homepage
 
-<img width="100%" src="./screenshots/homepage.jpeg" alt="Reset Homepage">
+<img width="50%" src="./screenshots/homepage.jpeg" alt="Reset Homepage">
 
 ### Services
 
-<img width="100%" src="./screenshots/services.jpeg" alt="Reset Services">
+<img width="50%" src="./screenshots/services.jpeg" alt="Reset Services">
 
 ### Trainer Dashboard
 
-<img width="100%" src="./screenshots/trainer-dashboard.jpeg" alt="Trainer Dashboard">
+<img width="50%" src="./screenshots/trainer-dashboard.jpg" alt="Trainer Dashboard">
 
 ---
 
