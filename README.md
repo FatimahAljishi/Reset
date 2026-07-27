@@ -1,4 +1,4 @@
-# 💙 Reset
+# 💚 Reset
 
 A modern fitness platform built for **Reset by Zainab**, allowing clients to book personal training sessions, join small group classes, purchase online coaching plans, and manage their orders through a seamless bilingual experience.
 
@@ -10,15 +10,15 @@ Designed with a clean, responsive interface and powered by a FastAPI backend, Re
 
 ### Homepage
 
-<img width="100%" src="./public/homepage.jpeg" alt="Reset Homepage">
+<img width="100%" src="./screenshots/homepage.jpeg" alt="Reset Homepage">
 
 ### Services
 
-<img width="100%" src="./public/services.jpeg" alt="Reset Services">
+<img width="100%" src="./screenshots/services.jpeg" alt="Reset Services">
 
 ### Trainer Dashboard
 
-<img width="100%" src="./public/trainer-dashboard.jpeg" alt="Trainer Dashboard">
+<img width="100%" src="./screenshots/trainer-dashboard.jpeg" alt="Trainer Dashboard">
 
 ---
 
