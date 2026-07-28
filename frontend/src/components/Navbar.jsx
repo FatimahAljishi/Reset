@@ -25,6 +25,7 @@ import {
   LuLogOut,
   LuSettings,
   LuLayoutDashboard,
+  LuRoute,
 } from "react-icons/lu";
 import { HiOutlineUserGroup, HiOutlineShoppingBag } from "react-icons/hi2";
 import { useCart } from "../context/CartContext";
@@ -144,6 +145,12 @@ export default function Navbar() {
                   {t("profile.trainerDashboard")}
                 </Link>
               )}
+
+              <Link to="/journey" onClick={() => setProfileOpen(false)}>
+                <LuRoute className="mobile-link-icon" />
+                {t("profile.myJourney")}
+              </Link>
+
               <Link to="/my-orders" onClick={() => setProfileOpen(false)}>
                 <LuClipboardList className="mobile-link-icon" />
                 {t("myOrders.title")}

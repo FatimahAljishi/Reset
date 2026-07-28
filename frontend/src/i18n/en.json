@@ -84,7 +84,8 @@
     "welcome": "Hello",
     "manageAccount": "Manage Account",
     "signOut": "Sign Out",
-    "trainerDashboard": "Trainer Dashboard"
+    "trainerDashboard": "Trainer Dashboard",
+    "myJourney": "My Journey"
   },
   "errors": {
     "generic": "Something went wrong.",
@@ -349,6 +350,19 @@
       "failed": "Failed",
       "expired": "Expired"
     }
+  },
+  "myJourney": {
+    "title": "My Journey",
+    "subtitle": "Track your active training plans and progress.",
+    "emptyTitle": "No active plans",
+    "emptyMessage": "Once you purchase a training package, you'll be able to track your progress here.",
+    "orderNumber": "Order",
+    "sessions": "Sessions",
+    "sessionsRemaining": "sessions remaining",
+    "needsContact": "Waiting for trainer contact",
+    "contacted": "Trainer contacted you",
+    "inProgress": "In progress",
+    "completed": "Completed"
   },
   "footer": {
     "subtitle1": "Move with Purpose.",

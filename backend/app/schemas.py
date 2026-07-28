@@ -126,8 +126,24 @@ class ActionItem(SQLModel):
     customer_name: str
     phone: str
     created_at: datetime
-
     service: str
     plan: str
-
     fulfillment_status: FulfillmentStatus
+
+
+class ActivePlan(SQLModel):
+    package_id: int
+    order_id: int
+    service: str
+    service_ar: str
+    plan: str
+    plan_ar: str
+    sessions_completed: int
+    total_sessions: int
+    sessions_remaining: int
+    progress_percentage: float
+    fulfillment_status: FulfillmentStatus
+
+
+class JourneyDashboard(SQLModel):
+    active_plans: list[ActivePlan]

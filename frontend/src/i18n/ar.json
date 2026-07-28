@@ -82,7 +82,8 @@
     "welcome": "مرحبًا",
     "manageAccount": "إدارة الحساب",
     "signOut": "تسجيل الخروج",
-    "trainerDashboard": "لوحة تحكم المدربة"
+    "trainerDashboard": "لوحة تحكم المدربة",
+    "myJourney": "رحلتي"
   },
   "errors": {
     "generic": "حدث خطأ ما.",
@@ -347,6 +348,19 @@
       "failed": "لم يكتمل",
       "expired": "منتهي"
     }
+  },
+  "myJourney": {
+    "title": "رحلتي",
+    "subtitle": "تابعي خططكِ التدريبية الحالية وتقدمكِ.",
+    "emptyTitle": "لا توجد خطط نشطة",
+    "emptyMessage": "بعد شراء باقة تدريبية، ستتمكني من متابعة تقدمكِ وخطواتكِ هنا.",
+    "orderNumber": "الطلب",
+    "sessions": "جلسة",
+    "sessionsRemaining": "جلسات متبقية",
+    "needsContact": "بانتظار تواصل المدربة",
+    "contacted": "تم التواصل معكِ من قبل المدربة",
+    "inProgress": "قيد التدريب",
+    "completed": "مكتمل"
   },
   "footer": {
     "subtitle1": "تحركي بهدف.",

@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException #type:ignore
-from fastapi.middleware.cors import CORSMiddleware #type:ignore 
+from fastapi import FastAPI, HTTPException  # type: ignore
+from fastapi.middleware.cors import CORSMiddleware  # type: ignore
 from app.database import create_db
 from app import models
 from app.routers.services import router as services_router
@@ -8,6 +8,7 @@ from app.routers.payments import router as payments_router
 from app.routers.orders import router as orders_router
 from app.seed_services import seed_services
 from app.routers.trainer import router as trainer_router
+from app.routers.journey import router as journey_router
 
 app = FastAPI(title="Reset API")
 
@@ -19,13 +20,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
 def on_startup():
     create_db()
     seed_services()
+
 
 app.include_router(services_router)
 app.include_router(contact_router)
 app.include_router(payments_router)
 app.include_router(orders_router)
 app.include_router(trainer_router)
+app.include_router(journey_router)

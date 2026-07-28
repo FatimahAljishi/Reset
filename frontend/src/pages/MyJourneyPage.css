@@ -1,0 +1,194 @@
+.journey-page {
+  min-height: calc(100vh - 91.36px);
+  padding: 2rem;
+  background: var(--background-color);
+}
+
+.journey-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.journey-container h1 {
+  color: var(--primary-color);
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 6.8vw, 2rem);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.journey-container > p {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+/* Grid */
+
+.journey-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Card */
+
+.journey-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.journey-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+
+.journey-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.journey-card-title h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+}
+
+.journey-card-title p {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.journey-order-number {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #999;
+}
+
+/* Progress */
+
+.journey-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.journey-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.journey-progress-labels strong {
+  color: var(--text-color);
+}
+
+.journey-progress-labels span {
+  color: #666;
+}
+
+.journey-progress {
+  height: 10px;
+  background: #ececec;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.journey-progress-fill {
+  height: 100%;
+  background: var(--primary-color);
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+/* Footer */
+
+.journey-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.journey-remaining {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Status */
+
+.journey-status {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.journey-status.needs-contact {
+  background: #fff4d6;
+  color: #b7791f;
+}
+
+.journey-status.contacted {
+  background: #e6f0ff;
+  color: #1e4fbc;
+}
+
+.journey-status.in-progress {
+  background: #e8f8ec;
+  color: #2e7d32;
+}
+
+.journey-status.completed {
+  background: #ededed;
+  color: #666;
+}
+
+/* Empty State */
+
+.journey-empty {
+  background: white;
+  border-radius: 20px;
+  border: 2px dashed #ddd;
+  padding: 3rem;
+  text-align: center;
+}
+
+.journey-empty h2 {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-heading);
+}
+
+.journey-empty p {
+  color: #666;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .journey-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .journey-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
