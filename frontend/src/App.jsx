@@ -20,6 +20,7 @@ import TrainerRoute from "./components/TrainerRoute";
 import TrainerDashboardPage from "./pages/TrainerDashboardPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import MyJourneyPage from "./pages/MyJourneyPage";
+import ResetOnlinePage from "./pages/ResetOnlinePage";
 
 export default function App() {
   return (
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="/sign-in" element={<RedirectToSignIn />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/journey" element={<MyJourneyPage />} />
+        <Route path="/services/reset-online" element={<ResetOnlinePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

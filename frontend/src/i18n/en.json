@@ -116,12 +116,35 @@
     },
     "service3": {
       "title": "Reset Online",
-      "description": "Train from anywhere with personalized programming and continuous support. "
+      "description": "Choose from ready-made programs, personalized programs, or live online coaching."
     },
     "footer": {
       "title": "Why Reset?",
       "subtitle1": "Because your journey should feel sustainable, not overwhelming.",
       "subtitle2": "We don't help women chase perfection, we help them build a lifestyle they enjoy living."
+    }
+  },
+  "resetOnline": {
+    "title": "Reset Online",
+    "description": "Flexible online training designed to fit your goals, schedule, and lifestyle.",
+
+    "chooseExperience": "Choose Your Online Experience",
+
+    "services": {
+      "readyMade": {
+        "title": "Ready-Made Programs",
+        "description": "Professionally designed workout programs created for all fitness levels. Start immediately with a structured plan you can follow at your own pace."
+      },
+
+      "personalized": {
+        "title": "Personalized Program",
+        "description": "A custom training program designed specifically for your goals, fitness level, lifestyle, and individual needs."
+      },
+
+      "liveCoaching": {
+        "title": "Live Online Coaching",
+        "description": "One-on-one live coaching sessions with real-time guidance, accountability, and technique correction from wherever you are."
+      }
     }
   },
   "about": {
@@ -251,19 +274,38 @@
     },
 
     "online": {
-      "title": "Online Coaching",
-      "subtitle": "Designed for busy women who want flexibility.",
+      "title": "Live Online Coaching",
+      "subtitle": "One-on-one live coaching sessions designed to provide guidance, accountability, and real-time feedback from wherever you are.",
       "features": [
-        "Personalized Workout Plan",
-        "Exercise Video Library",
-        "Weekly Follow-up",
-        "Progress Adjustments",
-        "Direct Communication"
-      ],
-      "plans": {
-        "online-ready": "Ready-Made Plan",
-        "online-personalized": "Personalized Plan"
-      }
+        "Live online sessions",
+        "Personalized coaching",
+        "Technique correction",
+        "Progress tracking",
+        "Direct support"
+      ]
+    },
+    "ready-programs": {
+      "title": "Ready-Made Programs",
+      "subtitle": "Professionally designed workout programs created for all fitness levels.\nPerfect if you’re looking for a structured plan you can start right away.",
+      "features": [
+        "Structured workout plan",
+        "Exercise video library",
+        "Clear weekly progression",
+        "Easy-to-follow format",
+        "Lifetime access"
+      ]
+    },
+    "personalized-programs": {
+      "title": "Personalized Program",
+      "subtitle": "A training program designed specifically for your goals, fitness level, lifestyle, and any medical or physical considerations.\nCreated to help you progress safely and sustainably.",
+      "features": [
+        "Personalized assessment",
+        "Custom workout plan",
+        "Exercise video library",
+        "Progress adjustments",
+        "Direct communication",
+        "Weekly follow-up"
+      ]
     },
     "includes": "Includes:",
     "choosePlan": "Choose Your Plan",

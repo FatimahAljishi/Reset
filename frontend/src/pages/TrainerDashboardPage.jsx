@@ -55,6 +55,7 @@ function TrainerDashboardPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loadingContactId, setLoadingContactId] = useState(null);
+  const [loadingDeliveryId, setLoadingDeliveryId] = useState(null);
   const [loadingPackageId, setLoadingPackageId] = useState(null);
 
   const formatFulfillmentStatus = (status) => {
@@ -163,6 +164,40 @@ function TrainerDashboardPage() {
     }
   };
 
+  const markDelivered = async (orderItemId) => {
+    try {
+      setLoadingDeliveryId(orderItemId);
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error(t("trainerDashboard.tokenError"));
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/mark-delivered`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail);
+      }
+
+      await fetchDashboard();
+    } catch (error) {
+      console.error("Mark delivered failed:", error);
+      alert(error.message);
+    } finally {
+      setLoadingDeliveryId(null);
+    }
+  };
+
   const undoContact = async (orderItemId) => {
     try {
       setLoadingContactId(orderItemId);
@@ -204,6 +239,50 @@ function TrainerDashboardPage() {
       alert(error.message);
     } finally {
       setLoadingContactId(null);
+    }
+  };
+
+  const undoDelivery = async (orderItemId) => {
+    try {
+      setLoadingDeliveryId(orderItemId);
+
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error(t("trainerDashboard.tokenError"));
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/undo-delivery`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Failed to undo delivery.");
+      }
+
+      await fetchDashboard();
+
+      // refresh the selected order in the modal
+      const updatedOrder = dashboard.recent_orders.find(
+        (order) => order.id === selectedOrder.id,
+      );
+
+      if (updatedOrder) {
+        setSelectedOrder(updatedOrder);
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    } finally {
+      setLoadingDeliveryId(null);
     }
   };
 
@@ -558,8 +637,22 @@ function TrainerDashboardPage() {
                     )}
 
                     {item.fulfillment_status === "needs_delivery" && (
-                      <button className="trainer-primary-button">
-                        Mark Delivered
+                      <button
+                        className="trainer-primary-button"
+                        disabled={loadingDeliveryId === item.order_item_id}
+                        onClick={() => markDelivered(item.order_item_id)}
+                      >
+                        {loadingDeliveryId === item.order_item_id ? (
+                          <>
+                            <FaSpinner className="spinner" />
+                            Updating...
+                          </>
+                        ) : (
+                          <>
+                            <FaCircleCheck />
+                            Mark Delivered
+                          </>
+                        )}
                       </button>
                     )}
                   </div>
@@ -1027,6 +1120,23 @@ function TrainerDashboardPage() {
                         </>
                       ) : (
                         "Undo Contact"
+                      )}
+                    </button>
+                  )}
+
+                  {item.fulfillment_status === "delivered" && (
+                    <button
+                      className="trainer-secondary-button"
+                      onClick={() => undoDelivery(item.id)}
+                      disabled={loadingDeliveryId === item.id}
+                    >
+                      {loadingDeliveryId === item.id ? (
+                        <>
+                          <FaSpinner className="spinner" />
+                          Updating...
+                        </>
+                      ) : (
+                        "Undo Delivery"
                       )}
                     </button>
                   )}

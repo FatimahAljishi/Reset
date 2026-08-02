@@ -6,15 +6,13 @@ from app.models import Service, ServicePlan, FulfillmentType
 def seed_services():
     with Session(engine) as session:
         existing_service = session.exec(
-            select(Service).where(
-                Service.slug == "personal"
-            )
+            select(Service).where(Service.slug == "personal")
         ).first()
 
         if existing_service:
             print("Services have already been seeded.")
             return
-        
+
         personal = Service(
             slug="personal",
             title_en="Personal Training",
@@ -36,23 +34,32 @@ def seed_services():
             fulfillment_type=FulfillmentType.SESSION,
         )
 
-        plans = Service(
-            slug="plans",
-            title_en="Workout Plans",
-            title_ar="الجداول الرياضية",
+        ready_programs = Service(
+            slug="ready-programs",
+            title_en="Ready-Made Programs",
+            title_ar="البرامج الرياضية الجاهزة",
             fulfillment_type=FulfillmentType.DIGITAL,
-       )
+        )
+
+        personalized_programs = Service(
+            slug="personalized-programs",
+            title_en="Personalized Program",
+            title_ar="برنامج رياضي مخصص",
+            fulfillment_type=FulfillmentType.DIGITAL,
+        )
 
         session.add(personal)
         session.add(group)
         session.add(online)
-        session.add(plans)
+        session.add(ready_programs)
+        session.add(personalized_programs)
         session.commit()
 
         session.refresh(personal)
         session.refresh(group)
         session.refresh(online)
-        session.refresh(plans)
+        session.refresh(ready_programs)
+        session.refresh(personalized_programs)
 
         plans = [
             ServicePlan(
@@ -93,21 +100,30 @@ def seed_services():
             ),
             ServicePlan(
                 service_id=online.id,
-                code="online-ready",
-                title_en="Ready Plan",
-                title_ar="خطة جاهزة",
-                sessions=None,
+                code="online-12",
+                title_en="12 Sessions",
+                title_ar="12 جلسة",
+                sessions=12,
                 price_halalas=30000,
                 sort_order=1,
             ),
             ServicePlan(
-                service_id=online.id,
-                code="online-personalized",
-                title_en="Personalized Plan",
-                title_ar="خطة مخصصة",
+                service_id=personalized_programs.id,
+                code="personalized",
+                title_en="personalized Program",
+                title_ar="برنامج رياضي مخصص",
                 sessions=None,
-                price_halalas=50000,
-                sort_order=2,
+                price_halalas=80000,
+                sort_order=1,
+            ),
+            ServicePlan(
+                service_id=ready_programs.id,
+                code="ready",
+                title_en="Ready-Made Program",
+                title_ar="برنامج جاهز",
+                sessions=None,
+                price_halalas=120000,
+                sort_order=1,
             ),
         ]
         session.add_all(plans)

@@ -98,17 +98,21 @@ export default function ServiceDetailsPage() {
     navigate("/cart");
   }
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/services");
+    }
+  };
+
   return (
     <>
       <Navbar />
       <div className="service-details-page">
         <img src={plant} className="services-plant-right" />
         <img src={plant} className="services-plant-left" />
-        <button
-          type="button"
-          className="back-button"
-          onClick={() => navigate("/services")}
-        >
+        <button type="button" className="back-button" onClick={handleBack}>
           <HiOutlineArrowLeft />
         </button>
 
@@ -148,60 +152,58 @@ export default function ServiceDetailsPage() {
           </div>
         )}
 
-        <div className="plan-section">
-          <h2>{t("serviceDetails.choosePlan")}</h2>
+        {service?.slug !== "ready-programs" &&
+        service?.slug !== "personalized-programs" ? (
+          <div className="plan-section">
+            <h2>{t("serviceDetails.choosePlan")}</h2>
 
-          <div className="plan-options">
-            {selectedPlan &&
-              service.plans.map((plan) => {
-                const isSelected = selectedPlan.id === plan.id;
+            <div className="plan-options">
+              {selectedPlan &&
+                service.plans.map((plan) => {
+                  const isSelected = selectedPlan.id === plan.id;
 
-                const formattedPrice = new Intl.NumberFormat(i18n.language, {
-                  style: "currency",
-                  currency: "SAR",
-                  maximumFractionDigits: 0,
-                }).format(selectedPlan.price_halalas / 100);
+                  const formattedPrice = new Intl.NumberFormat(i18n.language, {
+                    style: "currency",
+                    currency: "SAR",
+                    maximumFractionDigits: 0,
+                  }).format(selectedPlan.price_halalas / 100);
 
-                return (
-                  <button
-                    key={plan.id}
-                    type="button"
-                    className={`plan-card ${isSelected ? "selected" : ""}`}
-                    onClick={() => setSelectedPlan(plan)}
-                    aria-pressed={isSelected}
-                  >
-                    {isSelected && (
-                      <div className="selected-check">
-                        <FaCircleCheck />
-                      </div>
-                    )}
-                    {service.slug !== "online" ? (
-                      <>
-                        <strong className="sessions">{plan.sessions}</strong>
-                        <span className="plan-description">
-                          {t("serviceDetails.sessions", {
-                            count: plan.sessions,
-                          })}
-                        </span>
-                      </>
-                    ) : (
-                      <strong className="plans">
-                        {t(`serviceDetails.${serviceId}.plans.${plan.code}`)}
-                      </strong>
-                    )}
+                  return (
+                    <button
+                      key={plan.id}
+                      type="button"
+                      className={`plan-card ${isSelected ? "selected" : ""}`}
+                      onClick={() => setSelectedPlan(plan)}
+                      aria-pressed={isSelected}
+                    >
+                      {isSelected && (
+                        <div className="selected-check">
+                          <FaCircleCheck />
+                        </div>
+                      )}
 
-                    <span className="plan-price">
-                      {new Intl.NumberFormat(i18n.language, {
-                        style: "currency",
-                        currency: "SAR",
-                        maximumFractionDigits: 0,
-                      }).format(plan.price_halalas / 100)}
-                    </span>
-                  </button>
-                );
-              })}
+                      <strong className="sessions">{plan.sessions}</strong>
+                      <span className="plan-description">
+                        {t("serviceDetails.sessions", {
+                          count: plan.sessions,
+                        })}
+                      </span>
+
+                      <span className="plan-price">
+                        {new Intl.NumberFormat(i18n.language, {
+                          style: "currency",
+                          currency: "SAR",
+                          maximumFractionDigits: 0,
+                        }).format(plan.price_halalas / 100)}
+                      </span>
+                    </button>
+                  );
+                })}
+            </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
         <div className="cart-section">
           <div className="cart-summary">
             <div className="total-price">

@@ -251,6 +251,40 @@ def undo_order_item_contact(
 
 
 @router.patch(
+    "/order-items/{order_item_id}/undo-delivery",
+    response_model=MessageResponse,
+)
+def undo_order_item_delivery(
+    order_item_id: int,
+    session: Session = Depends(get_session),
+    _: str = Depends(get_current_trainer_id),
+):
+    item = session.get(OrderItem, order_item_id)
+
+    if not item:
+        raise HTTPException(
+            status_code=404,
+            detail="Order item not found.",
+        )
+
+    if item.fulfillment_status != FulfillmentStatus.DELIVERED:
+        raise HTTPException(
+            status_code=400,
+            detail="This item cannot be reverted.",
+        )
+
+    item.fulfillment_status = FulfillmentStatus.NEEDS_DELIVERY
+
+    session.add(item)
+    session.commit()
+    session.refresh(item)
+
+    return MessageResponse(
+        message="Delivery status reverted.",
+    )
+
+
+@router.patch(
     "/order-items/{order_item_id}/mark-delivered",
     response_model=MessageResponse,
 )

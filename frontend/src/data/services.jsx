@@ -4,8 +4,14 @@ import {
   HiOutlineChartBar,
   HiOutlineHandRaised,
   HiOutlineChatBubbleLeftRight,
+  HiOutlineVideoCamera,
+  HiOutlineUserCircle,
+  HiOutlineClipboardDocumentList,
   HiOutlinePlayCircle,
   HiOutlineCalendarDays,
+  HiOutlineListBullet,
+  HiOutlineKey,
+  HiOutlineArrowPath,
 } from "react-icons/hi2";
 
 export const services = {
@@ -27,11 +33,34 @@ export const services = {
   online: {
     id: "online",
     icons: [
-      <HiOutlineAdjustmentsHorizontal />,
-      <HiOutlinePlayCircle />,
-      <HiOutlineCalendarDays />,
+      <HiOutlineVideoCamera />,
+      <HiOutlineUserCircle />,
+      <HiOutlineHandRaised />,
       <HiOutlineChartBar />,
       <HiOutlineChatBubbleLeftRight />,
+    ],
+  },
+
+  "ready-programs": {
+    id: "ready-programs",
+    icons: [
+      <HiOutlineClipboardDocumentList />,
+      <HiOutlinePlayCircle />,
+      <HiOutlineCalendarDays />,
+      <HiOutlineListBullet />,
+      <HiOutlineKey />,
+    ],
+  },
+
+  "personalized-programs": {
+    id: "personalized-programs",
+    icons: [
+      <HiOutlineClipboardDocumentCheck />,
+      <HiOutlineAdjustmentsHorizontal />,
+      <HiOutlinePlayCircle />,
+      <HiOutlineArrowPath />,
+      <HiOutlineChatBubbleLeftRight />,
+      <HiOutlineCalendarDays />,
     ],
   },
 };

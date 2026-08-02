@@ -102,11 +102,7 @@ export default function CartPage() {
               <article className="cart-item" key={item.cartItemId}>
                 <div className="cart-item-info">
                   <h2>{t(`serviceDetails.${item.serviceId}.title`)}</h2>
-                  {!item.sessions && (
-                    <p>
-                      {t(`serviceDetails.${item.serviceId}.plans.${item.code}`)}
-                    </p>
-                  )}
+                  {!item.sessions && ""}
 
                   {item.sessions && (
                     <p>
