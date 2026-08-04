@@ -4,6 +4,7 @@ import "./MyJourneyPage.css";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { useTranslation } from "react-i18next";
+import { FaFilePdf } from "react-icons/fa6";
 
 export default function MyJourneyPage() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
@@ -93,7 +94,7 @@ export default function MyJourneyPage() {
         ) : (
           <div className="journey-cards">
             {journey.active_plans.map((plan) => (
-              <div className="journey-card" key={plan.package_id}>
+              <div className="journey-card" key={plan.order_item_id}>
                 <div className="journey-card-header">
                   <div className="journey-card-title">
                     <h3>
@@ -107,48 +108,67 @@ export default function MyJourneyPage() {
                     {t("myJourney.orderNumber")} #{plan.order_id}
                   </span>
                 </div>
+                {plan.total_sessions && (
+                  <>
+                    <div className="journey-progress-section">
+                      <div className="journey-progress-labels">
+                        <strong>
+                          {plan.sessions_completed} / {plan.total_sessions}{" "}
+                          {t("myJourney.sessions")}
+                        </strong>
 
-                <div className="journey-progress-section">
-                  <div className="journey-progress-labels">
-                    <strong>
-                      {plan.sessions_completed} / {plan.total_sessions}{" "}
-                      {t("myJourney.sessions")}
-                    </strong>
+                        <span>{Math.round(plan.progress_percentage)}%</span>
+                      </div>
 
-                    <span>{Math.round(plan.progress_percentage)}%</span>
-                  </div>
+                      <div className="journey-progress">
+                        <div
+                          className="journey-progress-fill"
+                          style={{
+                            width: `${plan.progress_percentage}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
 
-                  <div className="journey-progress">
-                    <div
-                      className="journey-progress-fill"
-                      style={{
-                        width: `${plan.progress_percentage}%`,
-                      }}
-                    />
-                  </div>
-                </div>
+                    <div className="journey-card-footer">
+                      <span className="journey-remaining">
+                        {plan.sessions_remaining}{" "}
+                        {t("myJourney.sessionsRemaining")}
+                      </span>
 
-                <div className="journey-card-footer">
-                  <span className="journey-remaining">
-                    {plan.sessions_remaining} {t("myJourney.sessionsRemaining")}
-                  </span>
+                      <div
+                        className={`journey-status ${plan.fulfillment_status.replace("_", "-")}`}
+                      >
+                        {plan.fulfillment_status === "needs_contact" &&
+                          t("myJourney.needsContact")}
 
-                  <div
-                    className={`journey-status ${plan.fulfillment_status.replace("_", "-")}`}
+                        {plan.fulfillment_status === "contacted" &&
+                          t("myJourney.contacted")}
+
+                        {plan.fulfillment_status === "in_progress" &&
+                          t("myJourney.inProgress")}
+
+                        {plan.fulfillment_status === "completed" &&
+                          t("myJourney.completed")}
+                      </div>
+                    </div>
+                  </>
+                )}
+                {plan.plan_pdf_url && (
+                  <a
+                    className="journey-download-button"
+                    href={`${import.meta.env.VITE_API_URL}${plan.plan_pdf_url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    {plan.fulfillment_status === "needs_contact" &&
-                      t("myJourney.needsContact")}
-
-                    {plan.fulfillment_status === "contacted" &&
-                      t("myJourney.contacted")}
-
-                    {plan.fulfillment_status === "in_progress" &&
-                      t("myJourney.inProgress")}
-
-                    {plan.fulfillment_status === "completed" &&
-                      t("myJourney.completed")}
+                    <FaFilePdf /> {t("myJourney.downloadPlan")}
+                  </a>
+                )}
+                {!plan.plan_pdf_url && !plan.total_sessions && (
+                  <div className="journey-waiting">
+                    {t("myJourney.noPlanAvailable")}
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>

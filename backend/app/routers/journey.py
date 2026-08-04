@@ -43,29 +43,31 @@ def get_journey(
                 select(TrainingPackage).where(TrainingPackage.order_item_id == item.id)
             ).first()
 
-            if not package:
-                continue
+            if package:
+                if package.completed_at is not None:
+                    continue
 
-            if package.completed_at is not None:
-                continue
-
-            sessions_completed = len(package.sessions)
-            sessions_remaining = package.total_sessions - sessions_completed
-            progress_percentage = (sessions_completed / package.total_sessions) * 100
+                sessions_completed = len(package.sessions)
+                sessions_remaining = package.total_sessions - sessions_completed
+                progress_percentage = (
+                    sessions_completed / package.total_sessions
+                ) * 100
 
             active_plans.append(
                 ActivePlan(
-                    package_id=package.id,
+                    package_id=package.id if package else None,
                     order_id=order.id,
+                    order_item_id=item.id,
                     service=item.service_title_en,
                     service_ar=item.service_title_ar,
                     plan=item.plan_title_en,
                     plan_ar=item.plan_title_ar,
-                    sessions_completed=sessions_completed,
-                    total_sessions=package.total_sessions,
-                    sessions_remaining=sessions_remaining,
-                    progress_percentage=progress_percentage,
+                    sessions_completed=sessions_completed if package else None,
+                    total_sessions=package.total_sessions if package else None,
+                    sessions_remaining=sessions_remaining if package else None,
+                    progress_percentage=progress_percentage if package else None,
                     fulfillment_status=item.fulfillment_status,
+                    plan_pdf_url=item.plan_pdf_url,
                 )
             )
 

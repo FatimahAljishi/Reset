@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from app.auth import get_current_trainer_id
 from app.schemas import (
     TrainerOrder,
@@ -20,6 +20,9 @@ from app.models import (
     TrainingSession,
 )
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
+import shutil
+import uuid
 
 router = APIRouter(
     prefix="/trainer",
@@ -163,6 +166,7 @@ def get_trainer_dashboard(
             ActiveClient(
                 package_id=package.id,
                 order_id=order.id,
+                order_item_id=order_item.id,
                 customer_name=order.customer_name,
                 service=order_item.service_title_en,
                 plan=order_item.plan_title_en,
@@ -171,12 +175,52 @@ def get_trainer_dashboard(
                 sessions_remaining=sessions_remaining,
                 progress=progress,
                 progress_percentage=progress_percentage,
+                plan_pdf_url=None,
+                plan_pdf_name=None,
+                plan_uploaded_at=None,
             )
         )
 
-        active_clients.sort(
-            key=lambda client: client.order_id,
-        )
+    for order in orders:
+        if order.status != OrderStatus.PAID:
+            continue
+
+        for item in order.items:
+
+            package = session.exec(
+                select(TrainingPackage).where(TrainingPackage.order_item_id == item.id)
+            ).first()
+
+            if package:
+                continue
+
+            if item.fulfillment_status != FulfillmentStatus.DELIVERED:
+                continue
+
+            progress = "In Progress"
+
+            active_clients.append(
+                ActiveClient(
+                    package_id=None,
+                    order_item_id=item.id,
+                    order_id=order.id,
+                    customer_name=order.customer_name,
+                    service=item.service_title_en,
+                    plan=item.plan_title_en,
+                    sessions_completed=None,
+                    total_sessions=None,
+                    sessions_remaining=None,
+                    progress=progress,
+                    progress_percentage=None,
+                    plan_pdf_url=item.plan_pdf_url,
+                    plan_pdf_name=item.plan_pdf_name,
+                    plan_uploaded_at=item.plan_uploaded_at,
+                )
+            )
+
+    active_clients.sort(
+        key=lambda client: client.order_id,
+    )
 
     return TrainerDashboard(
         needs_action=needs_action,
@@ -250,12 +294,13 @@ def undo_order_item_contact(
     )
 
 
-@router.patch(
-    "/order-items/{order_item_id}/undo-delivery",
+@router.post(
+    "/order-items/{order_item_id}/upload-plan",
     response_model=MessageResponse,
 )
-def undo_order_item_delivery(
+def upload_training_plan(
     order_item_id: int,
+    file: UploadFile = File(...),
     session: Session = Depends(get_session),
     _: str = Depends(get_current_trainer_id),
 ):
@@ -267,53 +312,85 @@ def undo_order_item_delivery(
             detail="Order item not found.",
         )
 
-    if item.fulfillment_status != FulfillmentStatus.DELIVERED:
+    if item.fulfillment_status not in (
+        FulfillmentStatus.NEEDS_DELIVERY,
+        FulfillmentStatus.DELIVERED,
+    ):
         raise HTTPException(
             status_code=400,
-            detail="This item cannot be reverted.",
+            detail="This item cannot be updated.",
         )
 
-    item.fulfillment_status = FulfillmentStatus.NEEDS_DELIVERY
-
-    session.add(item)
-    session.commit()
-    session.refresh(item)
-
-    return MessageResponse(
-        message="Delivery status reverted.",
-    )
-
-
-@router.patch(
-    "/order-items/{order_item_id}/mark-delivered",
-    response_model=MessageResponse,
-)
-def mark_order_item_delivered(
-    order_item_id: int,
-    session: Session = Depends(get_session),
-    _: str = Depends(get_current_trainer_id),
-):
-    item = session.get(OrderItem, order_item_id)
-
-    if not item:
-        raise HTTPException(
-            status_code=404,
-            detail="Order item not found.",
-        )
-
-    if item.fulfillment_status != FulfillmentStatus.NEEDS_DELIVERY:
+    if file.content_type != "application/pdf":
         raise HTTPException(
             status_code=400,
-            detail="This item cannot be marked as delivered.",
+            detail="Only PDF files are allowed.",
         )
+
+    if item.plan_pdf_url:
+        old_file = Path(item.plan_pdf_url.lstrip("/"))
+
+        if old_file.exists():
+            old_file.unlink()
+
+    extension = ".pdf"
+
+    original_filename = file.filename
+
+    filename = f"{uuid.uuid4()}{extension}"
+
+    upload_dir = Path("uploads/training-plans")
+    upload_dir.mkdir(parents=True, exist_ok=True)
+
+    file_path = upload_dir / filename
+
+    with file_path.open("wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    item.plan_pdf_url = f"/uploads/training-plans/{filename}"
+
+    item.plan_pdf_name = original_filename
+
+    item.plan_uploaded_at = datetime.now(timezone.utc)
 
     item.fulfillment_status = FulfillmentStatus.DELIVERED
 
     session.add(item)
+
+    session.commit()
+
+    return MessageResponse(message="Training plan uploaded successfully.")
+
+
+@router.patch(
+    "/order-items/{order_item_id}/mark-completed",
+    response_model=MessageResponse,
+)
+def mark_order_item_completed(
+    order_item_id: int,
+    session: Session = Depends(get_session),
+    _: str = Depends(get_current_trainer_id),
+):
+    item = session.get(OrderItem, order_item_id)
+
+    if not item:
+        raise HTTPException(
+            status_code=404,
+            detail="Order item not found.",
+        )
+    if item.fulfillment_status != FulfillmentStatus.DELIVERED:
+        raise HTTPException(
+            status_code=400,
+            detail="This item cannot be marked as completed.",
+        )
+
+    item.fulfillment_status = FulfillmentStatus.COMPLETED
+
+    session.add(item)
     session.commit()
     session.refresh(item)
 
-    return MessageResponse(message="Workout schedule marked as delivered.")
+    return MessageResponse(message="Order item marked as completed.")
 
 
 @router.post(

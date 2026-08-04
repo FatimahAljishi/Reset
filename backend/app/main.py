@@ -9,6 +9,8 @@ from app.routers.orders import router as orders_router
 from app.seed_services import seed_services
 from app.routers.trainer import router as trainer_router
 from app.routers.journey import router as journey_router
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 app = FastAPI(title="Reset API")
 
@@ -18,6 +20,18 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+)
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+UPLOAD_DIR = BASE_DIR / "uploads"
+
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+app.mount(
+    "/uploads",
+    StaticFiles(directory=UPLOAD_DIR),
+    name="uploads",
 )
 
 

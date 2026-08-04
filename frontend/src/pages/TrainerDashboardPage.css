@@ -199,6 +199,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  justify-content: center;
 }
 
 .trainer-whatsapp-button {
@@ -219,6 +220,73 @@
 .trainer-primary-button:hover,
 .trainer-secondary-button:hover {
   background: #394c23;
+}
+
+.trainer-digital-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.trainer-digital-actions > * {
+  flex: 1;
+}
+
+.plan-file-name {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 10px;
+  align-items: center;
+}
+
+.pdf-icon {
+  grid-row: 1 / span 2;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.plan-file-name p {
+  margin: 0;
+}
+
+.file-name {
+  color: var(--primary-color);
+  font-size: 0.8rem;
+}
+
+.plan-uploaded-at {
+  color: #777;
+  font-size: 0.6rem;
+}
+
+.digital-actions-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.digital-secondary-button {
+  border: none;
+
+  cursor: pointer;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  color: #333;
+  text-decoration: none;
+}
+
+.digital-secondary-button:hover {
+  color: var(--primary-color);
 }
 
 /* ===== Empty State ===== */
@@ -467,6 +535,7 @@
   cursor: pointer;
 
   transition: all 0.2s ease;
+  align-self: flex-end;
 }
 
 .trainer-record-session-button:hover:not(:disabled) {
@@ -1309,6 +1378,38 @@
 [dir="rtl"] .trainer-order-modal-header {
   padding-right: 0;
   padding-left: 2.8rem;
+}
+
+.trainer-upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.trainer-selected-file {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.trainer-file-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f6f6f6;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+.trainer-upload-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.trainer-upload-buttons button {
+  flex: 1;
 }
 
 /* =========================================

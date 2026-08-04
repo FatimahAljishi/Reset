@@ -179,6 +179,43 @@
   color: #666;
 }
 
+.journey-download-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+  padding: 0.8rem;
+
+  border-radius: 10px;
+
+  background: var(--primary-color);
+  color: white;
+
+  text-decoration: none;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.journey-download-button:hover {
+  background: #394c23;
+}
+
+.journey-waiting {
+  margin-top: 1rem;
+  padding: 0.8rem;
+
+  text-align: center;
+
+  background: #f8f9fb;
+
+  border-radius: 10px;
+
+  color: #666;
+}
+
 /* Responsive */
 
 @media (max-width: 768px) {

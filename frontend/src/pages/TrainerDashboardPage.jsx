@@ -16,6 +16,10 @@ import {
   FaRegFileLines,
   FaCircleCheck,
   FaSpinner,
+  FaUpload,
+  FaFilePdf,
+  FaArrowUpFromBracket,
+  FaEye,
 } from "react-icons/fa6";
 
 const ORDERS_PER_PAGE = 5;
@@ -55,8 +59,10 @@ function TrainerDashboardPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loadingContactId, setLoadingContactId] = useState(null);
-  const [loadingDeliveryId, setLoadingDeliveryId] = useState(null);
+  const [selectedPdf, setSelectedPdf] = useState({});
+  const [uploadingId, setUploadingId] = useState(null);
   const [loadingPackageId, setLoadingPackageId] = useState(null);
+  const [loadingItemId, setLoadingItemId] = useState(null);
 
   const formatFulfillmentStatus = (status) => {
     switch (status) {
@@ -164,9 +170,53 @@ function TrainerDashboardPage() {
     }
   };
 
-  const markDelivered = async (orderItemId) => {
+  const uploadTrainingPlan = async (orderItemId) => {
+    const file = selectedPdf[orderItemId];
+
+    if (!file) return;
+
     try {
-      setLoadingDeliveryId(orderItemId);
+      setUploadingId(orderItemId);
+      console.log("Uploading:", orderItemId);
+      console.log(file);
+
+      const token = await getToken();
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/upload-plan`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail);
+      }
+
+      const updatedDashboard = await fetchDashboard();
+
+      delete selectedPdf[orderItemId];
+      setSelectedPdf({ ...selectedPdf });
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    } finally {
+      setUploadingId(null);
+    }
+  };
+
+  const markCompleted = async (orderItemId) => {
+    try {
+      setLoadingItemId(orderItemId);
       const token = await getToken();
 
       if (!token) {
@@ -174,7 +224,7 @@ function TrainerDashboardPage() {
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/mark-delivered`,
+        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/mark-completed`,
         {
           method: "PATCH",
           headers: {
@@ -191,10 +241,10 @@ function TrainerDashboardPage() {
 
       await fetchDashboard();
     } catch (error) {
-      console.error("Mark delivered failed:", error);
+      console.error("Mark completed failed:", error);
       alert(error.message);
     } finally {
-      setLoadingDeliveryId(null);
+      setLoadingItemId(null);
     }
   };
 
@@ -239,50 +289,6 @@ function TrainerDashboardPage() {
       alert(error.message);
     } finally {
       setLoadingContactId(null);
-    }
-  };
-
-  const undoDelivery = async (orderItemId) => {
-    try {
-      setLoadingDeliveryId(orderItemId);
-
-      const token = await getToken();
-
-      if (!token) {
-        throw new Error(t("trainerDashboard.tokenError"));
-      }
-
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/undo-delivery`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.detail || "Failed to undo delivery.");
-      }
-
-      await fetchDashboard();
-
-      // refresh the selected order in the modal
-      const updatedOrder = dashboard.recent_orders.find(
-        (order) => order.id === selectedOrder.id,
-      );
-
-      if (updatedOrder) {
-        setSelectedOrder(updatedOrder);
-      }
-    } catch (error) {
-      console.error(error);
-      alert(error.message);
-    } finally {
-      setLoadingDeliveryId(null);
     }
   };
 
@@ -637,23 +643,65 @@ function TrainerDashboardPage() {
                     )}
 
                     {item.fulfillment_status === "needs_delivery" && (
-                      <button
-                        className="trainer-primary-button"
-                        disabled={loadingDeliveryId === item.order_item_id}
-                        onClick={() => markDelivered(item.order_item_id)}
-                      >
-                        {loadingDeliveryId === item.order_item_id ? (
-                          <>
-                            <FaSpinner className="spinner" />
-                            Updating...
-                          </>
+                      <div className="trainer-upload-section">
+                        {!selectedPdf[item.order_item_id] ? (
+                          <label className="trainer-primary-button">
+                            <FaUpload />
+                            Upload Training Plan
+                            <input
+                              type="file"
+                              hidden
+                              accept=".pdf"
+                              onChange={(e) => {
+                                if (!e.target.files.length) return;
+
+                                setSelectedPdf({
+                                  ...selectedPdf,
+                                  [item.order_item_id]: e.target.files[0],
+                                });
+                              }}
+                            />
+                          </label>
                         ) : (
-                          <>
-                            <FaCircleCheck />
-                            Mark Delivered
-                          </>
+                          <div className="trainer-selected-file">
+                            <div className="trainer-file-name">
+                              <FaFilePdf />
+
+                              {selectedPdf[item.order_item_id].name}
+                            </div>
+
+                            <div className="trainer-upload-buttons">
+                              <button
+                                className="trainer-primary-button"
+                                disabled={uploadingId === item.order_item_id}
+                                onClick={() =>
+                                  uploadTrainingPlan(item.order_item_id)
+                                }
+                              >
+                                {uploadingId === item.order_item_id ? (
+                                  <>
+                                    <FaSpinner className="spinner" />
+                                    Uploading...
+                                  </>
+                                ) : (
+                                  <>Upload</>
+                                )}
+                              </button>
+
+                              <button
+                                className="trainer-secondary-button"
+                                onClick={() => {
+                                  const files = { ...selectedPdf };
+                                  delete files[item.order_item_id];
+                                  setSelectedPdf(files);
+                                }}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
                         )}
-                      </button>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -673,7 +721,7 @@ function TrainerDashboardPage() {
             <div className="trainer-active-clients-grid">
               {activeClients.map((client) => (
                 <div
-                  key={client.package_id}
+                  key={client.order_item_id}
                   className="trainer-active-client-card"
                 >
                   <div className="trainer-active-client-header">
@@ -701,56 +749,165 @@ function TrainerDashboardPage() {
                       {client.progress}
                     </span>
                   </div>
-                  <div className="trainer-active-client-progress">
-                    <div className="trainer-progress-text">
-                      <span>
-                        {client.sessions_completed} of {client.total_sessions}{" "}
-                        sessions completed
-                      </span>
+                  {client.total_sessions ? (
+                    <>
+                      <div className="trainer-active-client-progress">
+                        <div className="trainer-progress-text">
+                          <span>
+                            {client.sessions_completed} of{" "}
+                            {client.total_sessions} sessions completed
+                          </span>
 
-                      <span>{Math.round(client.progress_percentage)}%</span>
+                          <span>{Math.round(client.progress_percentage)}%</span>
+                        </div>
+
+                        <div className="trainer-progress-bar">
+                          <div
+                            className="trainer-progress-fill"
+                            style={{
+                              width: `${client.progress_percentage}%`,
+                            }}
+                          />
+                        </div>
+
+                        <p className="trainer-sessions-remaining">
+                          Remaining: {client.sessions_remaining}{" "}
+                          {client.sessions_remaining === 1
+                            ? "session"
+                            : "sessions"}
+                        </p>
+                      </div>
+
+                      <div className="trainer-active-client-actions">
+                        <button
+                          className="trainer-record-session-button"
+                          onClick={() => recordSession(client.package_id)}
+                          disabled={
+                            client.progress === "Completed" ||
+                            loadingPackageId === client.package_id
+                          }
+                        >
+                          {loadingPackageId === client.package_id ? (
+                            <>
+                              <FaSpinner className="spinner" />
+                              Recording...
+                            </>
+                          ) : (
+                            <>
+                              <FaCircleCheck />
+                              {client.progress === "Not Started"
+                                ? "Start Session"
+                                : client.progress === "Completed"
+                                  ? "Completed"
+                                  : "Record Session"}
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="trainer-digital-actions">
+                      <div className="plan-file-name">
+                        <FaFilePdf className="pdf-icon" />
+                        <p className="file-name">{client.plan_pdf_name}</p>
+                        <p className="plan-uploaded-at">
+                          Uploaded {formatDate(client.plan_uploaded_at)} at{" "}
+                          {formatTime(client.plan_uploaded_at)}
+                        </p>
+                      </div>
+
+                      <div className="digital-actions-buttons">
+                        <a
+                          className="digital-secondary-button"
+                          href={`${import.meta.env.VITE_API_URL}${client.plan_pdf_url}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FaEye />
+                          View PDF
+                        </a>
+
+                        {!selectedPdf[client.order_item_id] ? (
+                          <label className="digital-secondary-button">
+                            <FaArrowUpFromBracket />
+                            Replace PDF
+                            <input
+                              type="file"
+                              hidden
+                              accept=".pdf"
+                              onChange={(e) => {
+                                if (!e.target.files.length) return;
+
+                                setSelectedPdf({
+                                  ...selectedPdf,
+                                  [client.order_item_id]: e.target.files[0],
+                                });
+                              }}
+                            />
+                          </label>
+                        ) : (
+                          <div className="trainer-selected-file">
+                            <div className="trainer-file-name">
+                              <FaFilePdf />
+
+                              {selectedPdf[client.order_item_id].name}
+                            </div>
+
+                            <div className="trainer-upload-buttons">
+                              <button
+                                className="trainer-primary-button"
+                                disabled={uploadingId === client.order_item_id}
+                                onClick={() =>
+                                  uploadTrainingPlan(client.order_item_id)
+                                }
+                              >
+                                {uploadingId === client.order_item_id ? (
+                                  <>
+                                    <FaSpinner className="spinner" />
+                                    Uploading...
+                                  </>
+                                ) : (
+                                  <>Upload</>
+                                )}
+                              </button>
+
+                              <button
+                                className="trainer-secondary-button"
+                                onClick={() => {
+                                  const files = { ...selectedPdf };
+                                  delete files[client.order_item_id];
+                                  setSelectedPdf(files);
+                                }}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-
-                    <div className="trainer-progress-bar">
-                      <div
-                        className="trainer-progress-fill"
-                        style={{
-                          width: `${client.progress_percentage}%`,
-                        }}
-                      />
+                  )}
+                  {!client.total_sessions && (
+                    <div className="trainer-active-client-actions">
+                      <button
+                        className="trainer-record-session-button"
+                        onClick={() => markCompleted(client.order_item_id)}
+                        disabled={loadingItemId === client.order_item_id}
+                      >
+                        {loadingItemId === client.order_item_id ? (
+                          <>
+                            <FaSpinner className="spinner" />
+                            Updating...
+                          </>
+                        ) : (
+                          <>
+                            <FaCircleCheck />
+                            Mark as Completed
+                          </>
+                        )}
+                      </button>
                     </div>
-
-                    <p className="trainer-sessions-remaining">
-                      Remaining: {client.sessions_remaining}{" "}
-                      {client.sessions_remaining === 1 ? "session" : "sessions"}
-                    </p>
-                  </div>
-                  <div className="trainer-active-client-actions">
-                    <button
-                      className="trainer-record-session-button"
-                      onClick={() => recordSession(client.package_id)}
-                      disabled={
-                        client.progress === "Completed" ||
-                        loadingPackageId === client.package_id
-                      }
-                    >
-                      {loadingPackageId === client.package_id ? (
-                        <>
-                          <FaSpinner className="spinner" />
-                          Recording...
-                        </>
-                      ) : (
-                        <>
-                          <FaCircleCheck />
-                          {client.progress === "Not Started"
-                            ? "Start Session"
-                            : client.progress === "Completed"
-                              ? "Completed"
-                              : "Record Session"}
-                        </>
-                      )}
-                    </button>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -1120,23 +1277,6 @@ function TrainerDashboardPage() {
                         </>
                       ) : (
                         "Undo Contact"
-                      )}
-                    </button>
-                  )}
-
-                  {item.fulfillment_status === "delivered" && (
-                    <button
-                      className="trainer-secondary-button"
-                      onClick={() => undoDelivery(item.id)}
-                      disabled={loadingDeliveryId === item.id}
-                    >
-                      {loadingDeliveryId === item.id ? (
-                        <>
-                          <FaSpinner className="spinner" />
-                          Updating...
-                        </>
-                      ) : (
-                        "Undo Delivery"
                       )}
                     </button>
                   )}

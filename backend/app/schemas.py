@@ -91,16 +91,20 @@ class TrainerOrder(SQLModel):
 
 
 class ActiveClient(SQLModel):
-    package_id: int
+    package_id: Optional[int] = None
     order_id: int
+    order_item_id: int
     customer_name: str
     service: str
     plan: str
-    sessions_completed: int
-    total_sessions: int
-    sessions_remaining: int
+    sessions_completed: Optional[int] = None
+    total_sessions: Optional[int] = None
+    sessions_remaining: Optional[int] = None
     progress: str
-    progress_percentage: float
+    progress_percentage: Optional[float] = None
+    plan_pdf_url: Optional[str] = None
+    plan_pdf_name: Optional[str] = None
+    plan_uploaded_at: Optional[datetime] = None
 
 
 class TrainerDashboard(SQLModel):
@@ -132,17 +136,20 @@ class ActionItem(SQLModel):
 
 
 class ActivePlan(SQLModel):
-    package_id: int
+    package_id: Optional[int] = None
     order_id: int
+    order_item_id: int
     service: str
     service_ar: str
     plan: str
     plan_ar: str
-    sessions_completed: int
-    total_sessions: int
-    sessions_remaining: int
-    progress_percentage: float
+    sessions_completed: Optional[int] = None
+    total_sessions: Optional[int] = None
+    sessions_remaining: Optional[int] = None
+    progress_percentage: Optional[float] = None
     fulfillment_status: FulfillmentStatus
+    plan_pdf_url: Optional[str] = None
+    plan_pdf_name: Optional[str] = None
 
 
 class JourneyDashboard(SQLModel):
