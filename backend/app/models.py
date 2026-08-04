@@ -78,7 +78,7 @@ class OrderItem(SQLModel, table=True):
     service_title_ar: str = Field(max_length=200)
     plan_title_en: str = Field(max_length=200)
     plan_title_ar: str = Field(max_length=200)
-    plan_pdf_url: Optional[str] = Field(default=None, max_length=500)
+    plan_pdf_key: Optional[str] = Field(default=None, max_length=500)
     plan_pdf_name: Optional[str] = Field(default=None)
     plan_uploaded_at: Optional[datetime] = Field(default=None)
     order: Optional[Order] = Relationship(back_populates="items")

@@ -23,6 +23,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import shutil
 import uuid
+from app.utils.r2 import r2
+import os
+from fastapi.responses import StreamingResponse
 
 router = APIRouter(
     prefix="/trainer",
@@ -175,7 +178,7 @@ def get_trainer_dashboard(
                 sessions_remaining=sessions_remaining,
                 progress=progress,
                 progress_percentage=progress_percentage,
-                plan_pdf_url=None,
+                plan_pdf_key=None,
                 plan_pdf_name=None,
                 plan_uploaded_at=None,
             )
@@ -212,7 +215,7 @@ def get_trainer_dashboard(
                     sessions_remaining=None,
                     progress=progress,
                     progress_percentage=None,
-                    plan_pdf_url=item.plan_pdf_url,
+                    plan_pdf_key=item.plan_pdf_key,
                     plan_pdf_name=item.plan_pdf_name,
                     plan_uploaded_at=item.plan_uploaded_at,
                 )
@@ -327,11 +330,11 @@ def upload_training_plan(
             detail="Only PDF files are allowed.",
         )
 
-    if item.plan_pdf_url:
-        old_file = Path(item.plan_pdf_url.lstrip("/"))
-
-        if old_file.exists():
-            old_file.unlink()
+    if item.plan_pdf_key:
+        r2.delete_object(
+            Bucket=os.getenv("R2_BUCKET"),
+            Key=item.plan_pdf_key,
+        )
 
     extension = ".pdf"
 
@@ -339,15 +342,16 @@ def upload_training_plan(
 
     filename = f"{uuid.uuid4()}{extension}"
 
-    upload_dir = Path("uploads/training-plans")
-    upload_dir.mkdir(parents=True, exist_ok=True)
+    r2.upload_fileobj(
+        Fileobj=file.file,
+        Bucket=os.getenv("R2_BUCKET"),
+        Key=filename,
+        ExtraArgs={
+            "ContentType": "application/pdf",
+        },
+    )
 
-    file_path = upload_dir / filename
-
-    with file_path.open("wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-
-    item.plan_pdf_url = f"/uploads/training-plans/{filename}"
+    item.plan_pdf_key = filename
 
     item.plan_pdf_name = original_filename
 
@@ -526,4 +530,36 @@ def remove_last_training_session(
         sessions_completed=sessions_completed,
         sessions_remaining=package.total_sessions - sessions_completed,
         completed=False,
+    )
+
+
+@router.get("/order-items/{order_item_id}/plan")
+def view_training_plan(
+    order_item_id: int,
+    session: Session = Depends(get_session),
+    _: str = Depends(get_current_trainer_id),
+):
+    item = session.get(OrderItem, order_item_id)
+
+    if not item:
+        raise HTTPException(
+            status_code=404,
+            detail="Training plan not found.",
+        )
+
+    if not item.plan_pdf_key:
+        raise HTTPException(
+            status_code=404,
+            detail="Training plan has not been uploaded yet.",
+        )
+
+    pdf = r2.get_object(
+        Bucket=os.getenv("R2_BUCKET"),
+        Key=item.plan_pdf_key,
+    )
+
+    return StreamingResponse(
+        pdf["Body"],
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'inline; filename="{item.plan_pdf_name}"'},
     )

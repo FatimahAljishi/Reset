@@ -492,6 +492,36 @@ function TrainerDashboardPage() {
     }
   }, [currentPage, totalPages]);
 
+  const viewTrainingPlan = async (orderItemId) => {
+    try {
+      const token = await getToken();
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/trainer/order-items/${orderItemId}/plan`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to load PDF.");
+      }
+
+      const blob = await response.blob();
+
+      const url = URL.createObjectURL(blob);
+
+      window.open(url, "_blank");
+
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (error) {
+      console.error(error);
+      alert("Unable to open training plan.");
+    }
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return "—";
 
@@ -817,15 +847,13 @@ function TrainerDashboardPage() {
                       </div>
 
                       <div className="digital-actions-buttons">
-                        <a
+                        <button
                           className="digital-secondary-button"
-                          href={`${import.meta.env.VITE_API_URL}${client.plan_pdf_url}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          onClick={() => viewTrainingPlan(client.order_item_id)}
                         >
                           <FaEye />
                           View PDF
-                        </a>
+                        </button>
 
                         {!selectedPdf[client.order_item_id] ? (
                           <label className="digital-secondary-button">

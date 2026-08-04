@@ -102,7 +102,7 @@ class ActiveClient(SQLModel):
     sessions_remaining: Optional[int] = None
     progress: str
     progress_percentage: Optional[float] = None
-    plan_pdf_url: Optional[str] = None
+    plan_pdf_key: Optional[str] = None
     plan_pdf_name: Optional[str] = None
     plan_uploaded_at: Optional[datetime] = None
 
@@ -148,7 +148,7 @@ class ActivePlan(SQLModel):
     sessions_remaining: Optional[int] = None
     progress_percentage: Optional[float] = None
     fulfillment_status: FulfillmentStatus
-    plan_pdf_url: Optional[str] = None
+    plan_pdf_key: Optional[str] = None
     plan_pdf_name: Optional[str] = None
 
 

@@ -50,6 +50,34 @@ export default function MyJourneyPage() {
     fetchJourney();
   }, [getToken, isLoaded, isSignedIn]);
 
+  const viewTrainingPlan = async (orderItemId) => {
+    try {
+      const token = await getToken();
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/journey/order-items/${orderItemId}/plan`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to load PDF.");
+      }
+
+      const blob = await response.blob();
+
+      const url = URL.createObjectURL(blob);
+
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error(error);
+      alert("Unable to open training plan.");
+    }
+  };
+
   if (loading) {
     return (
       <>
@@ -154,17 +182,15 @@ export default function MyJourneyPage() {
                     </div>
                   </>
                 )}
-                {plan.plan_pdf_url && (
-                  <a
+                {plan.plan_pdf_key && (
+                  <button
                     className="journey-download-button"
-                    href={`${import.meta.env.VITE_API_URL}${plan.plan_pdf_url}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => viewTrainingPlan(plan.order_item_id)}
                   >
                     <FaFilePdf /> {t("myJourney.downloadPlan")}
-                  </a>
+                  </button>
                 )}
-                {!plan.plan_pdf_url && !plan.total_sessions && (
+                {!plan.plan_pdf_key && !plan.total_sessions && (
                   <div className="journey-waiting">
                     {t("myJourney.noPlanAvailable")}
                   </div>
