@@ -16,6 +16,7 @@ from app.schemas import (
 from fastapi.responses import StreamingResponse
 from app.utils.r2 import r2
 import os
+from urllib.parse import quote
 
 router = APIRouter(
     prefix="/journey",
@@ -71,6 +72,8 @@ def get_journey(
                     progress_percentage=progress_percentage if package else None,
                     fulfillment_status=item.fulfillment_status,
                     plan_pdf_key=item.plan_pdf_key,
+                    plan_pdf_name=item.plan_pdf_name,
+                    plan_uploaded_at=item.plan_uploaded_at,
                 )
             )
 
@@ -116,4 +119,49 @@ def view_training_plan(
         pdf["Body"],
         media_type="application/pdf",
         headers={"Content-Disposition": f'inline; filename="{item.plan_pdf_name}"'},
+    )
+
+
+@router.get("/order-items/{order_item_id}/download-plan")
+def download_training_plan(
+    order_item_id: int,
+    session: Session = Depends(get_session),
+    user_id: str = Depends(get_current_user_id),
+):
+    item = session.get(OrderItem, order_item_id)
+
+    if not item:
+        raise HTTPException(
+            status_code=404,
+            detail="Training plan not found.",
+        )
+
+    order = session.get(Order, item.order_id)
+
+    if not order or order.user_id != user_id:
+        raise HTTPException(
+            status_code=403,
+            detail="You do not have permission to access this training plan.",
+        )
+
+    if not item.plan_pdf_key:
+        raise HTTPException(
+            status_code=404,
+            detail="Training plan has not been uploaded yet.",
+        )
+
+    pdf = r2.get_object(
+        Bucket=os.getenv("R2_BUCKET"),
+        Key=item.plan_pdf_key,
+    )
+
+    filename = item.plan_pdf_name or "training-plan.pdf"
+
+    return StreamingResponse(
+        pdf["Body"],
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f"attachment; filename*=UTF-8''{quote(filename)}",
+            "X-Filename": filename,
+        },
     )

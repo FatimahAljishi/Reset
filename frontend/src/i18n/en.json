@@ -406,6 +406,7 @@
     "inProgress": "In progress",
     "completed": "Completed",
     "downloadPlan": "Download Training Plan",
+    "viewPlan": "View Training Plan",
     "noPlanAvailable": "Your training plan is being prepared."
   },
   "footer": {

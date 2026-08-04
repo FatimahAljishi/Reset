@@ -150,6 +150,7 @@ class ActivePlan(SQLModel):
     fulfillment_status: FulfillmentStatus
     plan_pdf_key: Optional[str] = None
     plan_pdf_name: Optional[str] = None
+    plan_uploaded_at: Optional[datetime] = None
 
 
 class JourneyDashboard(SQLModel):

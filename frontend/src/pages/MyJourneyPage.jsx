@@ -4,7 +4,7 @@ import "./MyJourneyPage.css";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { useTranslation } from "react-i18next";
-import { FaFilePdf } from "react-icons/fa6";
+import { FaFilePdf, FaEye, FaDownload } from "react-icons/fa6";
 
 export default function MyJourneyPage() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
@@ -75,6 +75,45 @@ export default function MyJourneyPage() {
     } catch (error) {
       console.error(error);
       alert("Unable to open training plan.");
+    }
+  };
+
+  const downloadTrainingPlan = async (orderItemId) => {
+    try {
+      const token = await getToken();
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/journey/order-items/${orderItemId}/download-plan`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to download training plan.");
+      }
+
+      const blob = await response.blob();
+
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      const filename =
+        response.headers.get("X-Filename") || "training-plan.pdf";
+
+      link.download = filename;
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      alert("Unable to download training plan.");
     }
   };
 
@@ -183,12 +222,24 @@ export default function MyJourneyPage() {
                   </>
                 )}
                 {plan.plan_pdf_key && (
-                  <button
-                    className="journey-download-button"
-                    onClick={() => viewTrainingPlan(plan.order_item_id)}
-                  >
-                    <FaFilePdf /> {t("myJourney.downloadPlan")}
-                  </button>
+                  <div className="journey-download-section">
+                    <div className="training-plan-file-name">
+                      <FaFilePdf className="pdf-icon" />
+                      <p>{plan.plan_pdf_name}</p>
+                    </div>
+                    <button
+                      className="journey-download-button"
+                      onClick={() => downloadTrainingPlan(plan.order_item_id)}
+                    >
+                      <FaDownload /> {t("myJourney.downloadPlan")}
+                    </button>
+                    <button
+                      className="journey-download-button"
+                      onClick={() => viewTrainingPlan(plan.order_item_id)}
+                    >
+                      <FaEye /> {t("myJourney.viewPlan")}
+                    </button>
+                  </div>
                 )}
                 {!plan.plan_pdf_key && !plan.total_sessions && (
                   <div className="journey-waiting">
