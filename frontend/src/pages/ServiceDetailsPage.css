@@ -281,3 +281,15 @@ html[dir="rtl"] .back-button {
     padding-bottom: 1rem;
   }
 }
+
+@media (max-width: 376px) {
+  .services-card-content p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 345px) {
+  .services-card-content p {
+    font-size: 0.8rem;
+  }
+}

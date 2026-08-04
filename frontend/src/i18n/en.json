@@ -133,17 +133,17 @@
     "services": {
       "readyMade": {
         "title": "Ready-Made Programs",
-        "description": "Professionally designed workout programs created for all fitness levels. Start immediately with a structured plan you can follow at your own pace."
+        "description": "Professionally designed workout programs ready to help you start your fitness journey today."
       },
 
       "personalized": {
         "title": "Personalized Program",
-        "description": "A custom training program designed specifically for your goals, fitness level, lifestyle, and individual needs."
+        "description": "A custom workout program tailored to your goals, fitness level, and lifestyle."
       },
 
       "liveCoaching": {
         "title": "Live Online Coaching",
-        "description": "One-on-one live coaching sessions with real-time guidance, accountability, and technique correction from wherever you are."
+        "description": "Live one-to-one coaching with real-time guidance, support, and accountability wherever you are."
       }
     }
   },
